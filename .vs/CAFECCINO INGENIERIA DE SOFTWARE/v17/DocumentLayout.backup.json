@@ -1,34 +1,26 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\",
+  "WorkspaceRootPath": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|c:\\users\\joaquim\\desktop\\proyecto\\nuevo archivo winrar zip\\cafeccino ingenieria de software\\cafeccino ingenieria de software\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|solutionrelative:cafeccino ingenieria de software\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|c:\\users\\joaquim\\desktop\\cafeccino ingenieria de software\\cafeccino ingenieria de software\\frminicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|solutionrelative:cafeccino ingenieria de software\\frminicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E1C449FA-C1D5-4ACB-950C-22640864EC26}|BLL\\BLL.csproj|C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\bll\\seguridad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E1C449FA-C1D5-4ACB-950C-22640864EC26}|BLL\\BLL.csproj|solutionrelative:bll\\seguridad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\cafeccino ingenieria de software\\administradoridiomas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|solutionrelative:cafeccino ingenieria de software\\administradoridiomas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E1C449FA-C1D5-4ACB-950C-22640864EC26}|BLL\\BLL.csproj|C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\bll\\bllusuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|c:\\users\\joaquim\\desktop\\cafeccino ingenieria de software\\cafeccino ingenieria de software\\frminicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|solutionrelative:cafeccino ingenieria de software\\frminicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C449FA-C1D5-4ACB-950C-22640864EC26}|BLL\\BLL.csproj|c:\\users\\joaquim\\desktop\\cafeccino ingenieria de software\\bll\\bllusuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E1C449FA-C1D5-4ACB-950C-22640864EC26}|BLL\\BLL.csproj|solutionrelative:bll\\bllusuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\cafeccino ingenieria de software\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|solutionrelative:cafeccino ingenieria de software\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{98505F1B-948E-4A0D-90F0-DF63CB23BF2A}|DAL\\DAL.csproj|C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\dal\\generarhash.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{98505F1B-948E-4A0D-90F0-DF63CB23BF2A}|DAL\\DAL.csproj|solutionrelative:dal\\generarhash.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\cafeccino ingenieria de software\\frmeventos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|solutionrelative:cafeccino ingenieria de software\\frmeventos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{98505F1B-948E-4A0D-90F0-DF63CB23BF2A}|DAL\\DAL.csproj|C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\dal\\dalusuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{98505F1B-948E-4A0D-90F0-DF63CB23BF2A}|DAL\\DAL.csproj|solutionrelative:dal\\dalusuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\cafeccino ingenieria de software\\administradoridiomas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|solutionrelative:cafeccino ingenieria de software\\administradoridiomas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,90 +30,70 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "frmEventos.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\frmEventos.cs",
-              "RelativeDocumentMoniker": "CAFECCINO INGENIERIA DE SOFTWARE\\frmEventos.cs",
-              "ToolTip": "C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\frmEventos.cs [Dise\u00F1o]",
-              "RelativeToolTip": "CAFECCINO INGENIERIA DE SOFTWARE\\frmEventos.cs [Dise\u00F1o]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-04T17:28:08.728Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "DALUsuario.cs",
-              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\DAL\\DALUsuario.cs",
-              "RelativeDocumentMoniker": "DAL\\DALUsuario.cs",
-              "ToolTip": "C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\DAL\\DALUsuario.cs",
-              "RelativeToolTip": "DAL\\DALUsuario.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-04T03:30:17.643Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "GenerarHash.cs",
-              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\DAL\\GenerarHash.cs",
-              "RelativeDocumentMoniker": "DAL\\GenerarHash.cs",
-              "ToolTip": "C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\DAL\\GenerarHash.cs",
-              "RelativeToolTip": "DAL\\GenerarHash.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBEAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-04T03:37:22.547Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "BLLUsuario.cs",
-              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\BLL\\BLLUsuario.cs",
+              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\BLL\\BLLUsuario.cs",
               "RelativeDocumentMoniker": "BLL\\BLLUsuario.cs",
-              "ToolTip": "C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\BLL\\BLLUsuario.cs",
+              "ToolTip": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\BLL\\BLLUsuario.cs",
               "RelativeToolTip": "BLL\\BLLUsuario.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAWwBcAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAACwAAAAAAAAAAAA9wE0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-04T03:30:12.814Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Login.cs",
-              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\Login.cs",
-              "RelativeDocumentMoniker": "CAFECCINO INGENIERIA DE SOFTWARE\\Login.cs",
-              "ToolTip": "C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\Login.cs",
-              "RelativeToolTip": "CAFECCINO INGENIERIA DE SOFTWARE\\Login.cs",
-              "ViewState": "AgIAAEkAAAAAAAAAAAASwGQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-04T03:24:06.49Z",
+              "WhenOpened": "2026-06-30T01:45:26.078Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Login.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\Login.cs",
-              "RelativeDocumentMoniker": "CAFECCINO INGENIERIA DE SOFTWARE\\Login.cs",
-              "ToolTip": "C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\Login.cs [Dise\u00F1o]",
-              "RelativeToolTip": "CAFECCINO INGENIERIA DE SOFTWARE\\Login.cs [Dise\u00F1o]",
+              "DocumentIndex": 2,
+              "Title": "frmInicio.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs",
+              "RelativeDocumentMoniker": "CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs",
+              "ToolTip": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs [Dise\u00F1o]",
+              "RelativeToolTip": "CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-04T03:24:05.572Z"
+              "WhenOpened": "2026-06-30T01:45:04.169Z",
+              "EditorCaption": " [Dise\u00F1o]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "frmInicio.cs",
+              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs",
+              "RelativeDocumentMoniker": "CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs",
+              "ToolTip": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs",
+              "RelativeToolTip": "CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAswFcAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-28T02:01:35.565Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Seguridad.cs",
-              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\BLL\\Seguridad.cs",
-              "RelativeDocumentMoniker": "BLL\\Seguridad.cs",
-              "ToolTip": "C:\\Users\\joaquim\\Desktop\\PROYECTO\\Nuevo Archivo WinRAR ZIP\\CAFECCINO INGENIERIA DE SOFTWARE\\BLL\\Seguridad.cs",
-              "RelativeToolTip": "BLL\\Seguridad.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAFAAAAAAAAAA==",
+              "Title": "AdministradorIdiomas.cs",
+              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs",
+              "RelativeDocumentMoniker": "CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs",
+              "ToolTip": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs",
+              "RelativeToolTip": "CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs",
+              "ViewState": "AgIAAN8AAAAAAAAAAAAkwPkAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-04T03:23:07.068Z"
+              "WhenOpened": "2026-06-28T00:10:56.259Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AdministradorIdiomas.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs",
+              "RelativeDocumentMoniker": "CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs",
+              "ToolTip": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs [Dise\u00F1o]",
+              "RelativeToolTip": "CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-28T00:10:55.364Z",
+              "EditorCaption": " [Dise\u00F1o]"
             }
           ]
         }

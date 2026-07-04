@@ -1,31 +1,80 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BE;
 using DAL;
+using SERVICIOS;
 
 namespace BLL
 {
     public class BLLUsuario
     {
-       GenerarHash generarHash = new GenerarHash();
-
+        BLLPermiso _permisoBLL = new BLLPermiso();  
+        Encriptacion encriptacion = new Encriptacion();
         DALUsuario DALUsuario = new DALUsuario();
 
-        public bool Login(Usuario user)
+        public Usuario Login(Usuario user)
         {
-            user.Contraseña =
-                Seguridad.GenerarHash(user.Contraseña);
+           
+            user.Contraseña = encriptacion.GenerarHash(user.Contraseña);
 
-            return DALUsuario.Login(user);
+            
+            Usuario usuarioLogueado = DALUsuario.Login(user);
+
+           
+            if (usuarioLogueado != null)
+            {
+            
+                if (usuarioLogueado.Perfil != null)
+                {
+                    _permisoBLL.ArmarArbolComponente(usuarioLogueado.Perfil);
+                }
+            }
+
+        
+            return usuarioLogueado;
         }
-        public void ActualizarPasswordHash(string usuario, string contraseña)
+        public void RegistrarUsuario(Usuario usuario, int idPerfil)
         {
-            string hash = Seguridad.GenerarHash(contraseña);
+            usuario.Contraseña = encriptacion.GenerarHash(usuario.Contraseña);
+            DALUsuario.RegistrarUsuario(usuario, idPerfil);
+        }
+        public DataTable ListarUsuarios()
+        {
+            return DALUsuario.ListarUsuarios();
+        }
+        public void ModificarUsuario(Usuario usuario)
+        {
+            usuario.Contraseña = encriptacion.GenerarHash(usuario.Contraseña);
+            DALUsuario.ModificarUsuario(usuario);
+        }
+        public void EliminarUsuario(int dni)
+        {
+            DALUsuario.EliminarUsuario(dni);
+        }
+        private readonly DALUsuario _usuarioDAL = new DALUsuario();
+        private readonly DALDigitoVerificador _dvDAL = new DALDigitoVerificador();
 
-            generarHash.ActualizarPasswordHash(usuario, hash);
+        public void SincronizarDigitos()
+        {
+            var usuarios = _usuarioDAL.ObtenerTodos();
+            var dv = DigitVerifierService.Recalcular(usuarios);
+            _dvDAL.Guardar(dv);
+        }
+
+        public List<int> ObtenerFilasAlteradas()
+        {
+            List<Usuario> lista = _usuarioDAL.ObtenerTodos();
+            DigitoVerificador dvGuardado = _dvDAL.ObtenerPorTabla("Usuario");
+            return DigitVerifierService.ObtenerFilasAlteradas(lista, dvGuardado);
+        }
+        public bool ValidarIntegridad()
+        {
+            List<int> filasAlteradas = ObtenerFilasAlteradas();
+            return filasAlteradas.Count == 0;
         }
     }
 }

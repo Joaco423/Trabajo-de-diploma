@@ -41,9 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conexion.cs" />
+    <Compile Include="DALDigitoVerificador.cs" />
     <Compile Include="DALEvento.cs" />
+    <Compile Include="DALPermiso.cs" />
+    <Compile Include="DALIdioma.cs" />
     <Compile Include="DALUsuario.cs" />
-    <Compile Include="GenerarHash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

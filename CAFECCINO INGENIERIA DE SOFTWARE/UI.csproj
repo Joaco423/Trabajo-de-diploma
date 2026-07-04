@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdministradorIdiomas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdministradorIdiomas.Designer.cs">
+      <DependentUpon>AdministradorIdiomas.cs</DependentUpon>
+    </Compile>
     <Compile Include="CerrarSesion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +70,24 @@
     <Compile Include="frmInicio.Designer.cs">
       <DependentUpon>frmInicio.cs</DependentUpon>
     </Compile>
+    <Compile Include="GestionDeFamilias.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GestionDeFamilias.Designer.cs">
+      <DependentUpon>GestionDeFamilias.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GestionDePerfiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GestionDePerfiles.Designer.cs">
+      <DependentUpon>GestionDePerfiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GestionUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GestionUsuarios.Designer.cs">
+      <DependentUpon>GestionUsuarios.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +96,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Traductor.cs" />
+    <EmbeddedResource Include="AdministradorIdiomas.resx">
+      <DependentUpon>AdministradorIdiomas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CerrarSesion.resx">
       <DependentUpon>CerrarSesion.cs</DependentUpon>
     </EmbeddedResource>
@@ -80,6 +108,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmInicio.resx">
       <DependentUpon>frmInicio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GestionDeFamilias.resx">
+      <DependentUpon>GestionDeFamilias.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GestionDePerfiles.resx">
+      <DependentUpon>GestionDePerfiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GestionUsuarios.resx">
+      <DependentUpon>GestionUsuarios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
@@ -92,6 +129,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -23,10 +23,10 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // Capturar usuario antes de invalidarlo
-            string nombreUsuario = Singleton.ObtenerInstancia().Usuario?.Nombre ?? "Desconocido";
+            
+            string nombreUsuario = Singleton.Instancia.Usuario?.Nombre ?? "Desconocido";
 
-            Singleton.ObtenerInstancia().CerrarSesion();
+            Singleton.Instancia.CerrarSesion();
 
             ModificarMenu();
 
@@ -47,6 +47,10 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             parent.administradorToolStripMenuItem.Visible = false;
 
             parent.login.Hide();
+            parent.gestionDeFamilias.Hide();
+            parent.gestionDePerfiles.Hide();
+            parent.administradorIdiomas.Hide();
+      
         }
 
         private void CerrrarSesion_FormClosing(object sender, FormClosingEventArgs e)

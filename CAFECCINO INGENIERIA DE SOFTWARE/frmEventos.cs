@@ -1,5 +1,4 @@
-﻿using BLL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,15 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BLL;
+using SERVICIOS;
 
 namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 {
-    public partial class frmEventos : Form
+    public partial class frmEventos : Form, IObserver
     {
         BLLEvento bllevento = new BLLEvento();
+        Traductor traductor = new Traductor();
         public frmEventos()
         {
             InitializeComponent();
+        }
+
+        public void ActualizarIdioma(string idioma)
+        {
+            traductor.TraducirFormulario(this, int.Parse(idioma));
         }
 
         private void frmEventos_Load(object sender, EventArgs e)
@@ -70,6 +77,15 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 e.Cancel = true;
                 Hide();
 
+            }
+        }
+
+        private void frmEventos_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Visible)
+            {
+            
+                traductor.TraducirFormulario(this, Singleton.Instancia.IdiomaActual);
             }
         }
     }

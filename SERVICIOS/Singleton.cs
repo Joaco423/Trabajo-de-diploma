@@ -1,27 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+
 using BE;
 
 namespace SERVICIOS
 {
-    public class Singleton
+    public class Singleton: Subject
     {
-        private static readonly Singleton instance = new Singleton();
+        private static Singleton instance;
         private static Usuario _user;
 
+        
+        private int _idIdioma = 1; 
 
         private Singleton() { }
 
-
-
-        public static Singleton ObtenerInstancia()
+        public static Singleton Instancia
         {
-            return instance;
-        }
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new Singleton();
+                }
 
+                return instance;
+            }
+        }
 
         public void IniciarSesion(Usuario userNuevo)
         {
@@ -30,16 +39,28 @@ namespace SERVICIOS
 
         public void CerrarSesion()
         {
-
             _user = null;
         }
-
-
 
         public Usuario Usuario
         {
             get { return _user; }
         }
 
+        
+        public int IdiomaActual
+        {
+            get { return _idIdioma; }
+            set { _idIdioma = value; }
+        }
+
+        public void CambiarIdioma(int idIdioma)
+        {
+          
+            _idIdioma = idIdioma;
+
+           
+            Notificar();
+        }
     }
 }
