@@ -1,5 +1,5 @@
 # Proyecto-Ingenieria-de-Software
 
 credenciales: 
-Usuario: joaquin
+Usuario: joaco
 Contraseña: 12
