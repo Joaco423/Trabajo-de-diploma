@@ -26,7 +26,7 @@ namespace BE
         }
         public override void VaciarHijos()
         {
-            // Permiso no tiene hijos, no hace nada
+           
         }
         public override void EliminarHijo(int id)
         {

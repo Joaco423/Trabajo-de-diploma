@@ -16,55 +16,6 @@ namespace DAL
         private string cadenaConexion = Conexion.cadena;
 
         
-        public List<Perfil> ObtenerComponentesUsuario(int idUsuario)
-        {
-            List<Perfil> componentes = new List<Perfil>();
-
-            string query = @"SELECT p.CodPermiso, p.Nombre, p.EsFamilia 
-                         FROM Usuario_Permiso up
-                         INNER JOIN Permiso p ON up.CodPermiso = p.CodPermiso
-                         WHERE up.CodUsuario = @IdUsuario";
-
-            using (SqlConnection con = new SqlConnection(cadenaConexion))
-            {
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
-                    con.Open();
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            Perfil componente;
-                            bool esFamilia = Convert.ToBoolean(reader["EsFamilia"]);
-
-                            if (esFamilia)
-                            {
-                                componente = new Familia();
-                            }
-                            else
-                            {
-                                componente = new Permiso();
-                                
-                                if (Enum.TryParse(reader["Nombre"].ToString(), out TipoPermiso tipo))
-                                {
-                                    componente.Permiso = tipo;
-                                }
-                            }
-
-                            componente.Id = Convert.ToInt32(reader["CodPermiso"]);
-                            componente.Nombre = reader["Nombre"].ToString();
-
-                            componentes.Add(componente);
-                        }
-                    }
-                }
-            }
-            return componentes;
-        }
-
-        
         public List<Perfil> ObtenerHijos(int idPadre)
         {
             List<Perfil> hijos = new List<Perfil>();
@@ -244,20 +195,7 @@ namespace DAL
         }
 
         
-        public void InsertarUsuarioPermiso(int idUsuario, int idComponente)
-        {
-            string query = "INSERT INTO Usuario_Permiso (CodUsuario, CodPermiso) VALUES (@CodUsuario, @CodPermiso)";
-            using (SqlConnection con = new SqlConnection(cadenaConexion))
-            {
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    cmd.Parameters.AddWithValue("@CodUsuario", idUsuario);
-                    cmd.Parameters.AddWithValue("@CodPermiso", idComponente);
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
+      
       
     }
 }

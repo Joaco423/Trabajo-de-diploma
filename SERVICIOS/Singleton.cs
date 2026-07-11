@@ -15,7 +15,7 @@ namespace SERVICIOS
         private static Usuario _user;
 
         
-        private int _idIdioma = 1; 
+        private int _idIdioma = 2; 
 
         private Singleton() { }
 

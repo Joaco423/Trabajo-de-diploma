@@ -14,16 +14,8 @@ namespace BE
 
         public string NombreControl { get; set; }
 
-        public ControlIdioma()
-        {
+        
 
-        }
-
-        public ControlIdioma(int idControl, string formulario, string nombreControl)
-        {
-            IdControl = idControl;
-            Formulario = formulario;
-            NombreControl = nombreControl;
-        }
+       
     }
 }

@@ -20,9 +20,9 @@ namespace BLL
 
             foreach (Perfil hijo in hijos)
             {
-                // Si el hijo es una Familia, cargamos sus hijos también
+                
                 if (hijo is Familia)
-                    CargarArbolCompleto(hijo); // recursivo
+                    CargarArbolCompleto(hijo); 
 
                 perfil.AgregarHijo(hijo);
             }
@@ -42,20 +42,6 @@ namespace BLL
             return _permisoDAL.ObtenerTodosLosComponentes(soloFamilias: false, soloPerfiles: false);
         }
 
-        
-        public List<Perfil> CargarPerfilUsuario(int idUsuario)
-        {
-           
-            List<Perfil> componentesUsuario = _permisoDAL.ObtenerComponentesUsuario(idUsuario);
-
-           
-            foreach (var componente in componentesUsuario)
-            {
-                ArmarArbolComponente(componente);
-            }
-
-            return componentesUsuario;
-        }
 
 
         public void ArmarArbolComponente(Perfil componentePadre)
@@ -110,32 +96,15 @@ namespace BLL
             _permisoDAL.EliminarComponenteBase(idFamilia);
         }
        
-       
-
-        public void AsignarComponenteAUsuario(int idUsuario, int idComponente)
-        {
-            _permisoDAL.InsertarUsuarioPermiso(idUsuario, idComponente);
-        }
-      
         public List<Perfil> ObtenerPerfiles()
         {
          
             return _permisoDAL.ObtenerTodosLosComponentes(soloFamilias: true, soloPerfiles: true);
         }
-        public void GuardarPerfilOAmpliacion(Familia perfilALimpiarYGuardar)
-        {
-            
-            _permisoDAL.EliminarRelacionesPadre(perfilALimpiarYGuardar.Id);
-
-
-            foreach (var hijo in perfilALimpiarYGuardar.Hijos)
-            {
-                _permisoDAL.InsertarRelacion(perfilALimpiarYGuardar.Id, hijo.Id);
-            }
-        }
+      
         public int InsertarComponente(string nombre, bool esFamilia, bool esPerfil)
         {
-            // Llama al método de la DAL que tiene el "OUTPUT INSERTED.CodPermiso"
+            
             return _permisoDAL.InsertarComponente(nombre, esFamilia, esPerfil);
         }
 

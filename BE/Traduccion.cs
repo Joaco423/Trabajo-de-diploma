@@ -21,14 +21,6 @@ namespace BE
 
         }
 
-        public Traduccion(int idTraduccion,
-                          int idioma, int control,
-                          string texto)
-        {
-            IdTraduccion = idTraduccion;
-            Idioma = idioma;
-            Control = control;
-            Texto = texto;
-        }
+      
     }
 }

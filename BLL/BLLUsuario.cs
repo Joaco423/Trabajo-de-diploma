@@ -76,6 +76,10 @@ namespace BLL
             List<int> filasAlteradas = ObtenerFilasAlteradas();
             return filasAlteradas.Count == 0;
         }
+        public Usuario ObtenerPorDNI(int dni)
+        {
+            return _usuarioDAL.ObtenerPorDNI(dni);
+        }
     }
 }
 

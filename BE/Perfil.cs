@@ -19,9 +19,6 @@ namespace BE
         public abstract void EliminarHijo(int id);
         public abstract void VaciarHijos();
 
-        public override string ToString()
-        {
-            return Nombre;
-        }
+        
     }
 }

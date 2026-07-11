@@ -20,7 +20,30 @@ namespace DAL
         {
             cn = new SqlConnection(connectionString);
         }
-
+        public Usuario ObtenerPorDNI(int dni)
+        {
+            using (SqlConnection cn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(
+                "SELECT DNI, Username, Contraseña, Nombre, Apellido, Email, NumTelefono, Rol FROM Usuario WHERE DNI = @dni", cn))
+            {
+                cmd.Parameters.AddWithValue("@dni", dni);
+                cn.Open();
+                using (SqlDataReader rd = cmd.ExecuteReader())
+                {
+                    if (!rd.Read()) return null;
+                    return new Usuario(
+                        Convert.ToInt32(rd["DNI"]),
+                        rd["Nombre"].ToString(),
+                        rd["Apellido"].ToString(),
+                        rd["Email"].ToString(),
+                        Convert.ToInt32(rd["NumTelefono"]),
+                        rd["Username"].ToString(),
+                        rd["Contraseña"].ToString(),
+                        rd["Rol"].ToString()
+                    );
+                }
+            }
+        }
         public Usuario Login(Usuario user)
         {
             string query = @"SELECT u.DNI, u.Username, up.CodPermiso, p.Nombre as NombrePerfil

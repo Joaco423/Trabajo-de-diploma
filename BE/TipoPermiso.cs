@@ -10,7 +10,6 @@ namespace BE
     {
         IniciarSesion,
         CerrarSesion,
-        CambiarIdioma,
         AdministradorIdiomas,
         GestionUsuarios,
         GestionDePerfiles

@@ -15,6 +15,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 {
     public partial class GestionUsuarios : Form, IObserver
     {
+        private BLLBitacoraUsuario _bllBitacora = new BLLBitacoraUsuario();
         BLLUsuario bllUsuario = new BLLUsuario();
         BLLPermiso _permisoBLL = new BLLPermiso();
         Traductor traductor = new Traductor();
@@ -67,7 +68,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 
                 bllUsuario.RegistrarUsuario(usuario, rolSeleccionado.Id);
                 bllUsuario.SincronizarDigitos();
-
+               
                 MessageBox.Show("Usuario agregado y rol asignado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 
@@ -91,6 +92,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         private void Modificar_Click(object sender, EventArgs e)
         {
             Usuario usuario = new Usuario();
+            Usuario anterior = bllUsuario.ObtenerPorDNI(Convert.ToInt32(textBox1.Text));
 
             usuario.DNI = Convert.ToInt32(textBox1.Text);
             usuario.NombreUsuario = textBox2.Text;
@@ -103,6 +105,8 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 
             bllUsuario.ModificarUsuario(usuario);
             bllUsuario.SincronizarDigitos();
+            _bllBitacora.RegistrarModificacion(anterior, usuario, Singleton.Instancia.Usuario.NombreUsuario);
+
             MessageBox.Show("Usuario modificado correctamente.");
 
             actualizarGrilla();
@@ -110,15 +114,18 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 
         private void Eliminar_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("¿Desea eliminar el usuario?",
-                      "Confirmar",
-                      MessageBoxButtons.YesNo,
-                      MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                bllUsuario.EliminarUsuario(Convert.ToInt32(textBox1.Text));
-                bllUsuario.SincronizarDigitos();
-                MessageBox.Show("Usuario eliminado correctamente.");
+            Usuario eliminado = bllUsuario.ObtenerPorDNI(Convert.ToInt32(textBox1.Text));
 
+            if (MessageBox.Show("¿Desea eliminar el usuario?",
+                "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                bllUsuario.EliminarUsuario(eliminado.DNI);
+                bllUsuario.SincronizarDigitos();
+
+                
+               
+
+                MessageBox.Show("Usuario eliminado correctamente.");
                 actualizarGrilla();
             }
         }

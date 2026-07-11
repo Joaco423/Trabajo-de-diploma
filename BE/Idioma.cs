@@ -17,15 +17,6 @@ namespace BE
 
         }
 
-        public Idioma(int idIdioma, string nombre)
-        {
-            IdIdioma = idIdioma;
-            Nombre = nombre;
-        }
-
-        public override string ToString()
-        {
-            return Nombre;
-        }
+        
     }
 }

@@ -29,10 +29,7 @@ namespace BLL
       
        
 
-        public void AgregarControl(ControlIdioma control)
-        {
-            dal.AgregarControl(control);
-        }
+        
 
       
         public DataTable ObtenerTraducciones(string formulario, int idIdioma)
@@ -55,10 +52,7 @@ namespace BLL
         }
 
        
-        public void CambiarIdioma(Idioma idioma)
-        {
-            GestorIdiomas.Instancia.CambiarIdioma(idioma);
-        }
+       
         public void RegistrarControl(string formulario, string nombreControl, string textoOriginal)
         {
             dal.RegistrarControl(formulario, nombreControl, textoOriginal);

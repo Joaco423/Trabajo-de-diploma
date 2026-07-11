@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conexion.cs" />
+    <Compile Include="DALBitacoraUsuario.cs" />
     <Compile Include="DALDigitoVerificador.cs" />
     <Compile Include="DALEvento.cs" />
     <Compile Include="DALPermiso.cs" />

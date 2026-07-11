@@ -79,6 +79,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             cmbFormulario.Items.Add("AdministradorIdiomas");
             cmbFormulario.Items.Add("GestionDePerfiles"); 
             cmbFormulario.Items.Add("GestionDeFamilias");
+            cmbFormulario.Items.Add("frmBitacoraCambios");
             cmbFormulario.SelectedIndex = -1;
 
       
@@ -148,6 +149,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                     bllIdioma.RegistrarControl("frmInicio", "gestionDeIdiomasToolStripMenuItem", "Gestión de Idiomas");
                     bllIdioma.RegistrarControl("frmInicio", "usuarioToolStripMenuItem", "Usuario");
                     bllIdioma.RegistrarControl("frmInicio", "bitacoraDeEventosToolStripMenuItem", "Eventos");
+                    bllIdioma.RegistrarControl("frmInicio", "bitacoraDeCambiosToolStripMenuItem", "Cambios");
                     break;
 
                 case "AdministradorIdiomas":
@@ -181,6 +183,10 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                     bllIdioma.RegistrarControl("GestionDeFamilias", "BTNCrearFamilia", "Crear Familia");
                     bllIdioma.RegistrarControl("GestionDeFamilias", "BTNEliminarFamilia", "Eliminar Familia"); 
                     bllIdioma.RegistrarControl("GestionDeFamilias", "BTNAplicar", "Aplicar");
+                    break;
+                case "frmBitacoraCambios":
+                  
+                    bllIdioma.RegistrarControl("frmBitacoraCambios", "button2", "Restaurar");
                     break;
             }
            

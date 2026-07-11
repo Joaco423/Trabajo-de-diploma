@@ -26,6 +26,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         public AdministradorIdiomas administradorIdiomas = new AdministradorIdiomas();
         public GestionDePerfiles gestionDePerfiles = new GestionDePerfiles();
         public GestionDeFamilias gestionDeFamilias = new GestionDeFamilias();
+        public frmBitacoraCambios bitacoraCambios = new frmBitacoraCambios();
         private frmInicio menuPrincipal;
         Traductor traductor = new Traductor();
 
@@ -242,6 +243,12 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 item.OwnerItem.Visible = true;
                 PrenderPadresOcultos(item.OwnerItem); 
             }
+        }
+
+        private void bitacoraDeCambiosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bitacoraCambios.MdiParent = this;
+            bitacoraCambios.Show();
         }
     }
 }

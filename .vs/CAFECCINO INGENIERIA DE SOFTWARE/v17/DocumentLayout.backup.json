@@ -1,26 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\",
+  "WorkspaceRootPath": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|c:\\users\\joaquim\\desktop\\cafeccino ingenieria de software\\cafeccino ingenieria de software\\frminicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|solutionrelative:cafeccino ingenieria de software\\frminicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3A097BAA-FC5E-45A8-864C-1A56050E05C9}|SERVICIOS\\SERVICIOS.csproj|c:\\users\\joaquim\\desktop\\cafeccino ingenieria de software\\cafeccino ingenieria de software\\servicios\\singleton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3A097BAA-FC5E-45A8-864C-1A56050E05C9}|SERVICIOS\\SERVICIOS.csproj|solutionrelative:servicios\\singleton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\cafeccino ingenieria de software\\administradoridiomas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|c:\\users\\joaquim\\desktop\\cafeccino ingenieria de software\\cafeccino ingenieria de software\\cafeccino ingenieria de software\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|solutionrelative:cafeccino ingenieria de software\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|c:\\users\\joaquim\\desktop\\cafeccino ingenieria de software\\cafeccino ingenieria de software\\cafeccino ingenieria de software\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|solutionrelative:cafeccino ingenieria de software\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|c:\\users\\joaquim\\desktop\\cafeccino ingenieria de software\\cafeccino ingenieria de software\\cafeccino ingenieria de software\\administradoridiomas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|solutionrelative:cafeccino ingenieria de software\\administradoridiomas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|c:\\users\\joaquim\\desktop\\cafeccino ingenieria de software\\cafeccino ingenieria de software\\frminicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|solutionrelative:cafeccino ingenieria de software\\frminicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|c:\\users\\joaquim\\desktop\\cafeccino ingenieria de software\\cafeccino ingenieria de software\\cafeccino ingenieria de software\\frmbitacoracambios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|solutionrelative:cafeccino ingenieria de software\\frmbitacoracambios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E1C449FA-C1D5-4ACB-950C-22640864EC26}|BLL\\BLL.csproj|c:\\users\\joaquim\\desktop\\cafeccino ingenieria de software\\bll\\bllusuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E1C449FA-C1D5-4ACB-950C-22640864EC26}|BLL\\BLL.csproj|solutionrelative:bll\\bllusuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\cafeccino ingenieria de software\\administradoridiomas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|solutionrelative:cafeccino ingenieria de software\\administradoridiomas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|c:\\users\\joaquim\\desktop\\cafeccino ingenieria de software\\cafeccino ingenieria de software\\cafeccino ingenieria de software\\frminicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F793630A-512C-446C-B7D0-FACAFDC7A6E7}|CAFECCINO INGENIERIA DE SOFTWARE\\UI.csproj|solutionrelative:cafeccino ingenieria de software\\frminicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,70 +34,83 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "BLLUsuario.cs",
-              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\BLL\\BLLUsuario.cs",
-              "RelativeDocumentMoniker": "BLL\\BLLUsuario.cs",
-              "ToolTip": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\BLL\\BLLUsuario.cs",
-              "RelativeToolTip": "BLL\\BLLUsuario.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAA9wE0AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-30T01:45:26.078Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "frmInicio.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs",
-              "RelativeDocumentMoniker": "CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs",
-              "ToolTip": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs [Dise\u00F1o]",
-              "RelativeToolTip": "CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs [Dise\u00F1o]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-30T01:45:04.169Z",
-              "EditorCaption": " [Dise\u00F1o]"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "frmInicio.cs",
-              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs",
-              "RelativeDocumentMoniker": "CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs",
-              "ToolTip": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs",
-              "RelativeToolTip": "CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs",
-              "ViewState": "AgIAAEUAAAAAAAAAAAAswFcAAAAZAAAAAAAAAA==",
+              "Title": "Singleton.cs",
+              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\SERVICIOS\\Singleton.cs",
+              "RelativeDocumentMoniker": "SERVICIOS\\Singleton.cs",
+              "ToolTip": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\SERVICIOS\\Singleton.cs",
+              "RelativeToolTip": "SERVICIOS\\Singleton.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-28T02:01:35.565Z",
+              "WhenOpened": "2026-07-10T21:04:13.307Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AdministradorIdiomas.cs",
-              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs",
-              "RelativeDocumentMoniker": "CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs",
-              "ToolTip": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs",
-              "RelativeToolTip": "CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs",
-              "ViewState": "AgIAAN8AAAAAAAAAAAAkwPkAAAAMAAAAAAAAAA==",
+              "Title": "Login.cs",
+              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\Login.cs",
+              "RelativeDocumentMoniker": "CAFECCINO INGENIERIA DE SOFTWARE\\Login.cs",
+              "ToolTip": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\Login.cs",
+              "RelativeToolTip": "CAFECCINO INGENIERIA DE SOFTWARE\\Login.cs",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAAwJMAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-28T00:10:56.259Z",
+              "WhenOpened": "2026-07-10T20:57:58.86Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Login.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\Login.cs",
+              "RelativeDocumentMoniker": "CAFECCINO INGENIERIA DE SOFTWARE\\Login.cs",
+              "ToolTip": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\Login.cs [Dise\u00F1o]",
+              "RelativeToolTip": "CAFECCINO INGENIERIA DE SOFTWARE\\Login.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-10T20:57:57.985Z",
+              "EditorCaption": " [Dise\u00F1o]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "frmInicio.cs",
+              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs",
+              "RelativeDocumentMoniker": "CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs",
+              "ToolTip": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs",
+              "RelativeToolTip": "CAFECCINO INGENIERIA DE SOFTWARE\\frmInicio.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAewBwAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-10T20:42:12.912Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "AdministradorIdiomas.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs",
-              "RelativeDocumentMoniker": "CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs",
-              "ToolTip": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs [Dise\u00F1o]",
-              "RelativeToolTip": "CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs [Dise\u00F1o]",
+              "Title": "frmBitacoraCambios.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\frmBitacoraCambios.cs",
+              "RelativeDocumentMoniker": "CAFECCINO INGENIERIA DE SOFTWARE\\frmBitacoraCambios.cs",
+              "ToolTip": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\frmBitacoraCambios.cs [Dise\u00F1o]",
+              "RelativeToolTip": "CAFECCINO INGENIERIA DE SOFTWARE\\frmBitacoraCambios.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-28T00:10:55.364Z",
+              "WhenOpened": "2026-07-10T20:42:09.441Z",
               "EditorCaption": " [Dise\u00F1o]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AdministradorIdiomas.cs",
+              "DocumentMoniker": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs",
+              "RelativeDocumentMoniker": "CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs",
+              "ToolTip": "C:\\Users\\joaquim\\Desktop\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs",
+              "RelativeToolTip": "CAFECCINO INGENIERIA DE SOFTWARE\\AdministradorIdiomas.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAwwFEAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-10T20:41:21.737Z",
+              "EditorCaption": ""
             }
           ]
         }
