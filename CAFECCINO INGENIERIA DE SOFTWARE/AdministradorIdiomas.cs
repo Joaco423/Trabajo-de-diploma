@@ -187,6 +187,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 case "frmBitacoraCambios":
                   
                     bllIdioma.RegistrarControl("frmBitacoraCambios", "button2", "Restaurar");
+                    bllIdioma.RegistrarControl("frmBitacoraCambios", "button1", "Ver Todos");
                     break;
             }
            

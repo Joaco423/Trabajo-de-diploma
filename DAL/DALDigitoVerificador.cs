@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration; // <-- Agregar este using
+using System.Configuration;
 using BE;
 
 namespace DAL
@@ -17,7 +17,7 @@ namespace DAL
         {
             using (SqlConnection cn = new SqlConnection(_conn))
             using (SqlCommand cmd = new SqlCommand(
-                "SELECT Tabla, DVH, DVV FROM DigitoVerificador WHERE Tabla=@t", cn))
+                "SELECT Tabla, DVV FROM DigitoVerificador WHERE Tabla=@t", cn))
             {
                 cmd.Parameters.AddWithValue("@t", tabla);
                 cn.Open();
@@ -27,8 +27,8 @@ namespace DAL
                     return new DigitoVerificador
                     {
                         Tabla = rd.GetString(0),
-                        DVH = rd.GetString(1),
-                        DVV = rd.GetString(2)
+                      
+                        DVV = rd.GetString(1)
                     };
                 }
             }
@@ -38,15 +38,21 @@ namespace DAL
         {
             using (SqlConnection cn = new SqlConnection(_conn))
             using (SqlCommand cmd = new SqlCommand(@"
-            MERGE DigitoVerificador AS target
-            USING (SELECT @tabla AS Tabla) AS source ON target.Tabla = source.Tabla
-            WHEN MATCHED     THEN UPDATE SET DVH=@dvh, DVV=@dvv
-            WHEN NOT MATCHED THEN INSERT (Tabla,DVH,DVV) VALUES (@tabla,@dvh,@dvv);",
+        MERGE DigitoVerificador AS target
+        USING (SELECT @tabla AS Tabla) AS source 
+        ON target.Tabla = source.Tabla
+
+        WHEN MATCHED THEN 
+            UPDATE SET DVV = @dvv
+
+        WHEN NOT MATCHED THEN 
+            INSERT (Tabla, DVV) 
+            VALUES (@tabla, @dvv);",
                 cn))
             {
                 cmd.Parameters.AddWithValue("@tabla", dv.Tabla);
-                cmd.Parameters.AddWithValue("@dvh", dv.DVH);
                 cmd.Parameters.AddWithValue("@dvv", dv.DVV);
+
                 cn.Open();
                 cmd.ExecuteNonQuery();
             }

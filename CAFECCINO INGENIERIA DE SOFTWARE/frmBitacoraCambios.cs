@@ -79,5 +79,10 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 Hide();
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = _bll.ObtenerCambios();
+        }
     }
 }

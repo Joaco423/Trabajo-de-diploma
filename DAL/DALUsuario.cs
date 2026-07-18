@@ -24,7 +24,7 @@ namespace DAL
         {
             using (SqlConnection cn = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(
-                "SELECT DNI, Username, Contraseña, Nombre, Apellido, Email, NumTelefono, Rol FROM Usuario WHERE DNI = @dni", cn))
+                "SELECT DNI, Username, Contraseña, Nombre, Apellido, Email, NumTelefono, Rol, DVH FROM Usuario WHERE DNI = @dni", cn))
             {
                 cmd.Parameters.AddWithValue("@dni", dni);
                 cn.Open();
@@ -39,7 +39,8 @@ namespace DAL
                         Convert.ToInt32(rd["NumTelefono"]),
                         rd["Username"].ToString(),
                         rd["Contraseña"].ToString(),
-                        rd["Rol"].ToString()
+                        rd["Rol"].ToString(),
+                        rd["DVH"] == DBNull.Value ? 0 : Convert.ToInt32(rd["DVH"])
                     );
                 }
             }
@@ -96,7 +97,8 @@ namespace DAL
                         Apellido,
                         Email,
                         NumTelefono,
-                        Rol
+                        Rol,
+                        DVH
                      FROM Usuario";
             SqlDataAdapter da = new SqlDataAdapter(query, cn);
             DataTable dt = new DataTable();
@@ -121,7 +123,8 @@ namespace DAL
                     Convert.ToInt32(row["NumTelefono"]),
                     row["Username"].ToString(),
                     row["Contraseña"].ToString(),
-                    row["Rol"].ToString()
+                    row["Rol"].ToString(),
+                   row["DVH"] == DBNull.Value ? 0 : Convert.ToInt32(row["DVH"])
                 ));
             }
 
@@ -132,7 +135,7 @@ namespace DAL
        
             EjecutarComando(
                 "InsertarUsuario",
-                $"{usuario.DNI}, '{usuario.NombreUsuario}', '{usuario.Contraseña}', '{usuario.Nombre}', '{usuario.Apellido}', '{usuario.Mail}', '{usuario.NumTelefono}', '{usuario.Rol}', {idPerfil}"
+                $"{usuario.DNI}, '{usuario.NombreUsuario}', '{usuario.Contraseña}', '{usuario.Nombre}', '{usuario.Apellido}', '{usuario.Mail}', '{usuario.NumTelefono}', '{usuario.Rol}',{idPerfil}"
             );
         }
 
@@ -141,7 +144,7 @@ namespace DAL
         {
             EjecutarComando(
                 "ModificarUsuario",
-                $"{usuario.DNI}, '{usuario.NombreUsuario}', '{usuario.Contraseña}', '{usuario.Nombre}', '{usuario.Apellido}', '{usuario.Mail}', '{usuario.NumTelefono}', '{usuario.Rol}'");
+                $"{usuario.DNI}, '{usuario.NombreUsuario}', '{usuario.Contraseña}', '{usuario.Nombre}', '{usuario.Apellido}', '{usuario.Mail}', '{usuario.NumTelefono}', {usuario.Rol}");
         }
         public void EliminarUsuario(int dni)
         {
@@ -158,7 +161,23 @@ namespace DAL
 
             cn.Close();
         }
+        public void ActualizarDVH(int dni, int dvh)
+        {
+            using (SqlConnection cn = new SqlConnection(connectionString))
+            {
+                cn.Open();
 
-        
+                SqlCommand cmd = new SqlCommand(
+                    @"UPDATE Usuario 
+              SET DVH = @DVH
+              WHERE DNI = @DNI", cn);
+
+                cmd.Parameters.AddWithValue("@DVH", dvh);
+                cmd.Parameters.AddWithValue("@DNI", dni);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
     }
 }

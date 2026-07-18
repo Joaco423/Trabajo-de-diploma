@@ -15,7 +15,34 @@ namespace DAL
 
         private string cadenaConexion = Conexion.cadena;
 
-        
+        public List<Perfil> ObtenerPermisosYPerfiles()
+        {
+            List<Perfil> lista = new List<Perfil>();
+
+            string query = @"SELECT CodPermiso, Nombre, EsFamilia 
+                     FROM Permiso 
+                     WHERE (EsFamilia = 0 AND EsPerfil = 0)  -- permisos simples
+                     OR (EsFamilia = 1 AND EsPerfil = 1)     -- perfiles
+                     ORDER BY Nombre";
+
+            using (SqlConnection con = new SqlConnection(cadenaConexion))
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                con.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        bool esFamilia = Convert.ToBoolean(reader["EsFamilia"]);
+                        Perfil p = esFamilia ? (Perfil)new Familia() : (Perfil)new Permiso();
+                        p.Id = Convert.ToInt32(reader["CodPermiso"]);
+                        p.Nombre = reader["Nombre"].ToString();
+                        lista.Add(p);
+                    }
+                }
+            }
+            return lista;
+        }
         public List<Perfil> ObtenerHijos(int idPadre)
         {
             List<Perfil> hijos = new List<Perfil>();

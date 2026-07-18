@@ -35,7 +35,10 @@ namespace BLL
            
             return _permisoDAL.ObtenerTodosLosComponentes(soloFamilias: true, soloPerfiles: false);
         }
-        
+        public List<Perfil> ObtenerPermisosYPerfiles()
+        {
+            return _permisoDAL.ObtenerPermisosYPerfiles();
+        }
         public List<Perfil> ObtenerPermisosSimples()
         {
             

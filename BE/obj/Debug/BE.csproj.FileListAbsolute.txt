@@ -34,3 +34,9 @@ C:\Users\joaquim\Desktop\CAFECCINO INGENIERIA DE SOFTWARE\CAFECCINO INGENIERIA D
 C:\Users\joaquim\Desktop\CAFECCINO INGENIERIA DE SOFTWARE\CAFECCINO INGENIERIA DE SOFTWARE\BE\obj\Debug\BE.csproj.CoreCompileInputs.cache
 C:\Users\joaquim\Desktop\CAFECCINO INGENIERIA DE SOFTWARE\CAFECCINO INGENIERIA DE SOFTWARE\BE\obj\Debug\BE.dll
 C:\Users\joaquim\Desktop\CAFECCINO INGENIERIA DE SOFTWARE\CAFECCINO INGENIERIA DE SOFTWARE\BE\obj\Debug\BE.pdb
+C:\Users\Navegador\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\BE\bin\Debug\BE.dll
+C:\Users\Navegador\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\BE\bin\Debug\BE.pdb
+C:\Users\Navegador\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\BE\obj\Debug\BE.csproj.AssemblyReference.cache
+C:\Users\Navegador\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\BE\obj\Debug\BE.csproj.CoreCompileInputs.cache
+C:\Users\Navegador\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\BE\obj\Debug\BE.dll
+C:\Users\Navegador\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\BE\obj\Debug\BE.pdb

@@ -16,7 +16,7 @@ namespace BLL
         private readonly DALUsuario _dalUsuario = new DALUsuario();
         private string SerializarUsuario(Usuario u)
         {
-            return $"DNI:{u.DNI} | Usuario:{u.NombreUsuario} | Nombre:{u.Nombre} | " +
+            return $"DNI:{u.DNI} | Usuario:{u.NombreUsuario} | Contraseña:{u.Contraseña}| Nombre:{u.Nombre} | " +
                    $"Apellido:{u.Apellido} | Mail:{u.Mail} | Tel:{u.NumTelefono} | Rol:{u.Rol}";
         }
 
@@ -42,28 +42,19 @@ namespace BLL
         
         public void RestaurarUsuario(int idBitacora)
         {
-            
+
             BitacoraUsuario registro = _dal.ObtenerPorId(idBitacora);
-            if (registro == null) return;
 
-            string datosARestaurar = null;
+            if (registro == null)
+                return;
 
-            if (registro.Operacion == "Modificacion")
-                datosARestaurar = registro.DatosAnteriores; 
-           
-            
+            if (registro.Operacion != "Modificacion")
+                return;
 
-            
-            else
-            {
-                
-                Usuario u = DesSerializarUsuario(datosARestaurar);
-               
-                
-                    _dalUsuario.ModificarUsuario(u); 
-            }
+            Usuario usuarioAnterior = DesSerializarUsuario(registro.DatosAnteriores);
 
-            
+            _dalUsuario.ModificarUsuario(usuarioAnterior);
+
             _dal.RegistrarCambio(new BitacoraUsuario
             {
                 UsuarioEditor = Singleton.Instancia.Usuario.NombreUsuario,
@@ -91,6 +82,7 @@ namespace BLL
                 {
                     case "DNI": u.DNI = int.Parse(valor); break;
                     case "Usuario": u.NombreUsuario = valor; break;
+                    case "Contraseña": u.Contraseña = valor; break;
                     case "Nombre": u.Nombre = valor; break;
                     case "Apellido": u.Apellido = valor; break;
                     case "Mail": u.Mail = valor; break;

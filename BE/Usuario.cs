@@ -17,11 +17,12 @@ namespace BE
         public string Mail { get; set; }
         public int NumTelefono { get; set; }
         public string Rol { get; set; }
+        public int DVH { get; set; }
 
        
         public Perfil Perfil { get; set; }
 
-        public Usuario(int dni, string nombre, string apellido, string mail, int numtelefono, string username, string password, string rol)
+        public Usuario(int dni, string nombre, string apellido, string mail, int numtelefono, string username, string password, string rol, int dVH)
         {
             DNI = dni;
             Nombre = nombre;
@@ -31,6 +32,8 @@ namespace BE
             NombreUsuario = username;
             Contraseña = password;
             Rol = rol;
+            DVH = dVH;
+
         }
 
         public Usuario()

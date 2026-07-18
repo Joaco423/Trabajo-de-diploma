@@ -58,12 +58,21 @@ namespace BLL
         private readonly DALUsuario _usuarioDAL = new DALUsuario();
         private readonly DALDigitoVerificador _dvDAL = new DALDigitoVerificador();
 
-        public void SincronizarDigitos()
+       
+            public void SincronizarDigitos()
         {
             var usuarios = _usuarioDAL.ObtenerTodos();
+
             var dv = DigitVerifierService.Recalcular(usuarios);
+
+            foreach (Usuario u in usuarios)
+            {
+                _usuarioDAL.ActualizarDVH(u.DNI, u.DVH);
+            }
+
             _dvDAL.Guardar(dv);
         }
+        
 
         public List<int> ObtenerFilasAlteradas()
         {
@@ -71,11 +80,16 @@ namespace BLL
             DigitoVerificador dvGuardado = _dvDAL.ObtenerPorTabla("Usuario");
             return DigitVerifierService.ObtenerFilasAlteradas(lista, dvGuardado);
         }
-        public bool ValidarIntegridad()
+       
+           public bool ValidarIntegridad()
         {
-            List<int> filasAlteradas = ObtenerFilasAlteradas();
-            return filasAlteradas.Count == 0;
+            var usuarios = _usuarioDAL.ObtenerTodos();
+
+            var dv = _dvDAL.ObtenerPorTabla("Usuario");
+
+            return DigitVerifierService.Validar(usuarios, dv);
         }
+        
         public Usuario ObtenerPorDNI(int dni)
         {
             return _usuarioDAL.ObtenerPorDNI(dni);

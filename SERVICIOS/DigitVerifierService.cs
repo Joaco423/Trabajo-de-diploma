@@ -36,7 +36,7 @@ namespace SERVICIOS
             for (int i = 0; i < valores.Length; i++)
                 suma += ToNumeric(valores[i]) * (i + 1);
 
-            return suma % 10;
+            return suma % 1000;
         }
 
         public static int CalcularDVV(List<int> listaDVH)
@@ -45,60 +45,73 @@ namespace SERVICIOS
             for (int i = 0; i < listaDVH.Count; i++)
                 suma += listaDVH[i] * (i + 1);
 
-            return suma % 10;
+            return suma % 1000;
         }
 
         public static DigitoVerificador Recalcular(List<Usuario> usuarios)
         {
-            List<int> dvhList = new List<int>();
-            foreach (Usuario u in usuarios)
-                dvhList.Add(CalcularDVH(u));
+            List<int> listaDVH = new List<int>();
 
-            int dvv = CalcularDVV(dvhList);
+            foreach (Usuario u in usuarios)
+            {
+                int dvh = CalcularDVH(u);
+
+                
+                u.DVH = dvh;
+
+                listaDVH.Add(dvh);
+            }
+
+            int dvv = CalcularDVV(listaDVH);
 
             return new DigitoVerificador
             {
                 Tabla = "Usuario",
-                DVH = string.Join(",", dvhList),
                 DVV = dvv.ToString()
             };
         }
 
+
         public static bool Validar(List<Usuario> usuarios, DigitoVerificador dvGuardado)
         {
+            if (dvGuardado == null)
+                return false;
+
             return ObtenerFilasAlteradas(usuarios, dvGuardado).Count == 0;
         }
         public static List<int> ObtenerFilasAlteradas(List<Usuario> usuarios, DigitoVerificador dvGuardado)
         {
             List<int> filasAlteradas = new List<int>();
 
-            if (dvGuardado == null || string.IsNullOrEmpty(dvGuardado.DVH))
+            if (dvGuardado == null)
                 return filasAlteradas;
 
-            List<int> dvhGuardado = dvGuardado.ObtenerListaDVH();
+
             List<int> dvhActual = new List<int>();
 
             foreach (Usuario u in usuarios)
-                dvhActual.Add(CalcularDVH(u));
-
-         
-            if (dvhActual.Count != dvhGuardado.Count)
             {
-                filasAlteradas.Add(-1);
-                return filasAlteradas;
+                int dvhCalculado = CalcularDVH(u);
+
+                dvhActual.Add(dvhCalculado);
+
+                
+                if (dvhCalculado != u.DVH)
+                {
+                    filasAlteradas.Add(u.DNI);
+                }
             }
 
-           
-            for (int i = 0; i < dvhActual.Count; i++)
-                if (dvhActual[i] != dvhGuardado[i])
-                    filasAlteradas.Add(usuarios[i].DNI);
 
-           
             int dvvActual = CalcularDVV(dvhActual);
+
             int dvvGuardado = dvGuardado.ObtenerDVV();
 
             if (dvvActual != dvvGuardado)
-                filasAlteradas.Add(-2); 
+            {
+                filasAlteradas.Add(-2);
+            }
+
 
             return filasAlteradas;
         }

@@ -52,3 +52,21 @@ C:\Users\joaquim\Desktop\CAFECCINO INGENIERIA DE SOFTWARE\CAFECCINO INGENIERIA D
 C:\Users\joaquim\Desktop\CAFECCINO INGENIERIA DE SOFTWARE\CAFECCINO INGENIERIA DE SOFTWARE\SERVICIOS\obj\Debug\SERVICIOS.csproj.Up2Date
 C:\Users\joaquim\Desktop\CAFECCINO INGENIERIA DE SOFTWARE\CAFECCINO INGENIERIA DE SOFTWARE\SERVICIOS\obj\Debug\SERVICIOS.dll
 C:\Users\joaquim\Desktop\CAFECCINO INGENIERIA DE SOFTWARE\CAFECCINO INGENIERIA DE SOFTWARE\SERVICIOS\obj\Debug\SERVICIOS.pdb
+C:\Users\Navegador\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\bin\Debug\SERVICIOS.dll
+C:\Users\Navegador\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\bin\Debug\SERVICIOS.pdb
+C:\Users\Navegador\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\bin\Debug\BE.dll
+C:\Users\Navegador\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\bin\Debug\BE.pdb
+C:\Users\Navegador\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\obj\Debug\SERVICIOS.csproj.AssemblyReference.cache
+C:\Users\Navegador\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\obj\Debug\SERVICIOS.csproj.CoreCompileInputs.cache
+C:\Users\Navegador\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\obj\Debug\SERVICIOS.csproj.Up2Date
+C:\Users\Navegador\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\obj\Debug\SERVICIOS.dll
+C:\Users\Navegador\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\obj\Debug\SERVICIOS.pdb
+C:\Users\joaquim\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\bin\Debug\SERVICIOS.dll
+C:\Users\joaquim\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\bin\Debug\SERVICIOS.pdb
+C:\Users\joaquim\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\bin\Debug\BE.dll
+C:\Users\joaquim\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\bin\Debug\BE.pdb
+C:\Users\joaquim\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\obj\Debug\SERVICIOS.csproj.AssemblyReference.cache
+C:\Users\joaquim\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\obj\Debug\SERVICIOS.csproj.CoreCompileInputs.cache
+C:\Users\joaquim\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\obj\Debug\SERVICIOS.csproj.Up2Date
+C:\Users\joaquim\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\obj\Debug\SERVICIOS.dll
+C:\Users\joaquim\Desktop\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\Proyecto-Ingenieria-de-Software-main\SERVICIOS\obj\Debug\SERVICIOS.pdb
