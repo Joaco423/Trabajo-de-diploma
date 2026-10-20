@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -81,7 +82,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             cmbFamiliasAsociar.SelectedIndex = -1;
 
 
-            List<Perfil> permisos = _permisoBLL.ObtenerPermisosYPerfiles();
+            List<Perfil> permisos = _permisoBLL.ObtenerPermisosSimples();
             cmbPermisos.DataSource = permisos;
             cmbPermisos.DisplayMember = "Nombre";
             cmbPermisos.ValueMember = "Id";
@@ -113,37 +114,41 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 TXTPerfil.Clear();
                 LlenarCombosPerfiles(); 
 
-                MessageBox.Show("Perfil creado con éxito en la base de datos.");
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDePerfiles", "msg_PerfilCreado", "Perfil creado con éxito en la base de datos."));
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al crear el perfil: " + ex.Message);
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDePerfiles", "msg_ErrorCrear", "Error al crear el perfil: ") + ex.Message);
             }
         }
 
         private void BTNEliminarPerfil_Click(object sender, EventArgs e)
         {
-            
+
             if (cmbPerfiles.SelectedItem == null)
             {
-                MessageBox.Show("Por favor, seleccione de la lista el perfil que desea eliminar.");
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDePerfiles", "msg_SeleccionePerfil", "Por favor, seleccione de la lista el perfil que desea eliminar."));
                 return;
             }
 
             Familia perfilAEliminar = (Familia)cmbPerfiles.SelectedItem;
 
-            DialogResult resultado = MessageBox.Show($"¿Está seguro de que desea eliminar el perfil '{perfilAEliminar.Nombre}'? Se borrarán todas sus asociaciones.", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult resultado = MessageBox.Show(
+                traductor.ObtenerMensaje("GestionDePerfiles", "msg_ConfirmarEliminarPerfil", "¿Está seguro de que desea eliminar el perfil") + $" '{perfilAEliminar.Nombre}'? " +
+                traductor.ObtenerMensaje("GestionDePerfiles", "msg_ConfirmarEliminarPerfil2", "Se borrarán todas sus asociaciones."),
+                traductor.ObtenerMensaje("GestionDePerfiles", "msg_ConfirmarEliminacion_Titulo", "Confirmar Eliminación"),
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (resultado == DialogResult.Yes)
             {
                 try
                 {
-                   
+
                     _permisoBLL.EliminarComponente(perfilAEliminar.Id);
 
-                 
 
-                    MessageBox.Show("Perfil eliminado correctamente.");
+
+                    MessageBox.Show(traductor.ObtenerMensaje("GestionDePerfiles", "msg_PerfilEliminado", "Perfil eliminado correctamente."));
 
                  
                     treePerfil.Nodes.Clear();
@@ -159,7 +164,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error al eliminar el perfil: " + ex.Message);
+                    MessageBox.Show(traductor.ObtenerMensaje("GestionDePerfiles", "msg_ErrorEliminar", "Error al eliminar el perfil: ") + ex.Message);
                 }
             }
         }
@@ -218,25 +223,37 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 
             Familia subFamiliaOrigen = (Familia)cmbFamiliasAsociar.SelectedItem;
 
+            
             if (subFamiliaOrigen.Id == _perfilSeleccionado.Id)
             {
-                MessageBox.Show("No se puede agregar un perfil dentro de sí mismo.");
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDePerfiles", "msg_NoAgregarASiMismo", "No se puede agregar un perfil dentro de sí mismo."));
                 return;
             }
 
-            if (_perfilSeleccionado.Hijos.Any(h => h.Id == subFamiliaOrigen.Id))
+
+            if (_permisoBLL.ExisteEnArbol(_perfilSeleccionado, subFamiliaOrigen.Id))
             {
-                MessageBox.Show("Esta familia ya se encuentra ingresada.");
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDePerfiles", "msg_YaExisteEnArbol", "Esta familia ya existe en el árbol."));
                 return;
             }
 
-         
             Familia copia = new Familia();
             copia.Id = subFamiliaOrigen.Id;
             copia.Nombre = subFamiliaOrigen.Nombre;
-
-            
             _permisoBLL.ArmarArbolComponente(copia);
+
+
+            if (_permisoBLL.ExisteEnArbol(copia, _perfilSeleccionado.Id))
+            {
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDePerfiles", "msg_ReferenciaCircular", "No se puede agregar porque crearía una referencia circular."));
+                return;
+            }
+
+            if (_permisoBLL.AlgunComponenteYaExisteEnArbol(_perfilSeleccionado, copia))
+            {
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDePerfiles", "msg_ComponentesYaExisten", "Esta familia contiene componentes que ya existen en el árbol del perfil."));
+                return;
+            }
 
             _perfilSeleccionado.AgregarHijo(copia);
             MostrarEnTreeView();
@@ -251,30 +268,44 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
           
             if (permisoSeleccionado.Id == _perfilSeleccionado.Id)
             {
-                MessageBox.Show("No se puede agregar un perfil dentro de sí mismo.");
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDePerfiles", "msg_NoAgregarASiMismo", "No se puede agregar un perfil dentro de sí mismo."));
                 return;
             }
-
-            if (_perfilSeleccionado.Hijos.Any(h => h.Id == permisoSeleccionado.Id))
+            if (_permisoBLL.ExisteEnArbol(_perfilSeleccionado, permisoSeleccionado.Id))
             {
-                MessageBox.Show("Este permiso ya se encuentra agregado.");
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDePerfiles", "msg_PermisoYaExiste", "Este permiso ya existe"));
                 return;
-            }
 
-            if (permisoSeleccionado is Familia)
+            }
+            if(_perfilSeleccionado is Familia)
             {
                 Familia copia = new Familia();
                 copia.Id = permisoSeleccionado.Id;
                 copia.Nombre = permisoSeleccionado.Nombre;
                 _permisoBLL.ArmarArbolComponente(copia);
+
+                if (_permisoBLL.ExisteEnArbol(copia, _perfilSeleccionado.Id))
+                {
+                    MessageBox.Show(traductor.ObtenerMensaje("GestionDePerfiles", "msg_DependenciaCircular", "No se puede agregar porque crea una dependencia circular"));
+                    return;
+                }
+
+                if (_permisoBLL.AlgunComponenteYaExisteEnArbol(_perfilSeleccionado, copia))
+                {
+                    MessageBox.Show(traductor.ObtenerMensaje("GestionDePerfiles", "msg_PermisoComponentesYaExisten", "Este permiso contiene componentes que ya existen en el árbol del perfil."));
+                    return;
+                }
+
                 _perfilSeleccionado.AgregarHijo(copia);
+
+
             }
             else
             {
                 _perfilSeleccionado.AgregarHijo(permisoSeleccionado);
             }
-
             MostrarEnTreeView();
+            
         }
 
         private void BTNAplicar_Click(object sender, EventArgs e)
@@ -301,12 +332,12 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                     }
                 }
 
-                MessageBox.Show("Cambios aplicados con éxito.");
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDePerfiles", "msg_CambiosAplicados", "Cambios aplicados con éxito."));
                 LlenarCombosPerfiles();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al aplicar los cambios: " + ex.Message);
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDePerfiles", "msg_ErrorAplicar", "Error al aplicar los cambios: ") + ex.Message);
             }
         }
 
@@ -327,7 +358,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar el árbol del perfil: " + ex.Message);
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDePerfiles", "msg_ErrorCargarArbol", "Error al cargar el árbol del perfil: ") + ex.Message);
             }
         }
        

@@ -64,6 +64,61 @@
     <Compile Include="frmBitacoraCambios.Designer.cs">
       <DependentUpon>frmBitacoraCambios.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmCambiarContraseña.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCambiarContraseña.Designer.cs">
+      <DependentUpon>frmCambiarContraseña.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ContextoPedido.cs" />
+    <Compile Include="frmAsignarMesaYMozo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAsignarMesaYMozo.Designer.cs">
+      <DependentUpon>frmAsignarMesaYMozo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConfirmarPedido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConfirmarPedido.Designer.cs">
+      <DependentUpon>frmConfirmarPedido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmRegistrarCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRegistrarCliente.Designer.cs">
+      <DependentUpon>frmRegistrarCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSeleccionarProductos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSeleccionarProductos.Designer.cs">
+      <DependentUpon>frmSeleccionarProductos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmClientes.Designer.cs">
+      <DependentUpon>frmClientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmGestionDePedido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGestionDePedido.Designer.cs">
+      <DependentUpon>frmGestionDePedido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMozos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMozos.Designer.cs">
+      <DependentUpon>frmMozos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmProductos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProductos.Designer.cs">
+      <DependentUpon>frmProductos.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmEventos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,6 +130,12 @@
     </Compile>
     <Compile Include="frmInicio.Designer.cs">
       <DependentUpon>frmInicio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmVerificacionIntegridad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVerificacionIntegridad.Designer.cs">
+      <DependentUpon>frmVerificacionIntegridad.cs</DependentUpon>
     </Compile>
     <Compile Include="GestionDeFamilias.cs">
       <SubType>Form</SubType>
@@ -112,11 +173,20 @@
     <EmbeddedResource Include="frmBitacoraCambios.resx">
       <DependentUpon>frmBitacoraCambios.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmCambiarContraseña.resx">
+      <DependentUpon>frmCambiarContraseña.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmEventos.resx">
       <DependentUpon>frmEventos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmInicio.resx">
       <DependentUpon>frmInicio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProductos.resx">
+      <DependentUpon>frmProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVerificacionIntegridad.resx">
+      <DependentUpon>frmVerificacionIntegridad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GestionDeFamilias.resx">
       <DependentUpon>GestionDeFamilias.cs</DependentUpon>

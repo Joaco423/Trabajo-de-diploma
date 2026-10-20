@@ -80,6 +80,16 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             cmbFormulario.Items.Add("GestionDePerfiles"); 
             cmbFormulario.Items.Add("GestionDeFamilias");
             cmbFormulario.Items.Add("frmBitacoraCambios");
+            cmbFormulario.Items.Add("frmCambiarContraseña");
+            cmbFormulario.Items.Add("frmVerificacionIntegridad");
+            cmbFormulario.Items.Add("frmClientes");
+            cmbFormulario.Items.Add("frmProductos");
+            cmbFormulario.Items.Add("frmMozos");
+            cmbFormulario.Items.Add("frmGestionDePedido");
+            cmbFormulario.Items.Add("frmRegistrarCliente");
+            cmbFormulario.Items.Add("frmSeleccionarProductos");
+            cmbFormulario.Items.Add("frmConfirmarPedido");
+            cmbFormulario.Items.Add("frmAsignarMesaYMozo");
             cmbFormulario.SelectedIndex = -1;
 
       
@@ -129,7 +139,9 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                     bllIdioma.RegistrarControl("GestionUsuarios", "label8", "Rol");
                     bllIdioma.RegistrarControl("GestionUsuarios", "Agregar", "Agregar");
                     bllIdioma.RegistrarControl("GestionUsuarios", "Modificar", "Modificar");
-                    bllIdioma.RegistrarControl("GestionUsuarios", "Eliminar", "Eliminar");
+                    bllIdioma.RegistrarControl("GestionUsuarios", "Eliminar", "Desactivar Usuario");
+                    bllIdioma.RegistrarControl("GestionUsuarios", "chkActivo", "Activo");
+                    bllIdioma.RegistrarControl("GestionUsuarios", "btnDesbloquear", "Desbloquear");
                     break;
 
                 case "frmEventos":
@@ -150,8 +162,122 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                     bllIdioma.RegistrarControl("frmInicio", "usuarioToolStripMenuItem", "Usuario");
                     bllIdioma.RegistrarControl("frmInicio", "bitacoraDeEventosToolStripMenuItem", "Eventos");
                     bllIdioma.RegistrarControl("frmInicio", "bitacoraDeCambiosToolStripMenuItem", "Cambios");
+                    bllIdioma.RegistrarControl("frmInicio", "cambiarContraseñaToolStripMenuItem", "Cambiar Contraseña");
+                    bllIdioma.RegistrarControl("frmInicio", "verificacionIntegridadToolStripMenuItem", "Verificacion de Integridad");
+                    bllIdioma.RegistrarControl("frmInicio", "maestrosToolStripMenuItem", "Maestros");
+                    bllIdioma.RegistrarControl("frmInicio", "clientesToolStripMenuItem", "Clientes");
+                    bllIdioma.RegistrarControl("frmInicio", "productosToolStripMenuItem", "Productos");
+                    bllIdioma.RegistrarControl("frmInicio", "mozosToolStripMenuItem", "Mozos");
+                    bllIdioma.RegistrarControl("frmInicio", "pedidosToolStripMenuItem", "Pedidos");
+                    bllIdioma.RegistrarControl("frmInicio", "gestionDePedidoToolStripMenuItem", "Gestion de pedido");
                     break;
 
+                case "frmCambiarContraseña":
+                    bllIdioma.RegistrarControl("frmCambiarContraseña", "lblUsuario", "Usuario");
+                    bllIdioma.RegistrarControl("frmCambiarContraseña", "lblNuevaContraseña", "Nueva contraseña");
+                    bllIdioma.RegistrarControl("frmCambiarContraseña", "lblConfirmarContraseña", "Confirmar contraseña");
+                    bllIdioma.RegistrarControl("frmCambiarContraseña", "btnCambiar", "Cambiar");
+                    break;
+
+                case "frmVerificacionIntegridad":
+                    bllIdioma.RegistrarControl("frmVerificacionIntegridad", "lblTitulo", "Verificación de Integridad");
+                    bllIdioma.RegistrarControl("frmVerificacionIntegridad", "btnRecalcular", "Recalcular");
+                    bllIdioma.RegistrarControl("frmVerificacionIntegridad", "btnRestaurar", "Restaurar");
+                    bllIdioma.RegistrarControl("frmVerificacionIntegridad", "btnSalir", "Salir");
+                    break;
+
+                case "frmClientes":
+                    bllIdioma.RegistrarControl("frmClientes", "lblDNI", "DNI");
+                    bllIdioma.RegistrarControl("frmClientes", "lblNombre", "Nombre");
+                    bllIdioma.RegistrarControl("frmClientes", "lblApellido", "Apellido");
+                    bllIdioma.RegistrarControl("frmClientes", "lblMail", "Mail");
+                    bllIdioma.RegistrarControl("frmClientes", "lblTelefono", "Télefono");
+                    bllIdioma.RegistrarControl("frmClientes", "lblDomicilio", "Domicilio");
+                    bllIdioma.RegistrarControl("frmClientes", "btnAgregar", "Agregar");
+                    bllIdioma.RegistrarControl("frmClientes", "btnModificar", "Modificar");
+                    bllIdioma.RegistrarControl("frmClientes", "btnEliminar", "Desactivar");
+                    bllIdioma.RegistrarControl("frmClientes", "chkActivo", "Activo");
+                    bllIdioma.RegistrarControl("frmClientes", "btnLimpiar", "Limpiar");
+                    break;
+
+                case "frmMozos":
+                    bllIdioma.RegistrarControl("frmMozos", "lblDNI", "DNI");
+                    bllIdioma.RegistrarControl("frmMozos", "lblNombre", "Nombre");
+                    bllIdioma.RegistrarControl("frmMozos", "lblApellido", "Apellido");
+                    bllIdioma.RegistrarControl("frmMozos", "lblMail", "Mail");
+                    bllIdioma.RegistrarControl("frmMozos", "lblTelefono", "Télefono");
+                    bllIdioma.RegistrarControl("frmMozos", "btnAgregar", "Agregar");
+                    bllIdioma.RegistrarControl("frmMozos", "btnModificar", "Modificar");
+                    bllIdioma.RegistrarControl("frmMozos", "btnEliminar", "Desactivar");
+                    bllIdioma.RegistrarControl("frmMozos", "chkActivo", "Activo");
+                    bllIdioma.RegistrarControl("frmMozos", "btnLimpiar", "Limpiar");
+                    break;
+                case "frmProductos":
+                    bllIdioma.RegistrarControl("frmProductos", "lblCodigo", "Código");
+                    bllIdioma.RegistrarControl("frmProductos", "lblNombre", "Nombre");
+                    bllIdioma.RegistrarControl("frmProductos", "lblPrecio", "Precio");
+                    bllIdioma.RegistrarControl("frmProductos", "lblStock", "Stock");
+                    bllIdioma.RegistrarControl("frmProductos", "chkDisponible", "Disponible");
+                    bllIdioma.RegistrarControl("frmProductos", "btnAgregar", "Agregar");
+                    bllIdioma.RegistrarControl("frmProductos", "btnModificar", "Modificar");
+                    bllIdioma.RegistrarControl("frmProductos", "btnEliminar", "Eliminar");
+                    bllIdioma.RegistrarControl("frmProductos", "btnLimpiar", "Limpiar");
+                    break;
+
+                case "frmGestionDePedido":
+                    bllIdioma.RegistrarControl("frmGestionDePedido", "gbCliente", "Cliente");
+                    bllIdioma.RegistrarControl("frmGestionDePedido", "lblDNI", "DNI");
+                    bllIdioma.RegistrarControl("frmGestionDePedido", "btnIniciar", "Iniciar pedido");
+                    bllIdioma.RegistrarControl("frmGestionDePedido", "btnListaEspera", "Atender lista de espera");
+                    bllIdioma.RegistrarControl("frmGestionDePedido", "gbResumen", "Resumen");
+                    bllIdioma.RegistrarControl("frmGestionDePedido", "gbListaEspera", "Lista de espera");
+                    bllIdioma.RegistrarControl("frmGestionDePedido", "btnNuevoPedido", "Nuevo pedido");
+                    bllIdioma.RegistrarControl("frmGestionDePedido", "btnFinalizarAtencion", "Finalizar atención");
+                    bllIdioma.RegistrarControl("frmGestionDePedido", "gbEnCurso", "Pedidos en curso");
+                    break;
+
+                case "frmRegistrarCliente":
+                    bllIdioma.RegistrarControl("frmRegistrarCliente", "lblDNI", "DNI");
+                    bllIdioma.RegistrarControl("frmRegistrarCliente", "lblNombre", "Nombre");
+                    bllIdioma.RegistrarControl("frmRegistrarCliente", "lblApellido", "Apellido");
+                    bllIdioma.RegistrarControl("frmRegistrarCliente", "lblMail", "Mail");
+                    bllIdioma.RegistrarControl("frmRegistrarCliente", "lblTelefono", "Télefono");
+                    bllIdioma.RegistrarControl("frmRegistrarCliente", "lblDomicilio", "Domicilio");
+                    bllIdioma.RegistrarControl("frmRegistrarCliente", "btnRegistrar", "Registrar");
+                    bllIdioma.RegistrarControl("frmRegistrarCliente", "btnCancelar", "Cancelar");
+                    break;
+
+                case "frmSeleccionarProductos":
+                    bllIdioma.RegistrarControl("frmSeleccionarProductos", "lblProducto", "Producto");
+                    bllIdioma.RegistrarControl("frmSeleccionarProductos", "lblCantidad", "Cantidad");
+                    bllIdioma.RegistrarControl("frmSeleccionarProductos", "btnAgregarProducto", "Agregar producto");
+                    bllIdioma.RegistrarControl("frmSeleccionarProductos", "btnQuitarProducto", "Quitar producto");
+                    bllIdioma.RegistrarControl("frmSeleccionarProductos", "lblTotal", "Total");
+                    bllIdioma.RegistrarControl("frmSeleccionarProductos", "btnContinuar", "Continuar");
+                    bllIdioma.RegistrarControl("frmSeleccionarProductos", "btnCancelar", "Cancelar");
+                    break;
+
+                case "frmConfirmarPedido":
+                    bllIdioma.RegistrarControl("frmConfirmarPedido", "lblTotal", "Total");
+                    bllIdioma.RegistrarControl("frmConfirmarPedido", "btnConfirmar", "Confirmar pedido");
+                    bllIdioma.RegistrarControl("frmConfirmarPedido", "btnModificar", "Modificar pedido");
+                    bllIdioma.RegistrarControl("frmConfirmarPedido", "btnCancelar", "Cancelar");
+                    bllIdioma.RegistrarControl("frmConfirmarPedido", "btnContinuar", "Continuar");
+                    break;
+
+                case "frmAsignarMesaYMozo":
+                    bllIdioma.RegistrarControl("frmAsignarMesaYMozo", "gbMesa", "Mesa");
+                    bllIdioma.RegistrarControl("frmAsignarMesaYMozo", "btnAsignarMesa", "Asignar mesa");
+                    bllIdioma.RegistrarControl("frmAsignarMesaYMozo", "btnMesaDesdeLista", "Mesa liberada: asignar desde lista de espera");
+                    bllIdioma.RegistrarControl("frmAsignarMesaYMozo", "gbMozo", "Mozo");
+                    bllIdioma.RegistrarControl("frmAsignarMesaYMozo", "btnAsignarMozo", "Asignar mozo");
+                    bllIdioma.RegistrarControl("frmAsignarMesaYMozo", "btnMozoDesdeLista", "Mozo liberado: asignar desde lista de espera");
+                    bllIdioma.RegistrarControl("frmAsignarMesaYMozo", "gbResumen", "Resumen");
+                    bllIdioma.RegistrarControl("frmAsignarMesaYMozo", "btnListaEspera", "Ingresar a lista de espera");
+                    bllIdioma.RegistrarControl("frmAsignarMesaYMozo", "btnCancelarPedido", "Cancelar pedido");
+                    bllIdioma.RegistrarControl("frmAsignarMesaYMozo", "btnContinuar", "Continuar");
+                    bllIdioma.RegistrarControl("frmAsignarMesaYMozo", "btnCerrar", "Cerrar");
+                    break;
                 case "AdministradorIdiomas":
                     bllIdioma.RegistrarControl("AdministradorIdiomas", "label1", "Formulario");
                     bllIdioma.RegistrarControl("AdministradorIdiomas", "label2", "Idioma");
@@ -204,7 +330,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         {
             if (cmbIdioma.SelectedIndex == -1)
             {
-                MessageBox.Show("Seleccione un idioma.");
+                MessageBox.Show(traductor.ObtenerMensaje("AdministradorIdiomas", "msg_SeleccioneIdioma", "Seleccione un idioma."));
                 return;
             }
 
@@ -228,7 +354,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 bllIdioma.GuardarTraduccion(traduccion);
             }
 
-            MessageBox.Show("Traducciones guardadas correctamente.");
+            MessageBox.Show(traductor.ObtenerMensaje("AdministradorIdiomas", "msg_TraduccionesGuardadas", "Traducciones guardadas correctamente."));
         }
         
 
@@ -241,7 +367,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         {
             if (string.IsNullOrWhiteSpace(txtNuevoIdioma.Text))
             {
-                MessageBox.Show("Ingrese un nombre para el idioma.");
+                MessageBox.Show(traductor.ObtenerMensaje("AdministradorIdiomas", "msg_IngreseNombreIdioma", "Ingrese un nombre para el idioma."));
                 return;
             }
 
@@ -259,7 +385,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             if (parentUI != null)
                 parentUI.login.RecargarIdiomas();
 
-            MessageBox.Show("Idioma agregado correctamente.");
+            MessageBox.Show(traductor.ObtenerMensaje("AdministradorIdiomas", "msg_IdiomaAgregado", "Idioma agregado correctamente."));
         }
 
         private void AdministradorIdiomas_FormClosing(object sender, FormClosingEventArgs e)

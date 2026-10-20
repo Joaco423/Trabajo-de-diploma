@@ -13,8 +13,9 @@ namespace BLL
     public class BLLIdioma
     {
         DALIdioma dal = new DALIdioma();
+        BLLIntegridad integridadBLL = new BLLIntegridad();
 
-       
+
         public DataTable ListarIdiomas()
         {
             return dal.ListarIdiomas();
@@ -24,6 +25,8 @@ namespace BLL
         {
             var idioma = new Idioma { Nombre = nombre };
             dal.AgregarIdioma(idioma);
+
+            integridadBLL.SincronizarFilasNuevas("Idioma");
         }
 
       
@@ -40,7 +43,9 @@ namespace BLL
     
         public void GuardarTraduccion(Traduccion traduccion)
         {
-            dal.GuardarTraduccion(traduccion);
+            int idTraduccion = dal.GuardarTraduccion(traduccion);
+
+            integridadBLL.SincronizarFilaPorClave("Traduccion", idTraduccion);
         }
 
       
@@ -56,6 +61,8 @@ namespace BLL
         public void RegistrarControl(string formulario, string nombreControl, string textoOriginal)
         {
             dal.RegistrarControl(formulario, nombreControl, textoOriginal);
+
+            integridadBLL.SincronizarFilasNuevas("ControlIdioma");
         }
         public DataTable ObtenerControles(string formulario)
         {

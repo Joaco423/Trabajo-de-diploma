@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BE;
@@ -32,26 +33,18 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         }
         private void Agregar_Click(object sender, EventArgs e)
         {
-            
-            if (string.IsNullOrWhiteSpace(textBox1.Text) || string.IsNullOrWhiteSpace(textBox2.Text) ||
-                string.IsNullOrWhiteSpace(textBox3.Text) || CBRoles.SelectedItem == null)
+            if (!ValidarCampos(out string mensajeError, out string tituloError))
             {
-                MessageBox.Show("Por favor, complete los campos obligatorios (DNI, Usuario, Contraseña y Rol).", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(mensajeError, tituloError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-           
-            if (!int.TryParse(textBox1.Text.Trim(), out int dni))
-            {
-                MessageBox.Show("El DNI debe ser un número válido.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            int.TryParse(textBox7.Text.Trim(), out int telefono); 
+            int dni = int.Parse(textBox1.Text.Trim());
+            int.TryParse(textBox7.Text.Trim(), out int telefono);
 
             try
             {
-                
+
                 Usuario usuario = new Usuario();
                 usuario.DNI = dni;
                 usuario.NombreUsuario = textBox2.Text.Trim();
@@ -69,15 +62,21 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 bllUsuario.RegistrarUsuario(usuario, rolSeleccionado.Id);
                 bllUsuario.SincronizarDigitos();
                
-                MessageBox.Show("Usuario agregado y rol asignado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    traductor.ObtenerMensaje("GestionUsuarios", "msg_UsuarioAgregado", "Usuario agregado y rol asignado correctamente."),
+                    traductor.ObtenerMensaje("GestionUsuarios", "msg_Exito_Titulo", "Éxito"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                
+
                 LimpiarCampos();
                 actualizarGrilla();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al registrar el usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    traductor.ObtenerMensaje("GestionUsuarios", "msg_ErrorRegistrar", "Error al registrar el usuario: ") + ex.Message,
+                    traductor.ObtenerMensaje("GestionUsuarios", "msg_Error_Titulo", "Error"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void LimpiarCampos()
@@ -85,12 +84,103 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             textBox1.Clear(); textBox2.Clear(); textBox3.Clear();
             textBox4.Clear(); textBox5.Clear(); textBox6.Clear(); textBox7.Clear();
             CBRoles.SelectedIndex = -1;
+            chkActivo.Checked = true;
             }
-         
+
+        private bool EsEmailValido(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email)) return false;
+            return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+        }
+
+        private bool EsDniValido(string dni)
+        {
+            return Regex.IsMatch(dni, @"^\d{8}$");
+        }
+
+        private bool EsTelefonoValido(string telefono)
+        {
+            return Regex.IsMatch(telefono, @"^\d{6,15}$");
+        }
+
+        private bool EsNombreValido(string texto)
+        {
+            return Regex.IsMatch(texto, @"^[A-Za-zÀ-ÿ]+(\s[A-Za-zÀ-ÿ]+)*$");
+        }
+
+        private bool EsUsuarioValido(string usuario)
+        {
+            return Regex.IsMatch(usuario, @"^\S{3,}$");
+        }
+
+        /// <summary>
+        /// Valida todos los campos obligatorios del formulario. Devuelve false y el mensaje/título
+        /// correspondiente (ya traducidos) ante el primer problema encontrado.
+        /// </summary>
+        private bool ValidarCampos(out string mensajeError, out string tituloError)
+        {
+            tituloError = traductor.ObtenerMensaje("GestionUsuarios", "msg_ErrorFormato_Titulo", "Error de formato");
+
+            if (string.IsNullOrWhiteSpace(textBox1.Text) || string.IsNullOrWhiteSpace(textBox2.Text) ||
+                string.IsNullOrWhiteSpace(textBox3.Text) || string.IsNullOrWhiteSpace(textBox4.Text) ||
+                string.IsNullOrWhiteSpace(textBox5.Text) || string.IsNullOrWhiteSpace(textBox6.Text) ||
+                string.IsNullOrWhiteSpace(textBox7.Text) || CBRoles.SelectedItem == null)
+            {
+                mensajeError = traductor.ObtenerMensaje("GestionUsuarios", "msg_CamposObligatorios",
+                    "Por favor, complete todos los campos (DNI, Usuario, Contraseña, Email, Nombre, Apellido, Teléfono y Rol).");
+                tituloError = traductor.ObtenerMensaje("GestionUsuarios", "msg_Validacion_Titulo", "Validación");
+                return false;
+            }
+
+            if (!EsDniValido(textBox1.Text.Trim()))
+            {
+                mensajeError = traductor.ObtenerMensaje("GestionUsuarios", "msg_DniInvalido", "El DNI debe tener exactamente 8 dígitos numéricos.");
+                return false;
+            }
+
+            if (!EsUsuarioValido(textBox2.Text.Trim()))
+            {
+                mensajeError = traductor.ObtenerMensaje("GestionUsuarios", "msg_UsuarioInvalido", "El nombre de usuario debe tener al menos 3 caracteres y no contener espacios.");
+                return false;
+            }
+
+            if (!EsEmailValido(textBox4.Text.Trim()))
+            {
+                mensajeError = traductor.ObtenerMensaje("GestionUsuarios", "msg_EmailInvalido", "El email ingresado no tiene un formato válido.");
+                return false;
+            }
+
+            if (!EsNombreValido(textBox5.Text.Trim()))
+            {
+                mensajeError = traductor.ObtenerMensaje("GestionUsuarios", "msg_NombreInvalido", "El nombre solo puede contener letras y espacios.");
+                return false;
+            }
+
+            if (!EsNombreValido(textBox6.Text.Trim()))
+            {
+                mensajeError = traductor.ObtenerMensaje("GestionUsuarios", "msg_ApellidoInvalido", "El apellido solo puede contener letras y espacios.");
+                return false;
+            }
+
+            if (!EsTelefonoValido(textBox7.Text.Trim()))
+            {
+                mensajeError = traductor.ObtenerMensaje("GestionUsuarios", "msg_TelefonoInvalido", "El teléfono debe contener entre 6 y 15 dígitos numéricos.");
+                return false;
+            }
+
+            mensajeError = null;
+            return true;
+        }
 
 
         private void Modificar_Click(object sender, EventArgs e)
         {
+            if (!ValidarCampos(out string mensajeError, out string tituloError))
+            {
+                MessageBox.Show(mensajeError, tituloError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             Usuario usuario = new Usuario();
             Usuario anterior = bllUsuario.ObtenerPorDNI(Convert.ToInt32(textBox1.Text));
 
@@ -107,27 +197,60 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             bllUsuario.SincronizarDigitos();
             _bllBitacora.RegistrarModificacion(anterior, usuario, Singleton.Instancia.Usuario.NombreUsuario);
 
-            MessageBox.Show("Usuario modificado correctamente.");
+            MessageBox.Show(traductor.ObtenerMensaje("GestionUsuarios", "msg_UsuarioModificado", "Usuario modificado correctamente."));
 
             actualizarGrilla();
         }
 
         private void Eliminar_Click(object sender, EventArgs e)
         {
-            Usuario eliminado = bllUsuario.ObtenerPorDNI(Convert.ToInt32(textBox1.Text));
+            Usuario usuarioActual = bllUsuario.ObtenerPorDNI(Convert.ToInt32(textBox1.Text));
+            bool activarlo = !usuarioActual.Activo;
 
-            if (MessageBox.Show("¿Desea eliminar el usuario?",
-                "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            string mensajeConfirmacion = activarlo
+                ? traductor.ObtenerMensaje("GestionUsuarios", "msg_ConfirmarActivar", "¿Desea reactivar al usuario?")
+                : traductor.ObtenerMensaje("GestionUsuarios", "msg_ConfirmarDesactivar", "¿Desea desactivar al usuario? No podrá volver a iniciar sesión hasta que se lo reactive.");
+
+            if (MessageBox.Show(
+                mensajeConfirmacion,
+                traductor.ObtenerMensaje("GestionUsuarios", "msg_Confirmar_Titulo", "Confirmar"),
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                bllUsuario.EliminarUsuario(eliminado.DNI);
+                bllUsuario.ActualizarActivo(usuarioActual.DNI, activarlo);
                 bllUsuario.SincronizarDigitos();
 
-                
-               
+                MessageBox.Show(activarlo
+                    ? traductor.ObtenerMensaje("GestionUsuarios", "msg_UsuarioActivado", "Usuario activado correctamente.")
+                    : traductor.ObtenerMensaje("GestionUsuarios", "msg_UsuarioDesactivado", "Usuario desactivado correctamente."));
 
-                MessageBox.Show("Usuario eliminado correctamente.");
+                chkActivo.Checked = activarlo;
+                ActualizarBotonActivar(activarlo);
                 actualizarGrilla();
             }
+        }
+
+        private void ActualizarBotonActivar(bool activo)
+        {
+            Eliminar.Text = activo
+                ? traductor.ObtenerMensaje("GestionUsuarios", "msg_BotonDesactivar", "Desactivar Usuario")
+                : traductor.ObtenerMensaje("GestionUsuarios", "msg_BotonActivar", "Activar Usuario");
+        }
+
+        private void btnDesbloquear_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBox1.Text) || !int.TryParse(textBox1.Text.Trim(), out int dni))
+            {
+                MessageBox.Show(
+                    traductor.ObtenerMensaje("GestionUsuarios", "msg_SeleccioneUsuarioDesbloquear", "Seleccione de la grilla el usuario que desea desbloquear."),
+                    traductor.ObtenerMensaje("GestionUsuarios", "msg_Validacion_Titulo", "Validación"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            bllUsuario.Desbloquear(dni);
+
+            MessageBox.Show(traductor.ObtenerMensaje("GestionUsuarios", "msg_UsuarioDesbloqueado", "Usuario desbloqueado correctamente."));
+            actualizarGrilla();
         }
         private void actualizarGrilla()
         {
@@ -156,20 +279,43 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             }
             catch (Exception)
             {
-                MessageBox.Show("Error al inicializar la pantalla");
+                MessageBox.Show(traductor.ObtenerMensaje("GestionUsuarios", "msg_ErrorInicializar", "Error al inicializar la pantalla"));
             }
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            textBox1.Text = dataGridView1.CurrentRow.Cells["DNI"].Value.ToString();
-            textBox2.Text = dataGridView1.CurrentRow.Cells["Username"].Value.ToString();
-            textBox3.Text = dataGridView1.CurrentRow.Cells["Contraseña"].Value.ToString();
-            textBox4.Text = dataGridView1.CurrentRow.Cells["EMail"].Value.ToString();
-            textBox5.Text = dataGridView1.CurrentRow.Cells["Nombre"].Value.ToString();
-            textBox6.Text = dataGridView1.CurrentRow.Cells["Apellido"].Value.ToString();
-            textBox7.Text = dataGridView1.CurrentRow.Cells["NumTelefono"].Value.ToString();
-            CBRoles.Text = dataGridView1.CurrentRow.Cells["Rol"].Value.ToString();
+            if (e.RowIndex < 0 || dataGridView1.CurrentRow == null || dataGridView1.CurrentRow.IsNewRow)
+                return;
+
+            try
+            {
+                DataGridViewRow fila = dataGridView1.CurrentRow;
+
+                textBox1.Text = ObtenerTexto(fila, "DNI");
+                textBox2.Text = ObtenerTexto(fila, "Username");
+                textBox3.Text = ObtenerTexto(fila, "Contraseña");
+                textBox4.Text = ObtenerTexto(fila, "EMail");
+                textBox5.Text = ObtenerTexto(fila, "Nombre");
+                textBox6.Text = ObtenerTexto(fila, "Apellido");
+                textBox7.Text = ObtenerTexto(fila, "NumTelefono");
+                CBRoles.Text = ObtenerTexto(fila, "Rol");
+
+                bool activo = fila.Cells["Activo"].Value != null && fila.Cells["Activo"].Value != DBNull.Value
+                    && Convert.ToBoolean(fila.Cells["Activo"].Value);
+                chkActivo.Checked = activo;
+                ActualizarBotonActivar(activo);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error. ");
+            }
+        }
+
+        private string ObtenerTexto(DataGridViewRow fila, string columna)
+        {
+            object valor = fila.Cells[columna].Value;
+            return (valor == null || valor == DBNull.Value) ? string.Empty : valor.ToString();
         }
         private void LlenarComboRoles()
         {

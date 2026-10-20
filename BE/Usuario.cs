@@ -18,6 +18,9 @@ namespace BE
         public int NumTelefono { get; set; }
         public string Rol { get; set; }
         public int DVH { get; set; }
+        public bool Activo { get; set; } = true;
+        public bool Bloqueado { get; set; }
+        public int IntentosFallidos { get; set; }
 
        
         public Perfil Perfil { get; set; }

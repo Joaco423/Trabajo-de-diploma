@@ -49,6 +49,8 @@
             this.CBRoles = new System.Windows.Forms.ComboBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.chkActivo = new System.Windows.Forms.CheckBox();
+            this.btnDesbloquear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,6 +59,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(276, 10);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(801, 420);
             this.dataGridView1.TabIndex = 0;
@@ -182,9 +185,9 @@
             // 
             this.Eliminar.Location = new System.Drawing.Point(210, 463);
             this.Eliminar.Name = "Eliminar";
-            this.Eliminar.Size = new System.Drawing.Size(75, 23);
+            this.Eliminar.Size = new System.Drawing.Size(130, 23);
             this.Eliminar.TabIndex = 15;
-            this.Eliminar.Text = "Eliminar";
+            this.Eliminar.Text = "Desactivar Usuario";
             this.Eliminar.UseVisualStyleBackColor = true;
             this.Eliminar.Click += new System.EventHandler(this.Eliminar_Click);
             // 
@@ -213,20 +216,45 @@
             this.textBox7.TabIndex = 18;
             // 
             // label8
-            // 
+            //
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(21, 417);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(23, 13);
             this.label8.TabIndex = 19;
             this.label8.Text = "Rol";
-            // 
+            //
+            // chkActivo
+            //
+            this.chkActivo.AutoSize = true;
+            this.chkActivo.Checked = true;
+            this.chkActivo.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkActivo.Enabled = false;
+            this.chkActivo.Location = new System.Drawing.Point(99, 436);
+            this.chkActivo.Name = "chkActivo";
+            this.chkActivo.Size = new System.Drawing.Size(56, 17);
+            this.chkActivo.TabIndex = 20;
+            this.chkActivo.Text = "Activo";
+            this.chkActivo.UseVisualStyleBackColor = true;
+            //
+            // btnDesbloquear
+            //
+            this.btnDesbloquear.Location = new System.Drawing.Point(8, 492);
+            this.btnDesbloquear.Name = "btnDesbloquear";
+            this.btnDesbloquear.Size = new System.Drawing.Size(150, 23);
+            this.btnDesbloquear.TabIndex = 21;
+            this.btnDesbloquear.Text = "Desbloquear";
+            this.btnDesbloquear.UseVisualStyleBackColor = true;
+            this.btnDesbloquear.Click += new System.EventHandler(this.btnDesbloquear_Click);
+            //
             // GestionUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Chocolate;
-            this.ClientSize = new System.Drawing.Size(1087, 499);
+            this.ClientSize = new System.Drawing.Size(1087, 525);
+            this.Controls.Add(this.btnDesbloquear);
+            this.Controls.Add(this.chkActivo);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBox7);
             this.Controls.Add(this.CBRoles);
@@ -282,5 +310,7 @@
         private System.Windows.Forms.ComboBox CBRoles;
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckBox chkActivo;
+        private System.Windows.Forms.Button btnDesbloquear;
     }
 }

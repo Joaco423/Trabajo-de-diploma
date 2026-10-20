@@ -14,6 +14,7 @@ namespace BLL
     {
         private readonly DALBitacoraUsuario _dal = new DALBitacoraUsuario();
         private readonly DALUsuario _dalUsuario = new DALUsuario();
+        private readonly BLLIntegridad _integridadBLL = new BLLIntegridad();
         private string SerializarUsuario(Usuario u)
         {
             return $"DNI:{u.DNI} | Usuario:{u.NombreUsuario} | Contraseña:{u.Contraseña}| Nombre:{u.Nombre} | " +
@@ -32,6 +33,8 @@ namespace BLL
                 DatosAnteriores = SerializarUsuario(anterior),
                 DatosNuevos = SerializarUsuario(nuevo)
             });
+
+            _integridadBLL.SincronizarFilasNuevas("BitacoraUsuario");
         }
 
         public DataTable ObtenerCambios()
@@ -63,6 +66,9 @@ namespace BLL
                 DatosAnteriores = registro.DatosNuevos,
                 DatosNuevos = registro.DatosAnteriores
             });
+
+            new BLLUsuario().SincronizarDigitos();
+            _integridadBLL.SincronizarFilasNuevas("BitacoraUsuario");
         }
 
         private Usuario DesSerializarUsuario(string datos)

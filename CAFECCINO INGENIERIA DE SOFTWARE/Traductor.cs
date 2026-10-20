@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL;
+using SERVICIOS;
 
 namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 {
@@ -13,6 +14,19 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         private readonly BLLIdioma bllIdioma = new BLLIdioma();
 
         
+
+        /// <summary>
+        /// Traduce un mensaje (ej. de MessageBox) que no es un control fijo del formulario.
+        /// Usa el mismo mecanismo que los controles: "formulario" + "clave" identifican la fila en
+        /// ControlIdioma/Traduccion. Si no hay traducción cargada para el idioma actual, devuelve el
+        /// texto original en español.
+        /// </summary>
+        public string ObtenerMensaje(string formulario, string clave, string textoOriginal)
+        {
+            int idIdioma = Singleton.Instancia.IdiomaActual;
+            string traducido = bllIdioma.ObtenerTexto(idIdioma, formulario, clave);
+            return string.IsNullOrEmpty(traducido) ? textoOriginal : traducido;
+        }
 
         public void TraducirFormulario(Form formulario, int idIdioma)
         {

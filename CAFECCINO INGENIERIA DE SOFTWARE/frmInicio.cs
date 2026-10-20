@@ -27,6 +27,12 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         public GestionDePerfiles gestionDePerfiles = new GestionDePerfiles();
         public GestionDeFamilias gestionDeFamilias = new GestionDeFamilias();
         public frmBitacoraCambios bitacoraCambios = new frmBitacoraCambios();
+        public frmCambiarContraseña cambiarContraseña = new frmCambiarContraseña();
+        public frmVerificacionIntegridad verificacionIntegridad = new frmVerificacionIntegridad();
+        public frmClientes clientes_235JB = new frmClientes();
+        public frmProductos productos_235JB = new frmProductos();
+        public frmMozos mozos_235JB = new frmMozos();
+        public frmGestionDePedido gestionDePedido_235JB = new frmGestionDePedido();
         private frmInicio menuPrincipal;
         Traductor traductor = new Traductor();
 
@@ -70,6 +76,24 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             gestionDeFamilias.MdiParent = this;
             Singleton.Instancia.Suscribir(gestionDeFamilias);
 
+            cambiarContraseña.MdiParent = this;
+            Singleton.Instancia.Suscribir(cambiarContraseña);
+
+            verificacionIntegridad.MdiParent = this;
+            Singleton.Instancia.Suscribir(verificacionIntegridad);
+
+            clientes_235JB.MdiParent = this;
+            Singleton.Instancia.Suscribir(clientes_235JB);
+
+            productos_235JB.MdiParent = this;
+            Singleton.Instancia.Suscribir(productos_235JB);
+
+            mozos_235JB.MdiParent = this;
+            Singleton.Instancia.Suscribir(mozos_235JB);
+
+            gestionDePedido_235JB.MdiParent = this;
+            Singleton.Instancia.Suscribir(gestionDePedido_235JB);
+
             //Este metodo es para el frmInicio
 
             Singleton.Instancia.Suscribir(this);
@@ -78,29 +102,21 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         }
         private void ValidarIntegridadInicial()
         {
-           
+
             {
-                BLLUsuario bllUsuario = new BLLUsuario();
-                bool integro = bllUsuario.ValidarIntegridad();
+                BLLIntegridad bllIntegridad = new BLLIntegridad();
+                bool integro = bllIntegridad.ValidarIntegridadGeneral();
 
                 if (!integro)
                 {
-                    DialogResult resultado = MessageBox.Show(
-                        "Se detectó que la tabla Usuario fue alterada fuera del sistema.\n\n" +
-                        "¿Desea ingresar al sistema de todas formas?",
-                        "Alerta de integridad",
-                        MessageBoxButtons.YesNo,
+                    MessageBox.Show(
+                        traductor.ObtenerMensaje("frmInicio", "msg_AlertaIntegridad",
+                            "Se detectó que una o más tablas fueron alteradas fuera del sistema.\n\n" +
+                            "Inicie sesión como administrador y utilice 'Administrador > Verificación de Integridad' " +
+                            "para restaurar el último backup o recalcular los dígitos verificadores."),
+                        traductor.ObtenerMensaje("frmInicio", "msg_AlertaIntegridad_Titulo", "Alerta de integridad"),
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
-
-                    if (resultado == DialogResult.No)
-                    {
-                        Application.Exit();
-                    }
-                    else
-                    {
-                       
-                        bllUsuario.SincronizarDigitos();
-                    }
                 }
             }
         }
@@ -112,15 +128,30 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 
         private void cerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            cerrarSesion.MdiParent = this;
-            cerrarSesion.Show();
+                    if (cerrarSesion == null || cerrarSesion.IsDisposed)
+                    {
+                                  cerrarSesion = new CerrarSesion();
+                                  cerrarSesion.MdiParent = this;
+                    }
 
+                                   cerrarSesion.Show();
+                                   cerrarSesion.BringToFront();
+
+        }
+
+        private void cambiarContraseñaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            cambiarContraseña.MdiParent = this;
+            cambiarContraseña.Show();
         }
 
         private void bitacoraDeEventosToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             eventos.MdiParent = this;
             eventos.Show();
+            eventos.WindowState = FormWindowState.Maximized;
+            eventos.BringToFront();
         }
 
         private void gestionDeUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
@@ -131,14 +162,18 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 gestionUsuarios.MdiParent = this;
             }
             gestionUsuarios.Show();
+            gestionUsuarios.WindowState = FormWindowState.Maximized;
+            gestionUsuarios.BringToFront();
         }
 
-        
+
 
         private void gestionDeIdiomasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             administradorIdiomas.MdiParent = this;
-            administradorIdiomas.Show();    
+            administradorIdiomas.Show();
+            administradorIdiomas.WindowState = FormWindowState.Maximized;
+            administradorIdiomas.BringToFront();
         }
 
         private void gestionDePerfilesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -146,6 +181,8 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             gestionDePerfiles.MdiParent = this;
             gestionDeFamilias.MdiParent = this;
             gestionDePerfiles.Show();
+            gestionDePerfiles.WindowState = FormWindowState.Maximized;
+            gestionDePerfiles.BringToFront();
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -249,6 +286,60 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         {
             bitacoraCambios.MdiParent = this;
             bitacoraCambios.Show();
+            bitacoraCambios.WindowState = FormWindowState.Maximized;
+            bitacoraCambios.BringToFront();
+        }
+
+        private void clientesToolStripMenuItem_Click_235JB(object sender, EventArgs e)
+        {
+            clientes_235JB.MdiParent = this;
+            clientes_235JB.Show();
+            clientes_235JB.WindowState = FormWindowState.Maximized;
+            clientes_235JB.BringToFront();
+        }
+
+        private void productosToolStripMenuItem_Click_235JB(object sender, EventArgs e)
+        {
+            productos_235JB.MdiParent = this;
+            productos_235JB.Show();
+            productos_235JB.WindowState = FormWindowState.Maximized;
+            productos_235JB.BringToFront();
+        }
+
+        private void mozosToolStripMenuItem_Click_235JB(object sender, EventArgs e)
+        {
+            mozos_235JB.MdiParent = this;
+            mozos_235JB.Show();
+            mozos_235JB.WindowState = FormWindowState.Maximized;
+            mozos_235JB.BringToFront();
+        }
+
+        // CU01 paso 1: el empleado elige "Gestion de pedido" del menu
+        private void gestionDePedidoToolStripMenuItem_Click_235JB(object sender, EventArgs e)
+        {
+            gestionDePedido_235JB.MdiParent = this;
+            gestionDePedido_235JB.Show();
+            gestionDePedido_235JB.WindowState = FormWindowState.Maximized;
+            gestionDePedido_235JB.BringToFront();
+        }
+
+       
+        public void CerrarModuloCafeteria_235JB()
+        {
+            maestrosToolStripMenuItem.Visible = false;
+            pedidosToolStripMenuItem.Visible = false;
+            clientes_235JB.Hide();
+            productos_235JB.Hide();
+            mozos_235JB.Hide();
+            gestionDePedido_235JB.Hide();
+        }
+
+        private void verificacionIntegridadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            verificacionIntegridad.MdiParent = this;
+            verificacionIntegridad.Show();
+            verificacionIntegridad.WindowState = FormWindowState.Maximized;
+            verificacionIntegridad.BringToFront();
         }
     }
 }

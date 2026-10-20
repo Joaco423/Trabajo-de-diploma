@@ -16,6 +16,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
     public partial class CerrarSesion : Form
     {
         BLLEvento bitacora = new BLLEvento();
+        Traductor traductor = new Traductor();
         public CerrarSesion()
         {
             InitializeComponent();
@@ -36,7 +37,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 "Login",
                 "Baja");
 
-            MessageBox.Show("Sesion Cerrada");
+            MessageBox.Show(traductor.ObtenerMensaje("CerrarSesion", "msg_SesionCerrada", "Sesion Cerrada"));
             Hide();
         }
         public void ModificarMenu()
@@ -45,11 +46,14 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 
             parent.cerrarSesionToolStripMenuItem.Visible = false;
             parent.administradorToolStripMenuItem.Visible = false;
+            parent.verificacionIntegridadToolStripMenuItem.Visible = false;
+            parent.verificacionIntegridad.Hide();
 
             parent.login.Hide();
             parent.gestionDeFamilias.Hide();
             parent.gestionDePerfiles.Hide();
             parent.administradorIdiomas.Hide();
+            parent.CerrarModuloCafeteria_235JB();
       
         }
 

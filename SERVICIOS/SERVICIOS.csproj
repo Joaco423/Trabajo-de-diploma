@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="DigitVerifierService.cs" />
     <Compile Include="Encriptacion.cs" />
-    <Compile Include="GestorIdiomas.cs" />
     <Compile Include="IObserver.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

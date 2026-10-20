@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -41,11 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLLBackup.cs" />
     <Compile Include="BLLBitacoraUsuario.cs" />
     <Compile Include="BLLEvento.cs" />
     <Compile Include="BLLIdioma.cs" />
+    <Compile Include="BLLIntegridad.cs" />
     <Compile Include="BLLPermiso.cs" />
     <Compile Include="BLLUsuario.cs" />
+    <Compile Include="BLLMozo.cs" />
+    <Compile Include="BLLExcepciones.cs" />
+    <Compile Include="BLLCliente.cs" />
+    <Compile Include="BLLProducto.cs" />
+    <Compile Include="BLLPedido.cs" />
+    <Compile Include="BLLAtencion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -103,11 +103,11 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 TXTFamilia.Clear();
                 LlenarCombobox(); 
 
-                MessageBox.Show("Familia creada con éxito en la base de datos.");
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDeFamilias", "msg_FamiliaCreada", "Familia creada con éxito en la base de datos."));
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al crear la familia: " + ex.Message);
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDeFamilias", "msg_ErrorCrear", "Error al crear la familia: ") + ex.Message);
             }
         }
 
@@ -117,9 +117,9 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 
             Permiso permisoSeleccionado = (Permiso)CBPermisos.SelectedItem;
 
-            if (_familiaSeleccionada.Hijos.Any(h => h.Id == permisoSeleccionado.Id))
+            if (NegociosPermiso.ExisteEnArbol(_familiaSeleccionada, permisoSeleccionado.Id))
             {
-                MessageBox.Show("Este permiso ya se encuentra seleccionado en la familia actual.");
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDeFamilias", "msg_PermisoYaSeleccionado", "Este permiso ya se encuentra seleccionado en la familia actual."));
                 return;
             }
 
@@ -194,40 +194,44 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                     }
                 }
 
-                MessageBox.Show("Cambios guardados con éxito.");
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDeFamilias", "msg_CambiosGuardados", "Cambios guardados con éxito."));
                 LlenarCombobox();
             }
             catch (Exception)
             {
-                MessageBox.Show("Ocurrió un error al intentar guardar los cambios.");
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDeFamilias", "msg_ErrorGuardar", "Ocurrió un error al intentar guardar los cambios."));
             }
         }
 
         private void BTNEliminarFamilia_Click(object sender, EventArgs e)
         {
-            
+
             if (CBFamilias.SelectedItem == null)
             {
-                MessageBox.Show("Por favor, seleccione de la lista la familia que desea eliminar.");
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDeFamilias", "msg_SeleccioneFamilia", "Por favor, seleccione de la lista la familia que desea eliminar."));
                 return;
             }
 
-            
+
             Familia familiaAEliminar = (Familia)CBFamilias.SelectedItem;
 
-            DialogResult resultado = MessageBox.Show($"¿Está seguro de que desea eliminar la familia '{familiaAEliminar.Nombre}'? Se perderán todas sus uniones jerárquicas.", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult resultado = MessageBox.Show(
+                traductor.ObtenerMensaje("GestionDeFamilias", "msg_ConfirmarEliminarFamilia", "¿Está seguro de que desea eliminar la familia") + $" '{familiaAEliminar.Nombre}'? " +
+                traductor.ObtenerMensaje("GestionDeFamilias", "msg_ConfirmarEliminarFamilia2", "Se perderán todas sus uniones jerárquicas."),
+                traductor.ObtenerMensaje("GestionDeFamilias", "msg_ConfirmarEliminacion_Titulo", "Confirmar Eliminación"),
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (resultado == DialogResult.Yes)
             {
                 try
                 {
-                      
+
                     NegociosPermiso.EliminarFamilia(familiaAEliminar.Id);
 
-                    
-                   
 
-                    MessageBox.Show("Familia eliminada con éxito del sistema.");
+
+
+                    MessageBox.Show(traductor.ObtenerMensaje("GestionDeFamilias", "msg_FamiliaEliminada", "Familia eliminada con éxito del sistema."));
 
                    
                     treeView1.Nodes.Clear();
@@ -244,7 +248,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error al eliminar la familia: " + ex.Message);
+                    MessageBox.Show(traductor.ObtenerMensaje("GestionDeFamilias", "msg_ErrorEliminar", "Error al eliminar la familia: ") + ex.Message);
                 }
             }
         }
@@ -261,25 +265,37 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 
             Familia subFamiliaOrigen = (Familia)CBFamilias2.SelectedItem;
 
+            
             if (_familiaSeleccionada.Id == subFamiliaOrigen.Id)
             {
-                MessageBox.Show("No se puede agregar una familia dentro de sí misma.");
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDeFamilias", "msg_NoAgregarASiMisma", "No se puede agregar una familia dentro de sí misma."));
                 return;
             }
 
-            if (_familiaSeleccionada.Hijos.Any(h => h.Id == subFamiliaOrigen.Id))
+
+            if (NegociosPermiso.ExisteEnArbol(_familiaSeleccionada, subFamiliaOrigen.Id))
             {
-                MessageBox.Show("Esta familia ya se encuentra ingresada.");
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDeFamilias", "msg_YaExisteEnArbol", "Esta familia ya existe en el árbol."));
                 return;
             }
 
-            
             Familia copia = new Familia();
             copia.Id = subFamiliaOrigen.Id;
             copia.Nombre = subFamiliaOrigen.Nombre;
-
-            
             NegociosPermiso.ArmarArbolComponente(copia);
+
+
+            if (NegociosPermiso.ExisteEnArbol(copia, _familiaSeleccionada.Id))
+            {
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDeFamilias", "msg_ReferenciaCircular", "No se puede agregar porque crearía una referencia circular."));
+                return;
+            }
+
+            if (NegociosPermiso.AlgunComponenteYaExisteEnArbol(_familiaSeleccionada, copia))
+            {
+                MessageBox.Show(traductor.ObtenerMensaje("GestionDeFamilias", "msg_ComponentesYaExisten", "Esta familia contiene componentes que ya existen en el árbol."));
+                return;
+            }
 
             _familiaSeleccionada.AgregarHijo(copia);
             MostrarEnTreeView();

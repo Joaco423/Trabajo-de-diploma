@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,37 @@ namespace SERVICIOS
             if (value is bool b) return b ? 1 : 0;
             if (value is string s) return s.Sum(c => (int)c);
             return Convert.ToInt32(value);
+        }
+
+        /// <summary>
+        /// Calcula el DVH de una fila cualquiera, leyendo sus columnas dinámicamente
+        /// (sin depender de una clase tipada por tabla). Ignora la propia columna DVH.
+        /// </summary>
+        public static int CalcularDVHGenerico(DataRow fila, DataColumnCollection columnas)
+        {
+            int suma = 0;
+            int posicion = 1;
+
+            foreach (DataColumn col in columnas)
+            {
+                if (string.Equals(col.ColumnName, "DVH", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                suma += ToNumericGenerico(fila[col]) * posicion;
+                posicion++;
+            }
+
+            return Math.Abs(suma % 1000);
+        }
+
+        private static int ToNumericGenerico(object valor)
+        {
+            if (valor == null || valor is DBNull) return 0;
+            if (valor is int i) return i;
+            if (valor is bool b) return b ? 1 : 0;
+            if (valor is DateTime dt) return dt.GetHashCode();
+            if (valor is string s) return s.Sum(c => (int)c);
+            return Convert.ToInt32(valor);
         }
 
         public static int CalcularDVH(Usuario u)

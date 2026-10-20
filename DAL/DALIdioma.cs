@@ -113,7 +113,7 @@ namespace DAL
 
             return resultado.ToString();
         }
-        public void GuardarTraduccion(Traduccion traduccion)
+        public int GuardarTraduccion(Traduccion traduccion)
         {
             cn.Open();
 
@@ -124,7 +124,8 @@ namespace DAL
                             BEGIN
                             INSERT INTO Traduccion (IdIdioma, IdControl, Texto)
                             VALUES (@idioma, @control, @texto)
-                            END";
+                            END
+                            SELECT IdTraduccion FROM Traduccion WHERE IdIdioma=@idioma AND IdControl=@control";
 
             SqlCommand cmd =
                 new SqlCommand(query, cn);
@@ -138,9 +139,11 @@ namespace DAL
             cmd.Parameters.AddWithValue("@texto",
                 traduccion.Texto);
 
-            cmd.ExecuteNonQuery();
+            object resultado = cmd.ExecuteScalar();
 
             cn.Close();
+
+            return Convert.ToInt32(resultado);
         }
         public void RegistrarControl(string formulario, string nombreControl, string textoOriginal)
         {

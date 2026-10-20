@@ -47,6 +47,11 @@ namespace SERVICIOS
             get { return _user; }
         }
 
+        public bool EsAdministrador()
+        {
+            return _user != null && string.Equals(_user.Rol, "administrador", StringComparison.OrdinalIgnoreCase);
+        }
+
         
         public int IdiomaActual
         {

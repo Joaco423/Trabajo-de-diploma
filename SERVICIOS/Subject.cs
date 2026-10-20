@@ -24,12 +24,19 @@ namespace SERVICIOS
 
         protected void Notificar()
         {
+            string idiomaActual = Singleton.Instancia.IdiomaActual.ToString();
 
-           
-            foreach (IObserver observer in observadores)
+       
+            foreach (IObserver observer in observadores.ToList())
             {
-                
-                observer.ActualizarIdioma(Singleton.Instancia.IdiomaActual.ToString());
+                try
+                {
+                    observer.ActualizarIdioma(idiomaActual);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Error al traducir un observador: " + ex);
+                }
             }
         }
     }

@@ -19,6 +19,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         BLLEvento bitacora = new BLLEvento();
         Traductor traductor = new Traductor();
         BLLIdioma iidioma = new BLLIdioma();
+        BLLIntegridad integridadBLL = new BLLIntegridad();
         private bool CambioManual = false; 
         public Login()
         {
@@ -33,12 +34,12 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         {
             if (string.IsNullOrWhiteSpace(txtNombre.Text) || string.IsNullOrWhiteSpace(txtContraseña.Text))
             {
-                MessageBox.Show("Llene todos los espacios");
+                MessageBox.Show(traductor.ObtenerMensaje("Login", "msg_LlenarEspacios", "Llene todos los espacios"));
                 return;
             }
             if (Singleton.Instancia.Usuario != null)
             {
-                MessageBox.Show("Ya hay una sesión activa.");
+                MessageBox.Show(traductor.ObtenerMensaje("Login", "msg_SesionActiva", "Ya hay una sesión activa."));
                 return;
             }
 
@@ -48,12 +49,35 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 Contraseña = txtContraseña.Text
             };
 
-           
-            Usuario userLogueado = NegociosUsuario.Login(userIntento);
+            Usuario userLogueado;
+            try
+            {
+                userLogueado = NegociosUsuario.Login(userIntento);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    traductor.ObtenerMensaje("Login", "msg_ErrorSistema_Titulo", "Error del sistema"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
 
             if (userLogueado != null)
             {
-               
+                bool esAdmin = string.Equals(userLogueado.Rol, "administrador", StringComparison.OrdinalIgnoreCase);
+
+                if (!esAdmin && !integridadBLL.ValidarIntegridadGeneral())
+                {
+                    MessageBox.Show(
+                        traductor.ObtenerMensaje("Login", "msg_SistemaCaido", "Sistema caído. Contacte al administrador."),
+                        traductor.ObtenerMensaje("Login", "msg_ErrorSistema_Titulo", "Error del sistema"),
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
+                }
+
                 Singleton.Instancia.IniciarSesion(userLogueado);
 
                 bitacora.RegistrarEvento(txtNombre.Text, "Inicio de sesión exitoso", "Login", "Baja");
@@ -65,12 +89,18 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 }
 
                 ModificarMenu();
-                MessageBox.Show("Inicio de sesión exitoso.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    traductor.ObtenerMensaje("Login", "msg_InicioExitoso", "Inicio de sesión exitoso."),
+                    traductor.ObtenerMensaje("Login", "msg_Exito_Titulo", "Éxito"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
             }
             else
             {
-                MessageBox.Show("Nombre de usuario o contraseña incorrectos.", "Error de autenticación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    traductor.ObtenerMensaje("Login", "msg_CredencialesIncorrectas", "Nombre de usuario o contraseña incorrectos."),
+                    traductor.ObtenerMensaje("Login", "msg_ErrorAutenticacion_Titulo", "Error de autenticación"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -110,6 +140,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             frmInicio parent = this.MdiParent as frmInicio;
             parent.cerrarSesionToolStripMenuItem.Visible = true;
             parent.administradorToolStripMenuItem.Visible = true;
+            parent.verificacionIntegridadToolStripMenuItem.Visible = Singleton.Instancia.EsAdministrador();
         }
 
 

@@ -37,7 +37,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 
             if (dataGridView1.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Seleccione un registro para restaurar.");
+                MessageBox.Show(traductor.ObtenerMensaje("frmBitacoraCambios", "msg_SeleccioneRegistro", "Seleccione un registro para restaurar."));
                 return;
             }
 
@@ -46,13 +46,13 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 
             if (operacion == "Restauracion")
             {
-                MessageBox.Show("No se puede restaurar una restauración.");
+                MessageBox.Show(traductor.ObtenerMensaje("frmBitacoraCambios", "msg_NoRestaurarRestauracion", "No se puede restaurar una restauración."));
                 return;
             }
 
             DialogResult confirm = MessageBox.Show(
-                "¿Desea restaurar este registro al estado anterior?",
-                "Confirmar restauración",
+                traductor.ObtenerMensaje("frmBitacoraCambios", "msg_ConfirmarRestauracion", "¿Desea restaurar este registro al estado anterior?"),
+                traductor.ObtenerMensaje("frmBitacoraCambios", "msg_ConfirmarRestauracion_Titulo", "Confirmar restauración"),
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
 
@@ -61,12 +61,12 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 try
                 {
                     _bll.RestaurarUsuario(idBitacora);
-                    MessageBox.Show("Usuario restaurado correctamente.");
+                    MessageBox.Show(traductor.ObtenerMensaje("frmBitacoraCambios", "msg_RestauradoOK", "Usuario restaurado correctamente."));
                     dataGridView1.DataSource = _bll.ObtenerCambios();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error al restaurar: " + ex.Message);
+                    MessageBox.Show(traductor.ObtenerMensaje("frmBitacoraCambios", "msg_ErrorRestaurar", "Error al restaurar: ") + ex.Message);
                 }
             }
         }

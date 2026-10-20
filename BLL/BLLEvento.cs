@@ -12,6 +12,7 @@ namespace BLL
     public class BLLEvento
     {
         DALEvento eventoDAL = new DALEvento();
+        BLLIntegridad integridadBLL = new BLLIntegridad();
 
         public void RegistrarEvento(string usuario,
                                     string evento,
@@ -27,6 +28,8 @@ namespace BLL
             ev.Criticidad = criticidad;
 
             eventoDAL.RegistrarEvento(ev);
+
+            integridadBLL.SincronizarFilasNuevas("Evento");
         }
         public DataTable ObtenerEventos()
         {

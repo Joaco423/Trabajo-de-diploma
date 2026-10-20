@@ -13,6 +13,7 @@ namespace BE
         public DateTime Fecha { get; set; }
         public string Evento { get; set; }
         public string Modulo { get; set; }
+        
         public string Criticidad { get; set; }
     }
 }
