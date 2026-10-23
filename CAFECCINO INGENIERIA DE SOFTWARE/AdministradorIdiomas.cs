@@ -85,6 +85,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             cmbFormulario.Items.Add("frmClientes");
             cmbFormulario.Items.Add("frmProductos");
             cmbFormulario.Items.Add("frmMozos");
+            cmbFormulario.Items.Add("frmMesas");
             cmbFormulario.Items.Add("frmGestionDePedido");
             cmbFormulario.Items.Add("frmRegistrarCliente");
             cmbFormulario.Items.Add("frmSeleccionarProductos");
@@ -168,6 +169,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                     bllIdioma.RegistrarControl("frmInicio", "clientesToolStripMenuItem", "Clientes");
                     bllIdioma.RegistrarControl("frmInicio", "productosToolStripMenuItem", "Productos");
                     bllIdioma.RegistrarControl("frmInicio", "mozosToolStripMenuItem", "Mozos");
+                    bllIdioma.RegistrarControl("frmInicio", "mesasToolStripMenuItem", "Mesas");
                     bllIdioma.RegistrarControl("frmInicio", "pedidosToolStripMenuItem", "Pedidos");
                     bllIdioma.RegistrarControl("frmInicio", "gestionDePedidoToolStripMenuItem", "Gestion de pedido");
                     break;
@@ -198,6 +200,20 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                     bllIdioma.RegistrarControl("frmClientes", "btnEliminar", "Desactivar");
                     bllIdioma.RegistrarControl("frmClientes", "chkActivo", "Activo");
                     bllIdioma.RegistrarControl("frmClientes", "btnLimpiar", "Limpiar");
+                    bllIdioma.RegistrarControl("frmClientes", "btnSerializar", "Serializar");
+                    bllIdioma.RegistrarControl("frmClientes", "btnDeserializar", "Deserializar");
+                    bllIdioma.RegistrarControl("frmClientes", "lblSerializado", "Archivo serializado");
+                    bllIdioma.RegistrarControl("frmClientes", "lblDeserializado", "Archivo deserializado");
+                    bllIdioma.RegistrarControl("frmClientes", "lblFormato", "Tipo de serialización");
+                    break;
+
+                case "frmMesas":
+                    bllIdioma.RegistrarControl("frmMesas", "lblNumero", "Número de mesa");
+                    bllIdioma.RegistrarControl("frmMesas", "lblCapacidad", "Capacidad");
+                    bllIdioma.RegistrarControl("frmMesas", "btnAgregar", "Agregar");
+                    bllIdioma.RegistrarControl("frmMesas", "btnModificar", "Modificar");
+                    bllIdioma.RegistrarControl("frmMesas", "btnEliminar", "Eliminar");
+                    bllIdioma.RegistrarControl("frmMesas", "btnLimpiar", "Limpiar");
                     break;
 
                 case "frmMozos":

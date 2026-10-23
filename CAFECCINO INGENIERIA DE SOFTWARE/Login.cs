@@ -68,7 +68,9 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             {
                 bool esAdmin = string.Equals(userLogueado.Rol, "administrador", StringComparison.OrdinalIgnoreCase);
 
-                if (!esAdmin && !integridadBLL.ValidarIntegridadGeneral())
+                bool integro_235JB = integridadBLL.ValidarIntegridadGeneral();
+
+                if (!esAdmin && !integro_235JB)
                 {
                     MessageBox.Show(
                         traductor.ObtenerMensaje("Login", "msg_SistemaCaido", "Sistema caído. Contacte al administrador."),
@@ -94,6 +96,10 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                     traductor.ObtenerMensaje("Login", "msg_Exito_Titulo", "Éxito"),
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
+
+                // Administrador con tablas alteradas: se abre directamente la verificacion de integridad.
+                if (esAdmin && !integro_235JB && principal != null)
+                    principal.AbrirVerificacionIntegridad_235JB();
             }
             else
             {

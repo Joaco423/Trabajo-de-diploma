@@ -51,6 +51,7 @@
     <Compile Include="DALIdioma.cs" />
     <Compile Include="DALUsuario.cs" />
     <Compile Include="DALMozo.cs" />
+    <Compile Include="DALMesa.cs" />
     <Compile Include="DALCliente.cs" />
     <Compile Include="DALProducto.cs" />
     <Compile Include="DALPedido.cs" />

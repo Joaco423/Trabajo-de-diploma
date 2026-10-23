@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using BE;
@@ -80,6 +81,8 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             txtTelefono.Clear();
             txtDomicilio.Clear();
             chkActivo.Checked = true;
+            lstSerializado.Items.Clear();
+            lstDeserializado.Items.Clear();
             txtDNI.Enabled = true;
             dgvClientes.ClearSelection();
         }
@@ -278,6 +281,97 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             }
         }
 
+        private bool LeerSeleccionSerializacion_235JB(out int dni_235JB, out string formato_235JB)
+        {
+            formato_235JB = null;
+            if (txtDNI.Enabled || !int.TryParse(txtDNI.Text.Trim(), out dni_235JB))
+            {
+                dni_235JB = 0;
+                Aviso_235JB(Msg_235JB("msg_SeleccioneClienteSerializar", "Seleccione de la grilla el cliente que desea serializar o deserializar."),
+                    "msg_Validacion_Titulo", "Validación", MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (cboFormato.SelectedItem == null)
+            {
+                Aviso_235JB(Msg_235JB("msg_SeleccioneFormato", "Seleccione el tipo de serialización (XML o JSON)."),
+                    "msg_Validacion_Titulo", "Validación", MessageBoxIcon.Warning);
+                return false;
+            }
+
+            formato_235JB = cboFormato.SelectedItem.ToString().Trim();
+            return true;
+        }
+
+        private void btnSerializar_Click_235JB(object sender_235JB, EventArgs e_235JB)
+        {
+            if (!LeerSeleccionSerializacion_235JB(out int dni_235JB, out string formato_235JB))
+                return;
+
+            try
+            {
+                string ruta_235JB = _bllCliente_235JB.Serializar_235JB(dni_235JB, formato_235JB, out string texto_235JB);
+
+                lstSerializado.Items.Clear();
+                foreach (string linea_235JB in texto_235JB.Replace("\r", string.Empty).Split('\n'))
+                    lstSerializado.Items.Add(linea_235JB);
+
+                Aviso_235JB(string.Format(Msg_235JB("msg_ClienteSerializado", "Cliente serializado correctamente en: {0}"), ruta_235JB),
+                    "msg_Exito_Titulo", "Éxito", MessageBoxIcon.Information);
+            }
+            catch (Exception ex_235JB)
+            {
+                Aviso_235JB(Msg_235JB("msg_ErrorSerializar", "Error al serializar el cliente: ") + ex_235JB.Message,
+                    "msg_Error_Titulo", "Error", MessageBoxIcon.Error);
+            }
+        }
+
+       
+        private void btnDeserializar_Click_235JB(object sender_235JB, EventArgs e_235JB)
+        {
+            if (cboFormato.SelectedItem == null)
+            {
+                Aviso_235JB(Msg_235JB("msg_SeleccioneFormato", "Seleccione el tipo de serialización (XML o JSON)."),
+                    "msg_Validacion_Titulo", "Validación", MessageBoxIcon.Warning);
+                return;
+            }
+
+            string formato_235JB = cboFormato.SelectedItem.ToString().Trim();
+            string extension_235JB = formato_235JB.ToLowerInvariant();
+
+            using (OpenFileDialog dialogo_235JB = new OpenFileDialog())
+            {
+                dialogo_235JB.Title = Msg_235JB("msg_BuscarArchivo", "Seleccione el archivo serializado");
+                dialogo_235JB.Filter = formato_235JB + " (*." + extension_235JB + ")|*." + extension_235JB + "|*.*|*.*";
+                string carpeta_235JB = _bllCliente_235JB.CarpetaSerializados_235JB();
+                if (Directory.Exists(carpeta_235JB)) dialogo_235JB.InitialDirectory = carpeta_235JB;
+
+                if (dialogo_235JB.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                try
+                {
+                    Cliente cliente_235JB = _bllCliente_235JB.Deserializar_235JB(dialogo_235JB.FileName, formato_235JB, out string texto_235JB);
+
+                    lstDeserializado.Items.Clear();
+                    lstDeserializado.Items.Add("DNI: " + cliente_235JB.DNI);
+                    lstDeserializado.Items.Add("Nombre: " + cliente_235JB.Nombre);
+                    lstDeserializado.Items.Add("Apellido: " + cliente_235JB.Apellido);
+                    lstDeserializado.Items.Add("Mail: " + cliente_235JB.Mail);
+                    lstDeserializado.Items.Add("NumTelefono: " + cliente_235JB.NumTelefono);
+                    lstDeserializado.Items.Add("Domicilio: " + cliente_235JB.Domicilio);
+                    lstDeserializado.Items.Add("Activo: " + cliente_235JB.Activo);
+
+                    Aviso_235JB(string.Format(Msg_235JB("msg_ClienteDeserializado", "Cliente deserializado correctamente desde: {0}"), dialogo_235JB.FileName),
+                        "msg_Exito_Titulo", "Éxito", MessageBoxIcon.Information);
+                }
+                catch (Exception ex_235JB)
+                {
+                    Aviso_235JB(string.Format(Msg_235JB("msg_ArchivoInvalido", "El archivo seleccionado no es un cliente válido en formato {0}: "), formato_235JB) + ex_235JB.Message,
+                        "msg_Error_Titulo", "Error", MessageBoxIcon.Error);
+                }
+            }
+        }
         private static string ObtenerTexto_235JB(DataGridViewRow fila_235JB, string columna_235JB)
         {
             object valor_235JB = fila_235JB.Cells[columna_235JB].Value;

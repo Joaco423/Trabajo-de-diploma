@@ -32,6 +32,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         public frmClientes clientes_235JB = new frmClientes();
         public frmProductos productos_235JB = new frmProductos();
         public frmMozos mozos_235JB = new frmMozos();
+        public frmMesas mesas_235JB = new frmMesas();
         public frmGestionDePedido gestionDePedido_235JB = new frmGestionDePedido();
         private frmInicio menuPrincipal;
         Traductor traductor = new Traductor();
@@ -90,6 +91,9 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 
             mozos_235JB.MdiParent = this;
             Singleton.Instancia.Suscribir(mozos_235JB);
+
+            mesas_235JB.MdiParent = this;
+            Singleton.Instancia.Suscribir(mesas_235JB);
 
             gestionDePedido_235JB.MdiParent = this;
             Singleton.Instancia.Suscribir(gestionDePedido_235JB);
@@ -315,6 +319,14 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         }
 
         // CU01 paso 1: el empleado elige "Gestion de pedido" del menu
+        private void mesasToolStripMenuItem_Click_235JB(object sender, EventArgs e)
+        {
+            mesas_235JB.MdiParent = this;
+            mesas_235JB.Show();
+            mesas_235JB.WindowState = FormWindowState.Maximized;
+            mesas_235JB.BringToFront();
+        }
+
         private void gestionDePedidoToolStripMenuItem_Click_235JB(object sender, EventArgs e)
         {
             gestionDePedido_235JB.MdiParent = this;
@@ -331,10 +343,17 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             clientes_235JB.Hide();
             productos_235JB.Hide();
             mozos_235JB.Hide();
+            mesas_235JB.Hide();
             gestionDePedido_235JB.Hide();
         }
 
         private void verificacionIntegridadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirVerificacionIntegridad_235JB();
+        }
+
+        // Abre la pantalla de verificacion de integridad (tambien la usa el login del administrador cuando hay tablas alteradas).
+        public void AbrirVerificacionIntegridad_235JB()
         {
             verificacionIntegridad.MdiParent = this;
             verificacionIntegridad.Show();

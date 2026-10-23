@@ -49,6 +49,7 @@
     <Compile Include="BLLPermiso.cs" />
     <Compile Include="BLLUsuario.cs" />
     <Compile Include="BLLMozo.cs" />
+    <Compile Include="BLLMesa.cs" />
     <Compile Include="BLLExcepciones.cs" />
     <Compile Include="BLLCliente.cs" />
     <Compile Include="BLLProducto.cs" />
