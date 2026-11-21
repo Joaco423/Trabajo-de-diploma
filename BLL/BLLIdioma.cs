@@ -56,8 +56,12 @@ namespace BLL
             return dal.ObtenerTexto(idIdioma, formulario, control);
         }
 
-       
-       
+        public Dictionary<string, string> ObtenerTextosColumnas_235JB(int idIdioma_235JB, string formulario_235JB)
+        {
+            return dal.ObtenerTextosColumnas_235JB(idIdioma_235JB, formulario_235JB);
+        }
+
+
         public void RegistrarControl(string formulario, string nombreControl, string textoOriginal)
         {
             dal.RegistrarControl(formulario, nombreControl, textoOriginal);

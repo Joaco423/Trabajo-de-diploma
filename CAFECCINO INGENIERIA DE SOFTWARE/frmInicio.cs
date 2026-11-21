@@ -18,6 +18,117 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         public frmInicio()
         {
             InitializeComponent();
+            CrearMenuAyuda_235JB();
+        }
+
+        // ---------------- Menu Ayuda: guias rapidas en PDF (carpeta Guias junto al .exe) ----------------
+        // Cada guia esta asociada al item del menu de su pantalla: se muestra solo si el usuario puede abrir esa pantalla,
+        // asi respeta los permisos de cada perfil (administrador, empleado, reservista) sin duplicarlos.
+        private ToolStripMenuItem ayudaToolStripMenuItem;
+        private readonly Dictionary<ToolStripMenuItem, ToolStripMenuItem> _guiaPantalla_235JB = new Dictionary<ToolStripMenuItem, ToolStripMenuItem>();
+
+        private void CrearMenuAyuda_235JB()
+        {
+            ayudaToolStripMenuItem = new ToolStripMenuItem { Name = "ayudaToolStripMenuItem", Text = "Ayuda" };
+            ayudaToolStripMenuItem.DropDownOpening += ayudaToolStripMenuItem_DropDownOpening_235JB;
+
+            object[,] guias_235JB =
+            {
+                { "guiaInicioSesionToolStripMenuItem",        "Inicio de sesión",               "01_Inicio_de_sesion.pdf",           iniciarSesionToolStripMenuItem },
+                { "guiaCerrarSesionToolStripMenuItem",        "Cerrar sesión",                  "02_Cerrar_sesion.pdf",              cerrarSesionToolStripMenuItem },
+                { "guiaCambiarContrasenaToolStripMenuItem",   "Cambiar contraseña",             "03_Cambiar_contrasena.pdf",         cambiarContraseñaToolStripMenuItem },
+                { "-", null, null, null },
+                { "guiaGestionUsuariosToolStripMenuItem",     "Gestión de usuarios",            "04_Gestion_de_usuarios.pdf",        gestionDeUsuariosToolStripMenuItem },
+                { "guiaGestionPerfilesToolStripMenuItem",     "Gestión de perfiles y familias", "05_Gestion_de_perfiles.pdf",        gestionDePerfilesToolStripMenuItem },
+                { "guiaGestionIdiomasToolStripMenuItem",      "Gestión de idiomas",             "06_Gestion_de_idiomas.pdf",         gestionDeIdiomasToolStripMenuItem },
+                { "guiaBitacoraEventosToolStripMenuItem",     "Bitácora de eventos",            "07_Bitacora_de_eventos.pdf",        bitacoraDeEventosToolStripMenuItem },
+                { "guiaVerificacionIntegridadToolStripMenuItem", "Verificación de integridad",  "08_Verificacion_de_integridad.pdf", verificacionIntegridadToolStripMenuItem },
+                { "-", null, null, null },
+                { "guiaClientesToolStripMenuItem",            "Clientes",                       "09_Clientes.pdf",                   clientesToolStripMenuItem },
+                { "guiaProductosToolStripMenuItem",           "Productos",                      "10_Productos.pdf",                  productosToolStripMenuItem },
+                { "guiaMozosToolStripMenuItem",               "Mozos",                          "11_Mozos.pdf",                      mozosToolStripMenuItem },
+                { "guiaMesasToolStripMenuItem",               "Mesas",                          "12_Mesas.pdf",                      mesasToolStripMenuItem },
+                { "guiaBitacoraCambiosToolStripMenuItem",     "Bitácora de cambios",            "13_Bitacora_de_cambios.pdf",        bitacoraDeCambiosToolStripMenuItem },
+                { "-", null, null, null },
+                { "guiaGestionPedidoToolStripMenuItem",       "Gestión de pedido",              "14_Gestion_de_pedido.pdf",          gestionDePedidoToolStripMenuItem },
+                { "guiaGestionReservasToolStripMenuItem",     "Gestión de reservas",            "15_Gestion_de_reservas.pdf",        gestionDeReservasToolStripMenuItem },
+                { "-", null, null, null },
+                { "guiaReporteInteligenteToolStripMenuItem",  "Reporte inteligente",            "16_Reporte_inteligente.pdf",        reporteInteligenteToolStripMenuItem }
+            };
+
+            for (int i_235JB = 0; i_235JB < guias_235JB.GetLength(0); i_235JB++)
+            {
+                if ((string)guias_235JB[i_235JB, 0] == "-")
+                {
+                    ayudaToolStripMenuItem.DropDownItems.Add(new ToolStripSeparator());
+                    continue;
+                }
+                ToolStripMenuItem guia_235JB = new ToolStripMenuItem
+                {
+                    Name = (string)guias_235JB[i_235JB, 0],
+                    Text = (string)guias_235JB[i_235JB, 1],
+                    Tag = guias_235JB[i_235JB, 2]
+                };
+                guia_235JB.Click += guiaToolStripMenuItem_Click_235JB;
+                _guiaPantalla_235JB[guia_235JB] = (ToolStripMenuItem)guias_235JB[i_235JB, 3];
+                ayudaToolStripMenuItem.DropDownItems.Add(guia_235JB);
+            }
+
+            menuStrip1.Items.Add(ayudaToolStripMenuItem);
+        }
+
+        // La pantalla esta habilitada si su item y todos sus menus padres estan disponibles para el usuario
+        private static bool PantallaHabilitada_235JB(ToolStripItem item_235JB)
+        {
+            for (ToolStripItem actual_235JB = item_235JB; actual_235JB != null; actual_235JB = actual_235JB.OwnerItem)
+                if (!actual_235JB.Available) return false;
+            return true;
+        }
+
+        private void ayudaToolStripMenuItem_DropDownOpening_235JB(object sender_235JB, EventArgs e_235JB)
+        {
+            foreach (KeyValuePair<ToolStripMenuItem, ToolStripMenuItem> par_235JB in _guiaPantalla_235JB)
+                par_235JB.Key.Available = PantallaHabilitada_235JB(par_235JB.Value);
+
+            // Separadores: uno solo entre dos grupos que tengan guias visibles (los grupos vacios no dejan rayas de mas)
+            bool hayGuiaAntes_235JB = false;
+            ToolStripItem separadorPendiente_235JB = null;
+            foreach (ToolStripItem item_235JB in ayudaToolStripMenuItem.DropDownItems)
+            {
+                if (item_235JB is ToolStripSeparator)
+                {
+                    item_235JB.Available = false;
+                    separadorPendiente_235JB = item_235JB;
+                }
+                else if (item_235JB.Available)
+                {
+                    if (separadorPendiente_235JB != null && hayGuiaAntes_235JB)
+                        separadorPendiente_235JB.Available = true;
+                    separadorPendiente_235JB = null;
+                    hayGuiaAntes_235JB = true;
+                }
+            }
+        }
+
+        private void guiaToolStripMenuItem_Click_235JB(object sender_235JB, EventArgs e_235JB)
+        {
+            ToolStripMenuItem guia_235JB = (ToolStripMenuItem)sender_235JB;
+            string ruta_235JB = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Guias", (string)guia_235JB.Tag);
+            if (!System.IO.File.Exists(ruta_235JB))
+            {
+                MessageBox.Show(traductor.ObtenerMensaje("frmInicio", "msg_GuiaNoEncontrada", "No se encontró la guía: ") + ruta_235JB,
+                    traductor.ObtenerMensaje("frmInicio", "msg_Ayuda_Titulo", "Ayuda"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(ruta_235JB) { UseShellExecute = true });
+            }
+            catch (Exception ex_235JB)
+            {
+                MessageBox.Show(traductor.ObtenerMensaje("frmInicio", "msg_ErrorAbrirGuia", "No se pudo abrir la guía: ") + ex_235JB.Message,
+                    traductor.ObtenerMensaje("frmInicio", "msg_Ayuda_Titulo", "Ayuda"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         public Login login = new Login();
         public CerrarSesion cerrarSesion = new CerrarSesion();
@@ -33,7 +144,9 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         public frmProductos productos_235JB = new frmProductos();
         public frmMozos mozos_235JB = new frmMozos();
         public frmMesas mesas_235JB = new frmMesas();
+        public frmGestionDeReservas reservas_235JB = new frmGestionDeReservas();
         public frmGestionDePedido gestionDePedido_235JB = new frmGestionDePedido();
+        public frmReporteInteligente reporteInteligente_235JB = new frmReporteInteligente();
         private frmInicio menuPrincipal;
         Traductor traductor = new Traductor();
 
@@ -95,10 +208,13 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             mesas_235JB.MdiParent = this;
             Singleton.Instancia.Suscribir(mesas_235JB);
 
+            reservas_235JB.MdiParent = this;
+            Singleton.Instancia.Suscribir(reservas_235JB);
+
             gestionDePedido_235JB.MdiParent = this;
             Singleton.Instancia.Suscribir(gestionDePedido_235JB);
 
-            //Este metodo es para el frmInicio
+            
 
             Singleton.Instancia.Suscribir(this);
 
@@ -135,9 +251,10 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                     if (cerrarSesion == null || cerrarSesion.IsDisposed)
                     {
                                   cerrarSesion = new CerrarSesion();
-                                  cerrarSesion.MdiParent = this;
                     }
 
+                                   // Siempre como hija de esta ventana: CerrarSesion.ModificarMenu usa el MdiParent para ocultar los menus
+                                   cerrarSesion.MdiParent = this;
                                    cerrarSesion.Show();
                                    cerrarSesion.BringToFront();
 
@@ -223,10 +340,17 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                         }
                     }
 
-                    continue; 
+                    continue;
                 }
 
-               
+                // Ayuda siempre visible: sus guias se filtran al abrir el menu segun lo que el usuario puede ver
+                if (item.Name == "ayudaToolStripMenuItem")
+                {
+                    item.Visible = true;
+                    continue;
+                }
+
+
                 item.Visible = false;
 
                 if (item is ToolStripMenuItem menuDesplegable)
@@ -318,7 +442,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             mozos_235JB.BringToFront();
         }
 
-        // CU01 paso 1: el empleado elige "Gestion de pedido" del menu
+       
         private void mesasToolStripMenuItem_Click_235JB(object sender, EventArgs e)
         {
             mesas_235JB.MdiParent = this;
@@ -326,6 +450,8 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             mesas_235JB.WindowState = FormWindowState.Maximized;
             mesas_235JB.BringToFront();
         }
+
+     
 
         private void gestionDePedidoToolStripMenuItem_Click_235JB(object sender, EventArgs e)
         {
@@ -344,7 +470,20 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             productos_235JB.Hide();
             mozos_235JB.Hide();
             mesas_235JB.Hide();
+            bitacoraCambios.Hide();
+            reservas_235JB.Hide();
+            reportesToolStripMenuItem.Visible = false;
+            reporteInteligente_235JB.Hide();
+            reservasToolStripMenuItem.Visible = false;
             gestionDePedido_235JB.Hide();
+        }
+
+        private void reporteInteligenteToolStripMenuItem_Click_235JB(object sender_235JB, EventArgs e_235JB)
+        {
+            reporteInteligente_235JB.MdiParent = this;
+            reporteInteligente_235JB.Show();
+            reporteInteligente_235JB.WindowState = FormWindowState.Maximized;
+            reporteInteligente_235JB.BringToFront();
         }
 
         private void verificacionIntegridadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -352,13 +491,26 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             AbrirVerificacionIntegridad_235JB();
         }
 
-        // Abre la pantalla de verificacion de integridad (tambien la usa el login del administrador cuando hay tablas alteradas).
+        
         public void AbrirVerificacionIntegridad_235JB()
         {
             verificacionIntegridad.MdiParent = this;
             verificacionIntegridad.Show();
             verificacionIntegridad.WindowState = FormWindowState.Maximized;
             verificacionIntegridad.BringToFront();
+        }
+
+        private void pedidosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gestionDeReservasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            reservas_235JB.MdiParent = this;
+            reservas_235JB.Show();
+            reservas_235JB.WindowState = FormWindowState.Maximized;
+            reservas_235JB.BringToFront();
         }
     }
 }

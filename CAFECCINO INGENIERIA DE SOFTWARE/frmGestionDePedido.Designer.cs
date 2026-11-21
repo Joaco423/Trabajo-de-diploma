@@ -26,11 +26,16 @@
             this.btnListaEspera = new System.Windows.Forms.Button();
             this.gbResumen = new System.Windows.Forms.GroupBox();
             this.txtResumen = new System.Windows.Forms.TextBox();
+            this.btnGenerarReporte = new System.Windows.Forms.Button();
             this.btnNuevoPedido = new System.Windows.Forms.Button();
             this.gbListaEspera = new System.Windows.Forms.GroupBox();
             this.dgvListaEspera = new System.Windows.Forms.DataGridView();
             this.gbEnCurso = new System.Windows.Forms.GroupBox();
             this.dgvEnCurso = new System.Windows.Forms.DataGridView();
+            this.gbReservasActivas = new System.Windows.Forms.GroupBox();
+            this.dgvReservas = new System.Windows.Forms.DataGridView();
+            this.gbReservasActivas.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReservas)).BeginInit();
             this.gbEnCurso.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEnCurso)).BeginInit();
             this.gbCliente.SuspendLayout();
@@ -110,6 +115,7 @@
             //
             // gbResumen
             //
+            this.gbResumen.Controls.Add(this.btnGenerarReporte);
             this.gbResumen.Controls.Add(this.txtResumen);
             this.gbResumen.Location = new System.Drawing.Point(10, 135);
             this.gbResumen.Name = "gbResumen";
@@ -125,8 +131,19 @@
             this.txtResumen.Name = "txtResumen";
             this.txtResumen.ReadOnly = true;
             this.txtResumen.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtResumen.Size = new System.Drawing.Size(710, 65);
+            this.txtResumen.Size = new System.Drawing.Size(555, 65);
             this.txtResumen.TabIndex = 0;
+            //
+            // btnGenerarReporte
+            //
+            this.btnGenerarReporte.Enabled = false;
+            this.btnGenerarReporte.Location = new System.Drawing.Point(585, 22);
+            this.btnGenerarReporte.Name = "btnGenerarReporte";
+            this.btnGenerarReporte.Size = new System.Drawing.Size(140, 32);
+            this.btnGenerarReporte.TabIndex = 1;
+            this.btnGenerarReporte.Text = "Generar reporte";
+            this.btnGenerarReporte.UseVisualStyleBackColor = true;
+            this.btnGenerarReporte.Click += new System.EventHandler(this.btnGenerarReporte_Click_235JB);
             //
             // btnNuevoPedido
             //
@@ -143,7 +160,7 @@
             this.gbListaEspera.Controls.Add(this.dgvListaEspera);
             this.gbListaEspera.Location = new System.Drawing.Point(10, 245);
             this.gbListaEspera.Name = "gbListaEspera";
-            this.gbListaEspera.Size = new System.Drawing.Size(740, 130);
+            this.gbListaEspera.Size = new System.Drawing.Size(365, 130);
             this.gbListaEspera.TabIndex = 4;
             this.gbListaEspera.TabStop = false;
             this.gbListaEspera.Text = "Lista de espera";
@@ -159,8 +176,33 @@
             this.dgvListaEspera.Name = "dgvListaEspera";
             this.dgvListaEspera.ReadOnly = true;
             this.dgvListaEspera.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvListaEspera.Size = new System.Drawing.Size(710, 96);
+            this.dgvListaEspera.Size = new System.Drawing.Size(335, 96);
             this.dgvListaEspera.TabIndex = 0;
+            //
+            // gbReservasActivas
+            //
+            this.gbReservasActivas.Controls.Add(this.dgvReservas);
+            this.gbReservasActivas.Location = new System.Drawing.Point(385, 245);
+            this.gbReservasActivas.Name = "gbReservasActivas";
+            this.gbReservasActivas.Size = new System.Drawing.Size(365, 130);
+            this.gbReservasActivas.TabIndex = 6;
+            this.gbReservasActivas.TabStop = false;
+            this.gbReservasActivas.Text = "Reservas activas (prioridad de mesa y mozo)";
+            //
+            // dgvReservas
+            //
+            this.dgvReservas.AllowUserToAddRows = false;
+            this.dgvReservas.AllowUserToDeleteRows = false;
+            this.dgvReservas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvReservas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvReservas.Location = new System.Drawing.Point(15, 22);
+            this.dgvReservas.MultiSelect = false;
+            this.dgvReservas.Name = "dgvReservas";
+            this.dgvReservas.ReadOnly = true;
+            this.dgvReservas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvReservas.Size = new System.Drawing.Size(335, 96);
+            this.dgvReservas.TabIndex = 0;
+            this.dgvReservas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvReservas_CellClick_235JB);
             //
             // gbEnCurso
             //
@@ -194,6 +236,7 @@
             this.BackColor = System.Drawing.Color.Chocolate;
             this.ClientSize = new System.Drawing.Size(760, 592);
             this.Controls.Add(this.gbEnCurso);
+            this.Controls.Add(this.gbReservasActivas);
             this.Controls.Add(this.gbListaEspera);
             this.Controls.Add(this.btnNuevoPedido);
             this.Controls.Add(this.gbResumen);
@@ -202,6 +245,7 @@
             this.Name = "frmGestionDePedido";
             this.Text = "frmGestionDePedido";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmGestionDePedido_FormClosing_235JB);
+            this.Activated += new System.EventHandler(this.frmGestionDePedido_Activated_235JB);
             this.Load += new System.EventHandler(this.frmGestionDePedido_Load_235JB);
             this.VisibleChanged += new System.EventHandler(this.frmGestionDePedido_VisibleChanged_235JB);
             this.gbCliente.ResumeLayout(false);
@@ -210,6 +254,8 @@
             this.gbResumen.PerformLayout();
             this.gbListaEspera.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvListaEspera)).EndInit();
+            this.gbReservasActivas.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReservas)).EndInit();
             this.gbEnCurso.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvEnCurso)).EndInit();
             this.ResumeLayout(false);
@@ -227,10 +273,13 @@
         private System.Windows.Forms.Button btnListaEspera;
         private System.Windows.Forms.GroupBox gbResumen;
         private System.Windows.Forms.TextBox txtResumen;
+        private System.Windows.Forms.Button btnGenerarReporte;
         private System.Windows.Forms.Button btnNuevoPedido;
         private System.Windows.Forms.GroupBox gbListaEspera;
         private System.Windows.Forms.DataGridView dgvListaEspera;
         private System.Windows.Forms.GroupBox gbEnCurso;
         private System.Windows.Forms.DataGridView dgvEnCurso;
+        private System.Windows.Forms.GroupBox gbReservasActivas;
+        private System.Windows.Forms.DataGridView dgvReservas;
     }
 }

@@ -5,15 +5,13 @@ using System.Text;
 
 namespace SERVICIOS
 {
-    // Encriptacion reversible (AES-256, modo CBC) para datos que hay que poder volver a leer,
-    // como el domicilio del cliente. A diferencia de Encriptacion.GenerarHash, se puede desencriptar.
-    // Formato guardado: "AES$" + Base64( IV de 16 bytes + texto cifrado ). El IV es distinto en cada encriptacion.
+    
     public class EncriptacionReversible
     {
         private const string Prefijo_235JB = "AES$";
         private const string Frase_235JB = "CAFECCINO-235JB-clave-de-domicilio";
 
-        // La clave de 256 bits sale del SHA-256 de la frase.
+        
         private static byte[] ObtenerClave_235JB()
         {
             using (SHA256 sha_235JB = SHA256.Create())

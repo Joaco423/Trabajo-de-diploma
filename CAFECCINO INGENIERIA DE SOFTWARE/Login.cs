@@ -135,9 +135,11 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
+                // Solo se oculta: sigue suscrito para que el cambio de idioma lo traduzca en el momento (si se desuscribiera,
+                // al volver a abrirlo no se traduciria hasta cerrarlo y abrirlo otra vez)
                 e.Cancel = true;
                 Hide();
-
+                return;
             }
             Singleton.Instancia.Desuscribir(this);
         }
@@ -176,6 +178,8 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         {
             if (this.Visible)
             {
+                // Suscribir no repite a un observador ya suscrito
+                Singleton.Instancia.Suscribir(this);
                 this.BeginInvoke(new Action(() =>
                 {
                     CambioManual = false;

@@ -55,6 +55,8 @@
             this.dateTimePicker1.Location = new System.Drawing.Point(85, 33);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker1.ShowCheckBox = true;
+            this.dateTimePicker1.Checked = false;
             this.dateTimePicker1.TabIndex = 1;
             // 
             // Buscar
@@ -72,15 +74,18 @@
             this.cmbModulo.FormattingEnabled = true;
             this.cmbModulo.Location = new System.Drawing.Point(118, 96);
             this.cmbModulo.Name = "cmbModulo";
-            this.cmbModulo.Size = new System.Drawing.Size(121, 21);
+            this.cmbModulo.Size = new System.Drawing.Size(180, 21);
+            this.cmbModulo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbModulo.TabIndex = 3;
+            this.cmbModulo.SelectedIndexChanged += new System.EventHandler(this.cmbModulo_SelectedIndexChanged);
             // 
             // cmbCriticidad
             // 
             this.cmbCriticidad.FormattingEnabled = true;
             this.cmbCriticidad.Location = new System.Drawing.Point(118, 161);
             this.cmbCriticidad.Name = "cmbCriticidad";
-            this.cmbCriticidad.Size = new System.Drawing.Size(121, 21);
+            this.cmbCriticidad.Size = new System.Drawing.Size(180, 21);
+            this.cmbCriticidad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCriticidad.TabIndex = 4;
             // 
             // label1
@@ -115,7 +120,9 @@
             this.cmbEvento.FormattingEnabled = true;
             this.cmbEvento.Location = new System.Drawing.Point(118, 224);
             this.cmbEvento.Name = "cmbEvento";
-            this.cmbEvento.Size = new System.Drawing.Size(121, 21);
+            this.cmbEvento.Size = new System.Drawing.Size(180, 21);
+            this.cmbEvento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbEvento.DropDownWidth = 380;
             this.cmbEvento.TabIndex = 8;
             // 
             // label4
@@ -147,6 +154,7 @@
             this.Name = "frmEventos";
             this.Text = "Bitacora de eventos";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmEventos_FormClosing);
+            this.Activated += new System.EventHandler(this.frmEventos_Activated);
             this.Load += new System.EventHandler(this.frmEventos_Load);
             this.VisibleChanged += new System.EventHandler(this.frmEventos_VisibleChanged);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

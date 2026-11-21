@@ -10,7 +10,7 @@ namespace DAL
 {
     public class DALIdioma
     {
-        SqlConnection cn = new SqlConnection(@"Data Source=localhost;Initial Catalog=CAFECCINO1;Integrated Security=True");
+        SqlConnection cn = new SqlConnection(Conexion.cadena);
         
         public DataTable ListarIdiomas()
         {
@@ -113,6 +113,27 @@ namespace DAL
 
             return resultado.ToString();
         }
+        
+        public Dictionary<string, string> ObtenerTextosColumnas_235JB(int idIdioma_235JB, string formulario_235JB)
+        {
+            Dictionary<string, string> textos_235JB = new Dictionary<string, string>();
+            using (SqlConnection cnColumnas_235JB = new SqlConnection(cn.ConnectionString))
+            using (SqlCommand cmd_235JB = new SqlCommand(
+                @"SELECT c.NombreControl, t.Texto FROM Traduccion t INNER JOIN ControlIdioma c ON c.IdControl = t.IdControl
+                  WHERE t.IdIdioma = @idioma AND c.Formulario = @form AND c.NombreControl LIKE '%.%'", cnColumnas_235JB))
+            {
+                cmd_235JB.Parameters.AddWithValue("@idioma", idIdioma_235JB);
+                cmd_235JB.Parameters.AddWithValue("@form", formulario_235JB);
+                cnColumnas_235JB.Open();
+                using (SqlDataReader lector_235JB = cmd_235JB.ExecuteReader())
+                {
+                    while (lector_235JB.Read())
+                        textos_235JB[lector_235JB.GetString(0)] = lector_235JB.GetString(1);
+                }
+            }
+            return textos_235JB;
+        }
+
         public int GuardarTraduccion(Traduccion traduccion)
         {
             cn.Open();

@@ -11,7 +11,7 @@ namespace DAL
         public DataTable Listar_235JB()
         {
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
-            using (SqlDataAdapter da_235JB = new SqlDataAdapter("SELECT Codigo, Nombre, Precio, Disponible, Stock FROM Producto ORDER BY Nombre", cn_235JB))
+            using (SqlDataAdapter da_235JB = new SqlDataAdapter("SELECT Codigo, Nombre, Precio, Disponible, Stock FROM Producto WHERE Bit_Lo_Bo = 0 ORDER BY Nombre", cn_235JB))
             {
                 DataTable dt_235JB = new DataTable();
                 da_235JB.Fill(dt_235JB);
@@ -24,7 +24,7 @@ namespace DAL
         {
             List<Producto> lista_235JB = new List<Producto>();
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
-            using (SqlCommand cmd_235JB = new SqlCommand("SELECT Codigo, Nombre, Precio, Disponible, Stock FROM Producto WHERE Disponible = 1 ORDER BY Nombre", cn_235JB))
+            using (SqlCommand cmd_235JB = new SqlCommand("SELECT Codigo, Nombre, Precio, Disponible, Stock FROM Producto WHERE Disponible = 1 AND Bit_Lo_Bo = 0 ORDER BY Nombre", cn_235JB))
             {
                 cn_235JB.Open();
                 using (SqlDataReader r_235JB = cmd_235JB.ExecuteReader())
@@ -50,12 +50,12 @@ namespace DAL
         }
 
         
-        // Codigo de otro producto con el mismo nombre (sin distinguir mayusculas), o null. codigoExcluido: el propio producto al modificar.
+        
         public int? ObtenerCodigoPorNombre_235JB(string nombre_235JB, int codigoExcluido_235JB)
         {
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
             using (SqlCommand cmd_235JB = new SqlCommand(
-                "SELECT TOP 1 Codigo FROM Producto WHERE LTRIM(RTRIM(Nombre)) = @nombre AND Codigo <> @excluido ORDER BY Codigo", cn_235JB))
+                "SELECT TOP 1 Codigo FROM Producto WHERE LTRIM(RTRIM(Nombre)) = @nombre AND Codigo <> @excluido AND Bit_Lo_Bo = 0 ORDER BY Codigo", cn_235JB))
             {
                 cmd_235JB.Parameters.AddWithValue("@nombre", nombre_235JB.Trim());
                 cmd_235JB.Parameters.AddWithValue("@excluido", codigoExcluido_235JB);
@@ -80,7 +80,7 @@ namespace DAL
             }
         }
 
-        public void Modificar_235JB(Producto p_235JB)
+        public void ActualizarProducto_235JB(Producto p_235JB)
         {
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
             using (SqlCommand cmd_235JB = new SqlCommand(
@@ -97,21 +97,16 @@ namespace DAL
         }
 
 
+        // Borrado logico: el producto queda en la base (y en sus pedidos y su bitacora) pero deja de aparecer en el sistema.
+        // El trigger TR_Producto_RegistrarCambio registra la baja en Producto_C.
         public void Eliminar_235JB(int codigo_235JB)
         {
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
-            using (SqlCommand cmd_235JB = new SqlCommand("DELETE FROM Producto WHERE Codigo = @codigo", cn_235JB))
+            using (SqlCommand cmd_235JB = new SqlCommand("UPDATE Producto SET Bit_Lo_Bo = 1 WHERE Codigo = @codigo AND Bit_Lo_Bo = 0", cn_235JB))
             {
                 cmd_235JB.Parameters.AddWithValue("@codigo", codigo_235JB);
                 cn_235JB.Open();
-                try
-                {
-                    cmd_235JB.ExecuteNonQuery();
-                }
-                catch (SqlException ex_235JB) when (ex_235JB.Number == 547)
-                {
-                    throw new InvalidOperationException("No se puede eliminar el producto porque figura en pedidos. Puede marcarlo como no disponible.");
-                }
+                cmd_235JB.ExecuteNonQuery();
             }
         }
 

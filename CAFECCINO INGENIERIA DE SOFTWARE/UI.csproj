@@ -44,6 +44,10 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="PdfSharp">
+      <HintPath>..\SERVICIOS\Libs\PdfSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdministradorIdiomas.cs">
@@ -70,7 +74,6 @@
     <Compile Include="frmCambiarContraseña.Designer.cs">
       <DependentUpon>frmCambiarContraseña.cs</DependentUpon>
     </Compile>
-    <Compile Include="ContextoPedido.cs" />
     <Compile Include="frmAsignarMesaYMozo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +109,42 @@
     </Compile>
     <Compile Include="frmGestionDePedido.Designer.cs">
       <DependentUpon>frmGestionDePedido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmIniciarRegistro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmIniciarRegistro.Designer.cs">
+      <DependentUpon>frmIniciarRegistro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmIngresarDatosCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmIngresarDatosCliente.Designer.cs">
+      <DependentUpon>frmIngresarDatosCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmRegistrarClienteReserva.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRegistrarClienteReserva.Designer.cs">
+      <DependentUpon>frmRegistrarClienteReserva.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultarDisponibilidadMesas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultarDisponibilidadMesas.Designer.cs">
+      <DependentUpon>frmConsultarDisponibilidadMesas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmGestionDeReservas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGestionDeReservas.Designer.cs">
+      <DependentUpon>frmGestionDeReservas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReporteInteligente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReporteInteligente.Designer.cs">
+      <DependentUpon>frmReporteInteligente.cs</DependentUpon>
     </Compile>
     <Compile Include="frmMesas.cs">
       <SubType>Form</SubType>
@@ -168,6 +207,9 @@
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="frmConfigurarConexion.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Traductor.cs" />
     <EmbeddedResource Include="AdministradorIdiomas.resx">
@@ -187,6 +229,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmEventos.resx">
       <DependentUpon>frmEventos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGestionDeReservas.resx">
+      <DependentUpon>frmGestionDeReservas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmInicio.resx">
       <DependentUpon>frmInicio.cs</DependentUpon>
@@ -231,6 +276,56 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Guias\01_Inicio_de_sesion.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Guias\02_Cerrar_sesion.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Guias\03_Cambiar_contrasena.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Guias\04_Gestion_de_usuarios.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Guias\05_Gestion_de_perfiles.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Guias\06_Gestion_de_idiomas.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Guias\07_Bitacora_de_eventos.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Guias\08_Verificacion_de_integridad.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Guias\09_Clientes.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Guias\10_Productos.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Guias\11_Mozos.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Guias\12_Mesas.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Guias\13_Bitacora_de_cambios.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Guias\14_Gestion_de_pedido.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Guias\15_Gestion_de_reservas.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Guias\16_Reporte_inteligente.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE\BE.csproj">

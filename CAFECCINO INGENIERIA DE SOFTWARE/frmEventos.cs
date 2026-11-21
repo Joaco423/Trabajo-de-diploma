@@ -16,6 +16,10 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
     {
         BLLEvento bllevento = new BLLEvento();
         Traductor traductor = new Traductor();
+
+        // Mientras se recargan los combos no se deben disparar sus eventos
+        private bool _cargandoFiltros_235JB;
+
         public frmEventos()
         {
             InitializeComponent();
@@ -28,46 +32,86 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 
         private void frmEventos_Load(object sender, EventArgs e)
         {
+            CargarFiltros_235JB();
             dataGridView1.DataSource = bllevento.ObtenerEventos();
-            
-            cmbModulo.Items.Add("Todos");
-            cmbModulo.Items.Add("Login");
-            cmbModulo.Items.Add("Usuarios");
-            cmbModulo.Items.Add("Permisos");
-            cmbEvento.Items.Add("Todos");
-            cmbEvento.Items.Add("Inicio de sesión exitoso");
-            cmbEvento.Items.Add("Cierre de sesión");
+        }
 
-            cmbEvento.SelectedIndex = 0;
-            cmbModulo.SelectedIndex = 0;
+        // Los combos se arman con lo que hay guardado en la bitacora (modulos, criticidades y tipos de evento)
+        private void CargarFiltros_235JB()
+        {
+            _cargandoFiltros_235JB = true;
+            try
+            {
+                CargarCombo_235JB(cmbModulo, "Todos", bllevento.ObtenerModulos_235JB());
+                CargarCombo_235JB(cmbCriticidad, "Todas", bllevento.ObtenerCriticidades_235JB());
+                CargarTiposDeEvento_235JB();
+            }
+            finally
+            {
+                _cargandoFiltros_235JB = false;
+            }
+        }
 
-            cmbCriticidad.Items.Add("Todas");
-            cmbCriticidad.Items.Add("Alta");
-            cmbCriticidad.Items.Add("Media");
-            cmbCriticidad.Items.Add("Baja");
+        // Recarga los valores del combo y conserva lo que estaba seleccionado (si sigue existiendo)
+        private void CargarCombo_235JB(ComboBox combo_235JB, string todos_235JB, List<string> valores_235JB)
+        {
+            string seleccionado_235JB = combo_235JB.SelectedItem as string;
+            combo_235JB.Items.Clear();
+            combo_235JB.Items.Add(todos_235JB);
+            combo_235JB.Items.AddRange(valores_235JB.ToArray());
 
-            cmbCriticidad.SelectedIndex = 0;
+            int indice_235JB = seleccionado_235JB == null ? 0 : combo_235JB.Items.IndexOf(seleccionado_235JB);
+            combo_235JB.SelectedIndex = indice_235JB < 0 ? 0 : indice_235JB;
+        }
+
+        // Los tipos de evento dependen del modulo elegido
+        private void CargarTiposDeEvento_235JB()
+        {
+            CargarCombo_235JB(cmbEvento, "Todos", bllevento.ObtenerTiposDeEvento_235JB(ValorSeleccionado_235JB(cmbModulo)));
+        }
+
+        // "" cuando esta elegido "Todos"/"Todas" (la primera opcion)
+        private string ValorSeleccionado_235JB(ComboBox combo_235JB)
+        {
+            return combo_235JB.SelectedIndex <= 0 ? "" : (string)combo_235JB.SelectedItem;
+        }
+
+        private void cmbModulo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_cargandoFiltros_235JB) return;
+
+            _cargandoFiltros_235JB = true;
+            try
+            {
+                CargarTiposDeEvento_235JB();
+            }
+            finally
+            {
+                _cargandoFiltros_235JB = false;
+            }
+        }
+
+        private void AplicarFiltros_235JB()
+        {
+            // La fecha es opcional: si la casilla del selector no esta tildada se ven todas las fechas
+            DateTime? fecha_235JB = dateTimePicker1.Checked ? dateTimePicker1.Value.Date : (DateTime?)null;
+
+            dataGridView1.DataSource = bllevento.FiltrarEventos_235JB(
+                ValorSeleccionado_235JB(cmbModulo),
+                ValorSeleccionado_235JB(cmbCriticidad),
+                ValorSeleccionado_235JB(cmbEvento),
+                fecha_235JB);
         }
 
         private void Buscar_Click(object sender, EventArgs e)
         {
-            string modulo = cmbModulo.Text;
-            string criticidad = cmbCriticidad.Text;
-            string fecha = dateTimePicker1.Value.ToString("yyyy-MM-dd");
-          string evento = cmbEvento.Text;
+            AplicarFiltros_235JB();
+        }
 
-            if (modulo == "Todos")
-                modulo = "";
-
-            if (criticidad == "Todas")
-                criticidad = "";
-
-            if (evento == "Todos")
-                evento = "";
-
-            BLLEvento bll = new BLLEvento();
-
-            dataGridView1.DataSource = bll.FiltrarEventos(modulo, criticidad,  evento, fecha);
+        // Cada evento (y cada modulo) nuevo se suma a los combos: se actualizan al volver a esta pantalla
+        private void frmEventos_Activated(object sender, EventArgs e)
+        {
+            CargarFiltros_235JB();
         }
 
         private void frmEventos_FormClosing(object sender, FormClosingEventArgs e)
@@ -84,8 +128,12 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         {
             if (this.Visible)
             {
-            
+
                 traductor.TraducirFormulario(this, Singleton.Instancia.IdiomaActual);
+
+                // Se registran eventos nuevos mientras la pantalla esta oculta: se actualizan los combos y la grilla
+                CargarFiltros_235JB();
+                AplicarFiltros_235JB();
             }
         }
     }

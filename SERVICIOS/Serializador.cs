@@ -7,8 +7,7 @@ using System.Xml.Serialization;
 
 namespace SERVICIOS
 {
-    // Serializa un objeto a texto en XML o JSON y lo vuelve a armar a partir de ese texto.
-    // El formato se indica con las palabras "XML" o "JSON" (las que ofrece el combo de la pantalla).
+    
     public class Serializador
     {
         public string Serializar_235JB<T>(T objeto_235JB, string formato_235JB)
@@ -50,7 +49,7 @@ namespace SERVICIOS
             }
         }
 
-        // Devuelve "XML" o "JSON"; cualquier otra cosa no se soporta.
+        
         public string NormalizarFormato_235JB(string formato_235JB)
         {
             string f_235JB = (formato_235JB ?? string.Empty).Trim().ToUpperInvariant();

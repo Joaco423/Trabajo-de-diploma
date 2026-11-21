@@ -8,8 +8,8 @@ namespace DAL
     public class DALPedido
     {
         
-        // CU04 pasos 3-5: guarda pedido, descuenta stock y genera factura en una transaccion
-        public void ConfirmarPedido_235JB(Pedido pedido_235JB, Factura factura_235JB)
+        // CU04 pasos 3-5: guarda el pedido con su detalle y descuenta el stock en una transaccion
+        public void ConfirmarPedido_235JB(Pedido pedido_235JB)
         {
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
             {
@@ -21,7 +21,6 @@ namespace DAL
                         VerificarSinPedidoEnCurso_235JB(cn_235JB, tx_235JB, pedido_235JB.DNI);
                         GuardarPedido_235JB(cn_235JB, tx_235JB, pedido_235JB);
                         DescontarStock_235JB(cn_235JB, tx_235JB, pedido_235JB.Detalles);
-                        GuardarFactura_235JB(cn_235JB, tx_235JB, pedido_235JB, factura_235JB);
                         tx_235JB.Commit();
                     }
                     catch
@@ -75,7 +74,7 @@ namespace DAL
        
 
         
-        // Fin de la atencion: pedido Finalizado y libera mesa y mozo
+        
         public void FinalizarAtencion_235JB(int codigoPedido_235JB, out int numeroMesa_235JB, out int dniMozo_235JB)
         {
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
@@ -171,27 +170,8 @@ namespace DAL
             }
         }
 
-        // CU04 paso 5: genera y guarda la factura
-        private void GuardarFactura_235JB(SqlConnection cn_235JB, SqlTransaction tx_235JB, Pedido pedido_235JB, Factura factura_235JB)
-        {
-            factura_235JB.CodigoPedido = pedido_235JB.CodigoPedido;
-            using (SqlCommand cmd_235JB = new SqlCommand(
-                @"INSERT INTO Factura (CodigoPedido, DNI, Fecha, Hora, Total, Estado)
-                  VALUES (@pedido, @dni, @fecha, @hora, @total, @estado);
-                  SELECT CAST(SCOPE_IDENTITY() AS int);", cn_235JB, tx_235JB))
-            {
-                cmd_235JB.Parameters.AddWithValue("@pedido", factura_235JB.CodigoPedido);
-                cmd_235JB.Parameters.AddWithValue("@dni", factura_235JB.DNI);
-                cmd_235JB.Parameters.AddWithValue("@fecha", factura_235JB.Fecha.Date);
-                cmd_235JB.Parameters.AddWithValue("@hora", factura_235JB.Hora);
-                cmd_235JB.Parameters.AddWithValue("@total", factura_235JB.Total);
-                cmd_235JB.Parameters.AddWithValue("@estado", factura_235JB.Estado);
-                factura_235JB.NumeroFactura = (int)cmd_235JB.ExecuteScalar();
-            }
-        }
-
    
-        // CU05 y CU06 flujo 1.3: pedido Cancelado, devuelve stock, factura Anulada, quita de las listas
+        // CU05 y CU06 flujo 1.3: pedido Cancelado, devuelve stock, quita de las listas
         public void CancelarPedido_235JB(int codigoPedido_235JB)
         {
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
@@ -228,7 +208,6 @@ namespace DAL
                             @"UPDATE p SET p.Stock = p.Stock + d.Cantidad
                               FROM Producto p INNER JOIN DetallePedido d ON d.Codigo = p.Codigo
                               WHERE d.CodigoPedido = @c", codigoPedido_235JB, dni_235JB);
-                        Ejecutar_235JB(cn_235JB, tx_235JB, "UPDATE Factura SET Estado = 'Anulada' WHERE CodigoPedido = @c", codigoPedido_235JB, dni_235JB);
                         Ejecutar_235JB(cn_235JB, tx_235JB, "UPDATE Pedido SET Estado = 'Cancelado' WHERE CodigoPedido = @c", codigoPedido_235JB, dni_235JB);
                         Ejecutar_235JB(cn_235JB, tx_235JB, "DELETE FROM ListaDeEsperaMesas WHERE DNI = @dni", codigoPedido_235JB, dni_235JB);
                         Ejecutar_235JB(cn_235JB, tx_235JB, "DELETE FROM ListaDeEsperaMozos WHERE DNI = @dni", codigoPedido_235JB, dni_235JB);
@@ -284,32 +263,25 @@ namespace DAL
             return lista_235JB;
         }
 
-        public Factura ObtenerFacturaPorPedido_235JB(int codigoPedido_235JB)
+        
+        public List<int> ObtenerCodigosPedidosSinAtencion_235JB()
         {
+            List<int> lista_235JB = new List<int>();
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
             using (SqlCommand cmd_235JB = new SqlCommand(
-                "SELECT NumeroFactura, CodigoPedido, DNI, Fecha, Hora, Total, Estado FROM Factura WHERE CodigoPedido = @c", cn_235JB))
+                @"SELECT p.CodigoPedido FROM Pedido p
+                  WHERE p.Estado = 'Confirmado' AND NOT EXISTS (SELECT 1 FROM Atencion a WHERE a.CodigoPedido = p.CodigoPedido)", cn_235JB))
             {
-                cmd_235JB.Parameters.AddWithValue("@c", codigoPedido_235JB);
                 cn_235JB.Open();
                 using (SqlDataReader r_235JB = cmd_235JB.ExecuteReader())
                 {
-                    if (!r_235JB.Read()) return null;
-                    return new Factura
-                    {
-                        NumeroFactura = r_235JB.GetInt32(0),
-                        CodigoPedido = r_235JB.GetInt32(1),
-                        DNI = r_235JB.GetInt32(2),
-                        Fecha = r_235JB.GetDateTime(3),
-                        Hora = r_235JB.GetString(4),
-                        Total = r_235JB.GetInt32(5),
-                        Estado = r_235JB.GetString(6)
-                    };
+                    while (r_235JB.Read())
+                        lista_235JB.Add(r_235JB.GetInt32(0));
                 }
             }
+            return lista_235JB;
         }
 
-        
         public Pedido ObtenerPedidoConfirmadoSinAtencion_235JB(int dni_235JB)
         {
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))

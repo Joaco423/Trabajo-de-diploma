@@ -13,6 +13,7 @@ namespace BLL
         private readonly DALProducto _productoDAL_235JB = new DALProducto();
         private readonly DALPedido _pedidoDAL_235JB = new DALPedido();
         private readonly DALCliente _clienteDAL_235JB = new DALCliente();
+        private readonly DALAtencion _atencionDAL_235JB = new DALAtencion();
         private readonly BLLIntegridad _integridad_235JB = new BLLIntegridad();
         private readonly BLLEvento _evento_235JB = new BLLEvento();
 
@@ -36,7 +37,7 @@ namespace BLL
 
          
             if (!Singleton.Instancia.EsAdministrador() && !_integridad_235JB.ValidarIntegridadGeneral())
-                throw new SistemaNoDisponibleException();
+                throw new InvalidOperationException("msg_SistemaCaido");
 
             Producto producto_235JB = _productoDAL_235JB.ObtenerPorCodigo_235JB(codigoProducto_235JB);
             if (producto_235JB == null)
@@ -44,14 +45,23 @@ namespace BLL
 
             // CU03 flujo 4.1
             if (!producto_235JB.Disponible)
-                throw new ProductoNoDisponibleException(producto_235JB);
+            {
+                InvalidOperationException error_235JB = new InvalidOperationException("msg_ProductoNoDisponible");
+                error_235JB.Data["Nombre"] = producto_235JB.Nombre;
+                throw error_235JB;
+            }
 
             DetallePedido existente_235JB = detalle_235JB.FirstOrDefault(d_235JB => d_235JB.Codigo == producto_235JB.Codigo);
             int cantidadTotal_235JB = cantidad_235JB + (existente_235JB != null ? existente_235JB.Cantidad : 0);
 
             // CU03 flujo 4.2
             if (producto_235JB.Stock < cantidadTotal_235JB)
-                throw new StockInsuficienteException(producto_235JB, cantidadTotal_235JB);
+            {
+                InvalidOperationException error_235JB = new InvalidOperationException("msg_StockInsuficiente");
+                error_235JB.Data["Nombre"] = producto_235JB.Nombre;
+                error_235JB.Data["Stock"] = producto_235JB.Stock;
+                throw error_235JB;
+            }
 
             if (existente_235JB != null)
             {
@@ -83,8 +93,15 @@ namespace BLL
         }
 
        
-        // CU04 pasos 3-5: pedido Confirmado + stock + factura (una transaccion en DAL), luego digito verificador y evento
-        public Factura ConfirmarPedido_235JB(int dni_235JB, List<DetallePedido> detalle_235JB, out Pedido pedido_235JB)
+       
+        public bool EstaEnEsperaDeReserva_235JB(int dni_235JB)
+        {
+            return _atencionDAL_235JB.EstaEnListaDeEspera_235JB(true, dni_235JB)
+                && _pedidoDAL_235JB.ObtenerPedidoConfirmadoSinAtencion_235JB(dni_235JB) == null;
+        }
+
+        // CU04 pasos 3-5: pedido Confirmado + detalle + stock (una transaccion en DAL), luego digito verificador y evento
+        public Pedido ConfirmarPedido_235JB(int dni_235JB, List<DetallePedido> detalle_235JB)
         {
             if (detalle_235JB == null || detalle_235JB.Count == 0)
                 throw new InvalidOperationException("El pedido no tiene productos.");
@@ -93,15 +110,22 @@ namespace BLL
 
            
             Pedido enCurso_235JB = _pedidoDAL_235JB.ObtenerPedidoEnCurso_235JB(dni_235JB);
-            // Regla: un cliente con pedido en curso no puede confirmar otro
+            
             if (enCurso_235JB != null)
-                throw new PedidoEnCursoException(enCurso_235JB.CodigoPedido);
+            {
+                InvalidOperationException error_235JB = new InvalidOperationException("msg_PedidoEnCurso");
+                error_235JB.Data["CodigoPedido"] = enCurso_235JB.CodigoPedido;
+                throw error_235JB;
+            }
+
+            if (EstaEnEsperaDeReserva_235JB(dni_235JB))
+                throw new InvalidOperationException("msg_EnEsperaDeReserva");
 
             DateTime ahora_235JB = DateTime.Now;
             string hora_235JB = ahora_235JB.ToString("HH:mm:ss");
             int total_235JB = CalcularImporte_235JB(detalle_235JB);
 
-            pedido_235JB = new Pedido
+            Pedido pedido_235JB = new Pedido
             {
                 DNI = dni_235JB,
                 Fecha = ahora_235JB.Date,
@@ -110,42 +134,36 @@ namespace BLL
                 Estado = "Confirmado",
                 Detalles = detalle_235JB
             };
-            Factura factura_235JB = new Factura
-            {
-                DNI = dni_235JB,
-                Fecha = ahora_235JB.Date,
-                Hora = hora_235JB,
-                Total = total_235JB,
-                Estado = "Emitida"
-            };
 
-            _pedidoDAL_235JB.ConfirmarPedido_235JB(pedido_235JB, factura_235JB);
+            _pedidoDAL_235JB.ConfirmarPedido_235JB(pedido_235JB);
 
             _integridad_235JB.SincronizarFilasNuevas("Pedido");
             _integridad_235JB.SincronizarFilasNuevas("DetallePedido");
-            _integridad_235JB.SincronizarFilasNuevas("Factura");
             foreach (DetallePedido d_235JB in detalle_235JB)
                 _integridad_235JB.SincronizarFilaPorClave("Producto", d_235JB.Codigo);
+            // El descuento de stock agrega registros en la bitacora de cambios (trigger de Producto)
+            _integridad_235JB.SincronizarTabla("Producto_C");
+            BLLProducto.AvisarProductosCambiados_235JB();
 
             _evento_235JB.RegistrarEvento(UsuarioActual_235JB(),
-                "Pedido " + pedido_235JB.CodigoPedido + " confirmado. Factura " + factura_235JB.NumeroFactura, "Pedidos", "Media");
+                "Pedido " + pedido_235JB.CodigoPedido + " confirmado. Total " + pedido_235JB.Total, "Pedidos", "Media");
 
-            return factura_235JB;
+            return pedido_235JB;
         }
 
        
-        // CU05 y CU06 flujo 1.3: devuelve stock, anula factura y quita de la lista (digito verificador + evento)
+        // CU05 y CU06 flujo 1.3: devuelve stock, cancela el pedido y quita de la lista (digito verificador + evento)
         public void CancelarPedido_235JB(int codigoPedido_235JB)
         {
             List<DetallePedido> detalle_235JB = _pedidoDAL_235JB.ObtenerDetalle_235JB(codigoPedido_235JB);
-            Factura factura_235JB = _pedidoDAL_235JB.ObtenerFacturaPorPedido_235JB(codigoPedido_235JB);
 
             _pedidoDAL_235JB.CancelarPedido_235JB(codigoPedido_235JB);
 
             foreach (DetallePedido d_235JB in detalle_235JB)
                 _integridad_235JB.SincronizarFilaPorClave("Producto", d_235JB.Codigo);
-            if (factura_235JB != null)
-                _integridad_235JB.SincronizarFilaPorClave("Factura", factura_235JB.NumeroFactura);
+            // La devolucion de stock agrega registros en la bitacora de cambios (trigger de Producto)
+            _integridad_235JB.SincronizarTabla("Producto_C");
+            BLLProducto.AvisarProductosCambiados_235JB();
             _integridad_235JB.SincronizarFilaPorClave("Pedido", codigoPedido_235JB);
             _integridad_235JB.SincronizarFilasNuevas("ListaDeEsperaMesas");
             _integridad_235JB.SincronizarFilasNuevas("ListaDeEsperaMozos");
@@ -167,10 +185,5 @@ namespace BLL
             return _pedidoDAL_235JB.ObtenerPedidoEnCurso_235JB(dni_235JB);
         }
 
-     
-        public Factura ObtenerFacturaPorPedido_235JB(int codigoPedido_235JB)
-        {
-            return _pedidoDAL_235JB.ObtenerFacturaPorPedido_235JB(codigoPedido_235JB);
-        }
     }
 }

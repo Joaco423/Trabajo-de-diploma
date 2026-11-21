@@ -16,7 +16,6 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 {
     public partial class GestionUsuarios : Form, IObserver
     {
-        private BLLBitacoraUsuario _bllBitacora = new BLLBitacoraUsuario();
         BLLUsuario bllUsuario = new BLLUsuario();
         BLLPermiso _permisoBLL = new BLLPermiso();
         Traductor traductor = new Traductor();
@@ -182,7 +181,6 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             }
 
             Usuario usuario = new Usuario();
-            Usuario anterior = bllUsuario.ObtenerPorDNI(Convert.ToInt32(textBox1.Text));
 
             usuario.DNI = Convert.ToInt32(textBox1.Text);
             usuario.NombreUsuario = textBox2.Text;
@@ -195,7 +193,6 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 
             bllUsuario.ModificarUsuario(usuario);
             bllUsuario.SincronizarDigitos();
-            _bllBitacora.RegistrarModificacion(anterior, usuario, Singleton.Instancia.Usuario.NombreUsuario);
 
             MessageBox.Show(traductor.ObtenerMensaje("GestionUsuarios", "msg_UsuarioModificado", "Usuario modificado correctamente."));
 

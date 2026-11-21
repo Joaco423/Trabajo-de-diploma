@@ -13,5 +13,8 @@ namespace BE
        
         public string Estado { get; set; }
         public bool Activo { get; set; }
+
+        
+        public int MesasAtendiendo { get; set; }
     }
 }

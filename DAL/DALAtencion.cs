@@ -34,6 +34,28 @@ namespace DAL
             return lista_235JB;
         }
 
+        // Mesas "Ocupada" que no figuran en la atencion de ningun pedido en curso
+        public List<int> ObtenerMesasOcupadasSinAtencion_235JB()
+        {
+            List<int> lista_235JB = new List<int>();
+            using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
+            using (SqlCommand cmd_235JB = new SqlCommand(
+                @"SELECT m.NumeroMesa FROM Mesa m
+                  WHERE m.Estado = 'Ocupada'
+                    AND NOT EXISTS (SELECT 1 FROM Atencion a INNER JOIN Pedido p ON p.CodigoPedido = a.CodigoPedido
+                                    WHERE a.NumeroMesa = m.NumeroMesa AND p.Estado = 'Confirmado')
+                  ORDER BY m.NumeroMesa", cn_235JB))
+            {
+                cn_235JB.Open();
+                using (SqlDataReader r_235JB = cmd_235JB.ExecuteReader())
+                {
+                    while (r_235JB.Read())
+                        lista_235JB.Add(r_235JB.GetInt32(0));
+                }
+            }
+            return lista_235JB;
+        }
+
         public void ActualizarEstadoMesa_235JB(int numeroMesa_235JB, string estado_235JB)
         {
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
@@ -47,13 +69,20 @@ namespace DAL
         }
 
         
-        public List<Mozo> ObtenerMozosDisponibles_235JB()
+        // Mozos activos que todavia pueden tomar una mesa (atienden menos mesas que su capacidad), primero los que menos atienden
+        public List<Mozo> ObtenerMozosDisponibles_235JB(int capacidad_235JB)
         {
             List<Mozo> lista_235JB = new List<Mozo>();
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
             using (SqlCommand cmd_235JB = new SqlCommand(
-                "SELECT DNIMozo, Nombre, Apellido, Mail, NumTelefono, Estado FROM Mozo WHERE Estado = 'Disponible' AND Activo = 1 ORDER BY Apellido, Nombre", cn_235JB))
+                @"SELECT m.DNIMozo, m.Nombre, m.Apellido, m.Mail, m.NumTelefono, m.Estado, x.Mesas
+                  FROM Mozo m
+                  CROSS APPLY (SELECT COUNT(*) AS Mesas FROM Atencion a INNER JOIN Pedido p ON p.CodigoPedido = a.CodigoPedido
+                               WHERE a.DNIMozo = m.DNIMozo AND p.Estado = 'Confirmado') x
+                  WHERE m.Activo = 1 AND x.Mesas < @capacidad
+                  ORDER BY x.Mesas, m.Apellido, m.Nombre", cn_235JB))
             {
+                cmd_235JB.Parameters.AddWithValue("@capacidad", capacidad_235JB);
                 cn_235JB.Open();
                 using (SqlDataReader r_235JB = cmd_235JB.ExecuteReader())
                 {
@@ -66,12 +95,27 @@ namespace DAL
                             Apellido = r_235JB.GetString(2),
                             Mail = r_235JB.GetString(3),
                             NumTelefono = r_235JB.GetInt32(4),
-                            Estado = r_235JB.GetString(5)
+                            Estado = r_235JB.GetString(5),
+                            MesasAtendiendo = r_235JB.GetInt32(6)
                         });
                     }
                 }
             }
             return lista_235JB;
+        }
+
+        // Pedidos en curso (confirmados con atencion) del mozo: las mesas que esta atendiendo
+        public int ContarAtencionesEnCurso_235JB(int dniMozo_235JB)
+        {
+            using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
+            using (SqlCommand cmd_235JB = new SqlCommand(
+                @"SELECT COUNT(*) FROM Atencion a INNER JOIN Pedido p ON p.CodigoPedido = a.CodigoPedido
+                  WHERE a.DNIMozo = @dni AND p.Estado = 'Confirmado'", cn_235JB))
+            {
+                cmd_235JB.Parameters.AddWithValue("@dni", dniMozo_235JB);
+                cn_235JB.Open();
+                return (int)cmd_235JB.ExecuteScalar();
+            }
         }
 
         public void ActualizarEstadoMozo_235JB(int dniMozo_235JB, string estado_235JB)
@@ -87,17 +131,16 @@ namespace DAL
         }
 
         
-        // CU06 paso 4: registra la relacion cliente-pedido-factura-mesa-mozo
+        // CU06 paso 4: registra la relacion cliente-pedido-mesa-mozo
         public void GuardarAtencion_235JB(Atencion a_235JB)
         {
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
             using (SqlCommand cmd_235JB = new SqlCommand(
-                @"INSERT INTO Atencion (CodigoPedido, DNI, NumeroFactura, NumeroMesa, DNIMozo)
-                  VALUES (@pedido, @dni, @factura, @mesa, @mozo)", cn_235JB))
+                @"INSERT INTO Atencion (CodigoPedido, DNI, NumeroMesa, DNIMozo)
+                  VALUES (@pedido, @dni, @mesa, @mozo)", cn_235JB))
             {
                 cmd_235JB.Parameters.AddWithValue("@pedido", a_235JB.CodigoPedido);
                 cmd_235JB.Parameters.AddWithValue("@dni", a_235JB.DNI);
-                cmd_235JB.Parameters.AddWithValue("@factura", a_235JB.NumeroFactura);
                 cmd_235JB.Parameters.AddWithValue("@mesa", a_235JB.NumeroMesa);
                 cmd_235JB.Parameters.AddWithValue("@mozo", a_235JB.DNIMozo);
                 cn_235JB.Open();
@@ -110,7 +153,7 @@ namespace DAL
         {
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
             using (SqlCommand cmd_235JB = new SqlCommand(
-                @"SELECT a.CodigoPedido, a.NumeroFactura, a.NumeroMesa, m.Capacidad, z.Nombre, z.Apellido
+                @"SELECT a.CodigoPedido, a.NumeroMesa, m.Capacidad, z.Nombre, z.Apellido
                   FROM Atencion a
                   INNER JOIN Mesa m ON m.NumeroMesa = a.NumeroMesa
                   INNER JOIN Mozo z ON z.DNIMozo = a.DNIMozo
@@ -124,11 +167,10 @@ namespace DAL
                     return new ResumenAtencion
                     {
                         CodigoPedido = r_235JB.GetInt32(0),
-                        NumeroFactura = r_235JB.GetInt32(1),
-                        NumeroMesa = r_235JB.GetInt32(2),
-                        Capacidad = r_235JB.GetInt32(3),
-                        NombreMozo = r_235JB.GetString(4),
-                        ApellidoMozo = r_235JB.GetString(5)
+                        NumeroMesa = r_235JB.GetInt32(1),
+                        Capacidad = r_235JB.GetInt32(2),
+                        NombreMozo = r_235JB.GetString(3),
+                        ApellidoMozo = r_235JB.GetString(4)
                     };
                 }
             }
@@ -186,6 +228,35 @@ namespace DAL
             }
         }
 
+        // La lista de espera de mesas la usan dos flujos: clientes con un pedido confirmado que esperan mesa (Gestion de pedido)
+        // y clientes que esperan poder reservar una mesa (Gestion de reservas). Se distinguen por si tienen un pedido confirmado
+        // sin atencion. Devuelve el primero (por Fecha y Hora) del tipo pedido.
+        public ListaDeEspera ObtenerPrimeroEnListaDeEsperaDeMesas_235JB(bool conPedidoPendiente_235JB)
+        {
+            using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
+            using (SqlCommand cmd_235JB = new SqlCommand(
+                @"SELECT TOP 1 l.DNI, l.Nombre, l.Apellido, l.Fecha, l.Hora FROM ListaDeEsperaMesas l
+                  WHERE " + (conPedidoPendiente_235JB ? "" : "NOT ") + @"EXISTS (SELECT 1 FROM Pedido p
+                                WHERE p.DNI = l.DNI AND p.Estado = 'Confirmado'
+                                  AND NOT EXISTS (SELECT 1 FROM Atencion a WHERE a.CodigoPedido = p.CodigoPedido))
+                  ORDER BY l.Fecha, l.Hora", cn_235JB))
+            {
+                cn_235JB.Open();
+                using (SqlDataReader r_235JB = cmd_235JB.ExecuteReader())
+                {
+                    if (!r_235JB.Read()) return null;
+                    return new ListaDeEspera
+                    {
+                        DNI = r_235JB.GetInt32(0),
+                        Nombre = r_235JB.GetString(1),
+                        Apellido = r_235JB.GetString(2),
+                        Fecha = r_235JB.GetDateTime(3),
+                        Hora = r_235JB.GetString(4)
+                    };
+                }
+            }
+        }
+
         // CU05 y CU06 flujos 1.2 y 1.3: quita al cliente de la lista
         public void QuitarDeListaDeEspera_235JB(bool mesas_235JB, int dni_235JB)
         {
@@ -203,7 +274,10 @@ namespace DAL
         {
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
             using (SqlDataAdapter da_235JB = new SqlDataAdapter(
-                @"SELECT 'Mesa' AS Lista, DNI, Nombre, Apellido, Fecha, Hora FROM ListaDeEsperaMesas
+                @"SELECT CASE WHEN EXISTS (SELECT 1 FROM Pedido p WHERE p.DNI = l.DNI AND p.Estado = 'Confirmado'
+                                           AND NOT EXISTS (SELECT 1 FROM Atencion a WHERE a.CodigoPedido = p.CodigoPedido))
+                              THEN 'Mesa' ELSE 'Reserva' END AS Lista, l.DNI, l.Nombre, l.Apellido, l.Fecha, l.Hora
+                  FROM ListaDeEsperaMesas l
                   UNION ALL
                   SELECT 'Mozo' AS Lista, DNI, Nombre, Apellido, Fecha, Hora FROM ListaDeEsperaMozos
                   ORDER BY Fecha, Hora", cn_235JB))
@@ -227,6 +301,22 @@ namespace DAL
                   INNER JOIN Mozo z ON z.DNIMozo = a.DNIMozo
                   WHERE p.Estado = 'Confirmado'
                   ORDER BY p.CodigoPedido", cn_235JB))
+            {
+                DataTable dt_235JB = new DataTable();
+                da_235JB.Fill(dt_235JB);
+                return dt_235JB;
+            }
+        }
+
+        // Clientes que esperan una mesa para reservar (los que no tienen un pedido confirmado sin atender), en orden de llegada
+        public DataTable ListarEsperaDeReservas_235JB()
+        {
+            using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
+            using (SqlDataAdapter da_235JB = new SqlDataAdapter(
+                @"SELECT l.DNI, l.Nombre, l.Apellido, l.Fecha, l.Hora FROM ListaDeEsperaMesas l
+                  WHERE NOT EXISTS (SELECT 1 FROM Pedido p WHERE p.DNI = l.DNI AND p.Estado = 'Confirmado'
+                                    AND NOT EXISTS (SELECT 1 FROM Atencion a WHERE a.CodigoPedido = p.CodigoPedido))
+                  ORDER BY l.Fecha, l.Hora", cn_235JB))
             {
                 DataTable dt_235JB = new DataTable();
                 da_235JB.Fill(dt_235JB);

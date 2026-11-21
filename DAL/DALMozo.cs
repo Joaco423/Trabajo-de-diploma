@@ -11,11 +11,28 @@ namespace DAL
         {
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
             using (SqlDataAdapter da_235JB = new SqlDataAdapter(
-                "SELECT DNIMozo, Nombre, Apellido, Mail, NumTelefono, Estado, Activo FROM Mozo ORDER BY Apellido, Nombre", cn_235JB))
+                @"SELECT m.DNIMozo, m.Nombre, m.Apellido, m.Mail, m.NumTelefono, m.Estado, m.Activo,
+                         (SELECT COUNT(*) FROM Atencion a INNER JOIN Pedido p ON p.CodigoPedido = a.CodigoPedido
+                          WHERE a.DNIMozo = m.DNIMozo AND p.Estado = 'Confirmado') AS MesasAtendiendo
+                  FROM Mozo m ORDER BY m.Apellido, m.Nombre", cn_235JB))
             {
                 DataTable dt_235JB = new DataTable();
                 da_235JB.Fill(dt_235JB);
                 return dt_235JB;
+            }
+        }
+
+        
+        public int ContarAtencionesEnCurso_235JB(int dni_235JB)
+        {
+            using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
+            using (SqlCommand cmd_235JB = new SqlCommand(
+                @"SELECT COUNT(*) FROM Atencion a INNER JOIN Pedido p ON p.CodigoPedido = a.CodigoPedido
+                  WHERE a.DNIMozo = @dni AND p.Estado = 'Confirmado'", cn_235JB))
+            {
+                cmd_235JB.Parameters.AddWithValue("@dni", dni_235JB);
+                cn_235JB.Open();
+                return (int)cmd_235JB.ExecuteScalar();
             }
         }
 

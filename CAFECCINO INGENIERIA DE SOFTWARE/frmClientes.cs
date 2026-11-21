@@ -201,7 +201,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 LimpiarCampos_235JB();
                 ActualizarGrilla_235JB();
             }
-            catch (EntidadEnUsoException)
+            catch (InvalidOperationException ex_235JB) when (ex_235JB.Message == "msg_ClienteEnUso")
             {
                 Aviso_235JB(Msg_235JB("msg_ClienteEnUso", "No se puede desactivar el cliente porque tiene un pedido en curso."),
                     "msg_Error_Titulo", "Error", MessageBoxIcon.Error);
@@ -308,21 +308,45 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             if (!LeerSeleccionSerializacion_235JB(out int dni_235JB, out string formato_235JB))
                 return;
 
-            try
-            {
-                string ruta_235JB = _bllCliente_235JB.Serializar_235JB(dni_235JB, formato_235JB, out string texto_235JB);
+            string extension_235JB = formato_235JB.ToLowerInvariant();
 
-                lstSerializado.Items.Clear();
-                foreach (string linea_235JB in texto_235JB.Replace("\r", string.Empty).Split('\n'))
-                    lstSerializado.Items.Add(linea_235JB);
-
-                Aviso_235JB(string.Format(Msg_235JB("msg_ClienteSerializado", "Cliente serializado correctamente en: {0}"), ruta_235JB),
-                    "msg_Exito_Titulo", "Éxito", MessageBoxIcon.Information);
-            }
-            catch (Exception ex_235JB)
+            
+            using (SaveFileDialog dialogo_235JB = new SaveFileDialog())
             {
-                Aviso_235JB(Msg_235JB("msg_ErrorSerializar", "Error al serializar el cliente: ") + ex_235JB.Message,
-                    "msg_Error_Titulo", "Error", MessageBoxIcon.Error);
+                dialogo_235JB.Title = Msg_235JB("msg_GuardarSerializado", "Elija dónde guardar el archivo serializado");
+                dialogo_235JB.Filter = formato_235JB + " (*." + extension_235JB + ")|*." + extension_235JB;
+                dialogo_235JB.DefaultExt = extension_235JB;
+                dialogo_235JB.AddExtension = true;
+                dialogo_235JB.OverwritePrompt = true;
+                dialogo_235JB.FileName = _bllCliente_235JB.NombreArchivoSerializado_235JB(dni_235JB, formato_235JB);
+                try
+                {
+                    dialogo_235JB.InitialDirectory = _bllCliente_235JB.CarpetaSerializados_235JB();
+                }
+                catch
+                {
+                    
+                }
+
+                if (dialogo_235JB.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                try
+                {
+                    string ruta_235JB = _bllCliente_235JB.Serializar_235JB(dni_235JB, formato_235JB, dialogo_235JB.FileName, out string texto_235JB);
+
+                    lstSerializado.Items.Clear();
+                    foreach (string linea_235JB in texto_235JB.Replace("\r", string.Empty).Split('\n'))
+                        lstSerializado.Items.Add(linea_235JB);
+
+                    Aviso_235JB(string.Format(Msg_235JB("msg_ClienteSerializado", "Cliente serializado correctamente en: {0}"), ruta_235JB),
+                        "msg_Exito_Titulo", "Éxito", MessageBoxIcon.Information);
+                }
+                catch (Exception ex_235JB)
+                {
+                    Aviso_235JB(Msg_235JB("msg_ErrorSerializar", "Error al serializar el cliente: ") + ex_235JB.Message,
+                        "msg_Error_Titulo", "Error", MessageBoxIcon.Error);
+                }
             }
         }
 

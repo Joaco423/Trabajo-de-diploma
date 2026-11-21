@@ -11,8 +11,7 @@ namespace DAL
 {
     public class DALUsuario
     {
-        private readonly string connectionString =
-        @"Data Source=localhost;Initial Catalog=CAFECCINO1;Integrated Security=True";
+        private string connectionString { get { return Conexion.cadena; } }
 
         private readonly SqlConnection cn;
 

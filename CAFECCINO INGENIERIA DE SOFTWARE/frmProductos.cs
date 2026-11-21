@@ -17,6 +17,57 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
         public frmProductos()
         {
             InitializeComponent();
+
+            // Los productos tambien cambian desde otras pantallas (activar un cambio en la bitacora, el stock de un pedido):
+            // la grilla se actualiza sola
+            BLLProducto.ProductosCambiados_235JB += ProductosCambiados_235JB;
+            Disposed += (s_235JB, e_235JB) => BLLProducto.ProductosCambiados_235JB -= ProductosCambiados_235JB;
+        }
+
+        private void ProductosCambiados_235JB(object sender_235JB, EventArgs e_235JB)
+        {
+            if (IsDisposed || !IsHandleCreated)
+                return;
+            // Se actualiza cuando termina la operacion que hizo el cambio
+            BeginInvoke((MethodInvoker)RefrescarAutomaticamente_235JB);
+        }
+
+        // Recarga la grilla. Si hay un producto elegido, sus campos pasan a mostrar los datos actuales (por ejemplo, los del
+        // cambio anterior activado en la bitacora), asi Modificar no vuelve a guardar los datos viejos. Si la ventana esta
+        // oculta no hace falta: se recarga al volver a mostrarse.
+        private void RefrescarAutomaticamente_235JB()
+        {
+            if (IsDisposed || !Visible)
+                return;
+
+            int codigo_235JB;
+            bool haySeleccionado_235JB = int.TryParse(txtCodigo.Text.Trim(), out codigo_235JB);
+            if (!ActualizarGrilla_235JB(false))
+                return;
+
+            DataGridViewRow fila_235JB = haySeleccionado_235JB ? BuscarFila_235JB(codigo_235JB) : null;
+            if (fila_235JB == null)
+            {
+                // Sin producto elegido (o ya no esta en la lista): como queda despues de Limpiar
+                if (haySeleccionado_235JB)
+                    LimpiarCampos_235JB();
+                else
+                    dgvProductos.ClearSelection();
+                return;
+            }
+
+            DataGridViewColumn visible_235JB = dgvProductos.Columns.GetFirstColumn(DataGridViewElementStates.Visible);
+            if (visible_235JB != null)
+                dgvProductos.CurrentCell = fila_235JB.Cells[visible_235JB.Index];
+            CargarCampos_235JB(fila_235JB);
+        }
+
+        private DataGridViewRow BuscarFila_235JB(int codigo_235JB)
+        {
+            foreach (DataGridViewRow fila_235JB in dgvProductos.Rows)
+                if (!fila_235JB.IsNewRow && ObtenerTexto_235JB(fila_235JB, "Codigo") == codigo_235JB.ToString())
+                    return fila_235JB;
+            return null;
         }
 
         public void ActualizarIdioma(string idioma)
@@ -57,16 +108,19 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
             }
         }
 
-        private void ActualizarGrilla_235JB()
+        private bool ActualizarGrilla_235JB(bool avisarErrores_235JB = true)
         {
             try
             {
                 dgvProductos.DataSource = _bllProducto_235JB.Listar_235JB();
+                return true;
             }
             catch (Exception ex_235JB)
             {
-                Aviso_235JB(Msg_235JB("msg_ErrorInicializar", "Error al cargar los productos: ") + ex_235JB.Message,
-                    "msg_Error_Titulo", "Error", MessageBoxIcon.Error);
+                if (avisarErrores_235JB)
+                    Aviso_235JB(Msg_235JB("msg_ErrorInicializar", "Error al cargar los productos: ") + ex_235JB.Message,
+                        "msg_Error_Titulo", "Error", MessageBoxIcon.Error);
+                return false;
             }
         }
 
@@ -138,7 +192,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 LimpiarCampos_235JB();
                 ActualizarGrilla_235JB();
             }
-            catch (ProductoExistenteException)
+            catch (InvalidOperationException ex_235JB) when (ex_235JB.Message == "msg_ProductoExistente")
             {
                 Aviso_235JB(Msg_235JB("msg_ProductoExistente", "Ya existe un producto con ese nombre. Para cambiar su stock, selecciónelo en la grilla y use Modificar."),
                     "msg_Error_Titulo", "Error", MessageBoxIcon.Error);
@@ -186,7 +240,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 LimpiarCampos_235JB();
                 ActualizarGrilla_235JB();
             }
-            catch (ProductoExistenteException)
+            catch (InvalidOperationException ex_235JB) when (ex_235JB.Message == "msg_ProductoExistente")
             {
                 Aviso_235JB(Msg_235JB("msg_ProductoExistente", "Ya existe un producto con ese nombre. Para cambiar su stock, selecciónelo en la grilla y use Modificar."),
                     "msg_Error_Titulo", "Error", MessageBoxIcon.Error);
@@ -212,19 +266,23 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 
             try
             {
-                DataGridViewRow fila_235JB = dgvProductos.CurrentRow;
-                txtCodigo.Text = ObtenerTexto_235JB(fila_235JB, "Codigo");
-                txtNombre.Text = ObtenerTexto_235JB(fila_235JB, "Nombre");
-                txtPrecio.Text = ObtenerTexto_235JB(fila_235JB, "Precio");
-                txtStock.Text = ObtenerTexto_235JB(fila_235JB, "Stock");
-                object disponible_235JB = fila_235JB.Cells["Disponible"].Value;
-                chkDisponible.Checked = disponible_235JB != null && disponible_235JB != DBNull.Value && Convert.ToBoolean(disponible_235JB);
+                CargarCampos_235JB(dgvProductos.CurrentRow);
             }
             catch (Exception)
             {
                 Aviso_235JB(Msg_235JB("msg_ErrorSeleccion", "No se pudo leer la fila seleccionada."),
                     "msg_Error_Titulo", "Error", MessageBoxIcon.Error);
             }
+        }
+
+        private void CargarCampos_235JB(DataGridViewRow fila_235JB)
+        {
+            txtCodigo.Text = ObtenerTexto_235JB(fila_235JB, "Codigo");
+            txtNombre.Text = ObtenerTexto_235JB(fila_235JB, "Nombre");
+            txtPrecio.Text = ObtenerTexto_235JB(fila_235JB, "Precio");
+            txtStock.Text = ObtenerTexto_235JB(fila_235JB, "Stock");
+            object disponible_235JB = fila_235JB.Cells["Disponible"].Value;
+            chkDisponible.Checked = disponible_235JB != null && disponible_235JB != DBNull.Value && Convert.ToBoolean(disponible_235JB);
         }
 
         private static string ObtenerTexto_235JB(DataGridViewRow fila_235JB, string columna_235JB)

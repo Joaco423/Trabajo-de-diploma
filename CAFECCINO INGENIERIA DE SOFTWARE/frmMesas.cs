@@ -196,7 +196,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 LimpiarCampos_235JB();
                 ActualizarGrilla_235JB();
             }
-            catch (EntidadEnUsoException)
+            catch (InvalidOperationException ex_235JB) when (ex_235JB.Message == "msg_MesaOcupada")
             {
                 Aviso_235JB(Msg_235JB("msg_MesaOcupada", "No se puede eliminar la mesa porque está ocupada."),
                     "msg_Error_Titulo", "Error", MessageBoxIcon.Error);

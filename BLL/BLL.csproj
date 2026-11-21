@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLLBackup.cs" />
-    <Compile Include="BLLBitacoraUsuario.cs" />
+    <Compile Include="BLLInstalacion.cs" />
+    <Compile Include="BLLProducto_C.cs" />
+    <Compile Include="BLLReporte.cs" />
     <Compile Include="BLLEvento.cs" />
     <Compile Include="BLLIdioma.cs" />
     <Compile Include="BLLIntegridad.cs" />
@@ -50,7 +52,7 @@
     <Compile Include="BLLUsuario.cs" />
     <Compile Include="BLLMozo.cs" />
     <Compile Include="BLLMesa.cs" />
-    <Compile Include="BLLExcepciones.cs" />
+    <Compile Include="BLLReserva.cs" />
     <Compile Include="BLLCliente.cs" />
     <Compile Include="BLLProducto.cs" />
     <Compile Include="BLLPedido.cs" />

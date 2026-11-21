@@ -10,7 +10,7 @@ namespace BE
         public DateTime Fecha { get; set; }
         public string Hora { get; set; }
         public int Total { get; set; }
-        /// <summary>"Confirmado" o "Cancelado".</summary>
+         
         public string Estado { get; set; }
         public List<DetallePedido> Detalles { get; set; } = new List<DetallePedido>();
     }

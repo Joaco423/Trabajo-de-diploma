@@ -42,8 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conexion.cs" />
+    <Compile Include="DALConexion.cs" />
     <Compile Include="DALBackup.cs" />
-    <Compile Include="DALBitacoraUsuario.cs" />
+    <Compile Include="DALInstalacion.cs" />
+    <Compile Include="DALProducto_C.cs" />
+    <Compile Include="DALReporte.cs" />
     <Compile Include="DALDigitoVerificador.cs" />
     <Compile Include="DALEvento.cs" />
     <Compile Include="DALIntegridad.cs" />
@@ -52,11 +55,18 @@
     <Compile Include="DALUsuario.cs" />
     <Compile Include="DALMozo.cs" />
     <Compile Include="DALMesa.cs" />
+    <Compile Include="DALReserva.cs" />
     <Compile Include="DALCliente.cs" />
     <Compile Include="DALProducto.cs" />
     <Compile Include="DALPedido.cs" />
     <Compile Include="DALAtencion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Script con el que el programa crea su base de datos (estructura y configuracion tomadas de CAFECCINO1) -->
+    <EmbeddedResource Include="cafeccino_instalador.sql" />
+    <!-- Script que actualiza a la version 2.0 una base que ya existia (por ejemplo, la que crea el instalador 1.0) -->
+    <EmbeddedResource Include="cafeccino_actualizacion.sql" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE\BE.csproj">

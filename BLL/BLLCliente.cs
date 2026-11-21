@@ -4,6 +4,7 @@ using SERVICIOS;
 using System;
 using System.Data;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace BLL
 {
@@ -21,7 +22,7 @@ namespace BLL
             return Singleton.Instancia.Usuario != null ? Singleton.Instancia.Usuario.NombreUsuario : "sistema";
         }
 
-        // El domicilio se guarda encriptado (AES): aca se desencripta para mostrarlo.
+        
         public DataTable Listar_235JB()
         {
             DataTable tabla_235JB = _dal_235JB.Listar_235JB();
@@ -38,7 +39,7 @@ namespace BLL
             return cliente_235JB;
         }
 
-        // Copia del cliente con el domicilio encriptado, para guardar (el objeto original queda en texto plano).
+        
         private Cliente ConDomicilioEncriptado_235JB(Cliente cliente_235JB)
         {
             return new Cliente
@@ -49,7 +50,9 @@ namespace BLL
                 Mail = cliente_235JB.Mail,
                 NumTelefono = cliente_235JB.NumTelefono,
                 Domicilio = _cripto_235JB.Encriptar_235JB(cliente_235JB.Domicilio),
-                Activo = cliente_235JB.Activo
+                Activo = cliente_235JB.Activo,
+                CodigoCliente = cliente_235JB.CodigoCliente,
+                FechaAlta = cliente_235JB.FechaAlta
             };
         }
 
@@ -60,12 +63,16 @@ namespace BLL
             if (_dal_235JB.ObtenerPorDNI_235JB(cliente_235JB.DNI) != null)
                 throw new InvalidOperationException("Ya existe un cliente con ese DNI.");
 
-            _dal_235JB.Insertar_235JB(ConDomicilioEncriptado_235JB(cliente_235JB));
+            
+            cliente_235JB.FechaAlta = DateTime.Today;
+            Cliente aGuardar_235JB = ConDomicilioEncriptado_235JB(cliente_235JB);
+            _dal_235JB.Insertar_235JB(aGuardar_235JB);
+            cliente_235JB.CodigoCliente = aGuardar_235JB.CodigoCliente;
             _integridad_235JB.SincronizarFilasNuevas("Cliente");
             _evento_235JB.RegistrarEvento(UsuarioActual_235JB(), "Alta de cliente " + cliente_235JB.DNI, "Maestros", "Baja");
         }
 
-        // Devuelve false si los datos son iguales a los guardados (no se modifica nada).
+        
         public bool Modificar_235JB(Cliente cliente_235JB)
         {
             if (cliente_235JB == null) throw new ArgumentNullException("cliente");
@@ -87,22 +94,67 @@ namespace BLL
         private void VerificarSinPedidoEnCurso_235JB(int dni_235JB)
         {
             if (_pedidoDAL_235JB.ObtenerPedidoEnCurso_235JB(dni_235JB) != null)
-                throw new EntidadEnUsoException("El cliente tiene un pedido en curso.");
+                throw new InvalidOperationException("msg_ClienteEnUso");
         }
 
         
-        // ------------------------- Serializacion (XML / JSON) -------------------------
-        // Los archivos se guardan en la subcarpeta "Serializados" de esta carpeta (se crea si no existe).
-        private const string CarpetaProyecto_235JB = @"C:\Users\joaquim\Desktop\Proyecto-Ingenieria-de-Software\Proyecto-Ingenieria-de-Software";
+        
+        public Cliente ConsultarRegistro_235JB(int dni_235JB)
+        {
+            Cliente cliente_235JB = ObtenerPorDNI_235JB(dni_235JB);
+            _evento_235JB.RegistrarEvento(UsuarioActual_235JB(), "Consulta de registro del DNI " + dni_235JB, "Reservas", "Baja");
+            return cliente_235JB;
+        }
+
+        
+        public string ValidarDatos_235JB(Cliente cliente_235JB)
+        {
+            const string patronNombre_235JB = @"^[A-Za-z\u00C0-\u00FF]+(\s[A-Za-z\u00C0-\u00FF]+)*$";
+
+            if (cliente_235JB == null || cliente_235JB.DNI <= 0 || cliente_235JB.NumTelefono <= 0 ||
+                string.IsNullOrWhiteSpace(cliente_235JB.Nombre) || string.IsNullOrWhiteSpace(cliente_235JB.Apellido) ||
+                string.IsNullOrWhiteSpace(cliente_235JB.Domicilio) || string.IsNullOrWhiteSpace(cliente_235JB.Mail))
+                return "msg_CamposObligatorios";
+            if (!Regex.IsMatch(cliente_235JB.DNI.ToString(), @"^\d{8}$")) return "msg_DniInvalido";
+            if (!Regex.IsMatch(cliente_235JB.Nombre.Trim(), patronNombre_235JB)) return "msg_NombreInvalido";
+            if (!Regex.IsMatch(cliente_235JB.Apellido.Trim(), patronNombre_235JB)) return "msg_ApellidoInvalido";
+            if (!Regex.IsMatch(cliente_235JB.Mail.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$")) return "msg_MailInvalido";
+            if (!Regex.IsMatch(cliente_235JB.NumTelefono.ToString(), @"^\d{6,10}$")) return "msg_TelefonoInvalido";
+            return null;
+        }
+
+        
+        public bool IngresarDatos_235JB(Cliente cliente_235JB, out string claveError_235JB)
+        {
+            claveError_235JB = ValidarDatos_235JB(cliente_235JB);
+            if (claveError_235JB != null) return false;
+
+            _evento_235JB.RegistrarEvento(UsuarioActual_235JB(), "Ingreso de datos del cliente " + cliente_235JB.DNI, "Reservas", "Baja");
+            return true;
+        }
+        
+        private static string CarpetaSerializadosRuta_235JB()
+        {
+            string documentos_235JB = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (string.IsNullOrWhiteSpace(documentos_235JB))
+                documentos_235JB = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            return Path.Combine(documentos_235JB, "CAFECCINO", "Serializados");
+        }
 
         private static string RutaSerializado_235JB(int dni_235JB, string formato_235JB)
         {
-            string carpeta_235JB = Path.Combine(CarpetaProyecto_235JB, "Serializados");
-            return Path.Combine(carpeta_235JB, "Cliente_" + dni_235JB + "." + formato_235JB.ToLowerInvariant());
+            return Path.Combine(CarpetaSerializadosRuta_235JB(), "Cliente_" + dni_235JB + "." + formato_235JB.ToLowerInvariant());
         }
 
-        // Serializa el cliente al formato indicado, lo guarda en un archivo y devuelve la ruta. El texto queda en texto_235JB.
-        public string Serializar_235JB(int dni_235JB, string formato_235JB, out string texto_235JB)
+        
+        public string NombreArchivoSerializado_235JB(int dni_235JB, string formato_235JB)
+        {
+            return Path.GetFileName(RutaSerializado_235JB(dni_235JB, formato_235JB));
+        }
+
+        
+        
+        public string Serializar_235JB(int dni_235JB, string formato_235JB, string ruta_235JB, out string texto_235JB)
         {
             string formato_NORM_235JB = _serializador_235JB.NormalizarFormato_235JB(formato_235JB);
             Cliente cliente_235JB = ObtenerPorDNI_235JB(dni_235JB);
@@ -110,7 +162,8 @@ namespace BLL
                 throw new InvalidOperationException("No existe un cliente con ese DNI.");
 
             texto_235JB = _serializador_235JB.Serializar_235JB(cliente_235JB, formato_NORM_235JB);
-            string ruta_235JB = RutaSerializado_235JB(dni_235JB, formato_NORM_235JB);
+            if (string.IsNullOrWhiteSpace(ruta_235JB))
+                ruta_235JB = RutaSerializado_235JB(dni_235JB, formato_NORM_235JB);
             Directory.CreateDirectory(Path.GetDirectoryName(ruta_235JB));
             File.WriteAllText(ruta_235JB, texto_235JB, new System.Text.UTF8Encoding(false));
 
@@ -118,13 +171,15 @@ namespace BLL
             return ruta_235JB;
         }
 
-        // Carpeta donde se guardan los archivos serializados (para que el dialogo de busqueda arranque ahi).
+        
         public string CarpetaSerializados_235JB()
         {
-            return Path.Combine(CarpetaProyecto_235JB, "Serializados");
+            string carpeta_235JB = CarpetaSerializadosRuta_235JB();
+            Directory.CreateDirectory(carpeta_235JB);
+            return carpeta_235JB;
         }
 
-        // Lee el archivo elegido por el usuario y lo vuelve a armar. No modifica la base de datos.
+        
         public Cliente Deserializar_235JB(string ruta_235JB, string formato_235JB, out string texto_235JB)
         {
             string formato_NORM_235JB = _serializador_235JB.NormalizarFormato_235JB(formato_235JB);

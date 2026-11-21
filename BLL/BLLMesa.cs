@@ -38,7 +38,7 @@ namespace BLL
             _evento_235JB.RegistrarEvento(UsuarioActual_235JB(), "Alta de mesa " + mesa_235JB.NumeroMesa, "Maestros", "Baja");
         }
 
-        // Devuelve false si la capacidad es igual a la guardada (no se modifica nada).
+        
         public bool Modificar_235JB(Mesa mesa_235JB)
         {
             if (mesa_235JB == null) throw new ArgumentNullException("mesa");
@@ -57,11 +57,11 @@ namespace BLL
         public void Eliminar_235JB(int numeroMesa_235JB)
         {
             Mesa actual_235JB = _dal_235JB.ObtenerPorNumero_235JB(numeroMesa_235JB);
-            if (actual_235JB != null && actual_235JB.Estado == "Ocupada")
-                throw new EntidadEnUsoException("La mesa esta ocupada.");
+            if (actual_235JB != null && actual_235JB.Estado != "Libre")
+                throw new InvalidOperationException("msg_MesaOcupada");
 
             _dal_235JB.Eliminar_235JB(numeroMesa_235JB);
-            // Tras una baja hay que recalcular el DVV de la tabla (cambio la cantidad de filas).
+            
             _integridad_235JB.SincronizarFilasNuevas("Mesa");
             _evento_235JB.RegistrarEvento(UsuarioActual_235JB(), "Baja de mesa " + numeroMesa_235JB, "Maestros", "Alta");
         }

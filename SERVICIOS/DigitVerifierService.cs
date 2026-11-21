@@ -19,10 +19,7 @@ namespace SERVICIOS
             return Convert.ToInt32(value);
         }
 
-        /// <summary>
-        /// Calcula el DVH de una fila cualquiera, leyendo sus columnas dinámicamente
-        /// (sin depender de una clase tipada por tabla). Ignora la propia columna DVH.
-        /// </summary>
+        
         public static int CalcularDVHGenerico(DataRow fila, DataColumnCollection columnas)
         {
             int suma = 0;

@@ -8,7 +8,7 @@ namespace DAL
   
     public class DALIntegridad
     {
-        private readonly string _conn = @"Data Source=localhost;Initial Catalog=CAFECCINO1;Integrated Security=True";
+        private string _conn { get { return Conexion.cadena; } }
 
         private static readonly Dictionary<string, string[]> ClavesPrimarias = new Dictionary<string, string[]>
         {
@@ -20,14 +20,14 @@ namespace DAL
             { "Traduccion", new[] { "IdTraduccion" } },
             { "ControlIdioma", new[] { "IdControl" } },
             { "Evento", new[] { "CodEvento" } },
-            { "BitacoraUsuario", new[] { "IdBitacora" } },
+            { "Producto_C", new[] { "CodigoCambio" } },
             { "Cliente", new[] { "DNI" } },
             { "Producto", new[] { "Codigo" } },
             { "Mesa", new[] { "NumeroMesa" } },
+            { "Reserva", new[] { "CodigoReserva" } },
             { "Mozo", new[] { "DNIMozo" } },
             { "Pedido", new[] { "CodigoPedido" } },
             { "DetallePedido", new[] { "CodigoPedido", "Codigo" } },
-            { "Factura", new[] { "NumeroFactura" } },
             { "Atencion", new[] { "CodigoPedido" } },
             { "ListaDeEsperaMesas", new[] { "DNI" } },
             { "ListaDeEsperaMozos", new[] { "DNI" } },

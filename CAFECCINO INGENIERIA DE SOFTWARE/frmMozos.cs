@@ -196,7 +196,7 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 LimpiarCampos_235JB();
                 ActualizarGrilla_235JB();
             }
-            catch (EntidadEnUsoException)
+            catch (InvalidOperationException ex_235JB) when (ex_235JB.Message == "msg_MozoEnUso")
             {
                 Aviso_235JB(Msg_235JB("msg_MozoEnUso", "No se puede desactivar el mozo porque está atendiendo un pedido."),
                     "msg_Error_Titulo", "Error", MessageBoxIcon.Error);

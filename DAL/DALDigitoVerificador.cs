@@ -11,7 +11,7 @@ namespace DAL
 {
     public class DALDigitoVerificador
     {
-        private string _conn = @"Data Source=localhost;Initial Catalog=CAFECCINO1;Integrated Security=True";
+        private string _conn { get { return Conexion.cadena; } }
 
         public DigitoVerificador ObtenerPorTabla(string tabla)
         {

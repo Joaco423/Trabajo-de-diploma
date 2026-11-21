@@ -12,5 +12,7 @@ namespace BE
         public int NumTelefono { get; set; }
         public string Domicilio { get; set; }
         public bool Activo { get; set; }
+        public int CodigoCliente { get; set; }
+        public DateTime FechaAlta { get; set; }
     }
 }

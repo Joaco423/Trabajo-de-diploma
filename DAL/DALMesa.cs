@@ -33,7 +33,7 @@ namespace DAL
             }
         }
 
-        // Una mesa nueva queda "Libre" para poder asignarla.
+        
         public void Insertar_235JB(Mesa m_235JB)
         {
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
@@ -46,7 +46,7 @@ namespace DAL
             }
         }
 
-        // Solo cambia la capacidad: el estado lo manejan la asignacion y la liberacion.
+        
         public void Modificar_235JB(Mesa m_235JB)
         {
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))
@@ -59,7 +59,7 @@ namespace DAL
             }
         }
 
-        // Falla si la mesa tiene atenciones registradas.
+        
         public void Eliminar_235JB(int numeroMesa_235JB)
         {
             using (SqlConnection cn_235JB = new SqlConnection(Conexion.cadena))

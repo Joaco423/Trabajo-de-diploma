@@ -3,26 +3,28 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using BE;
 using BLL;
+using SERVICIOS;
 
 namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 {
     
-    public partial class frmRegistrarCliente : FormularioCU
+    public partial class frmRegistrarCliente : Form
     {
         private readonly BLLCliente _bllCliente_235JB = new BLLCliente();
-        private readonly ContextoPedido _ctx_235JB;
 
-        public frmRegistrarCliente(ContextoPedido ctx_235JB, int dni_235JB)
+        // Cliente registrado (se completa al terminar el CU)
+        public Cliente Cliente { get; private set; }
+
+        public frmRegistrarCliente(int dni_235JB)
         {
             InitializeComponent();
-            _ctx_235JB = ctx_235JB;
             txtDNI.Text = dni_235JB.ToString();
         }
 
         // CU02 paso 1: se solicitan los datos del cliente
         private void frmRegistrarCliente_Load_235JB(object sender_235JB, EventArgs e_235JB)
         {
-            TraducirAlAbrir_235JB();
+            traductor_235JB.TraducirFormulario(this, Singleton.Instancia.IdiomaActual);
             Aviso_235JB(Msg_235JB("msg_ClienteNoRegistrado", "El cliente no está registrado. Complete sus datos para registrarlo."),
                 "msg_Info_Titulo", "Información", MessageBoxIcon.Information);
         }
@@ -81,12 +83,12 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
                 };
                 // CU02 paso 4: guarda el cliente (BLLCliente: digito verificador + evento)
                 _bllCliente_235JB.Registrar_235JB(nuevo_235JB);
-                _ctx_235JB.Cliente = nuevo_235JB;
+                Cliente = nuevo_235JB;
 
                 // CU02 pasos 5-6: informa que quedo registrado y continua CU01
                 Aviso_235JB(Msg_235JB("msg_ClienteRegistrado", "Cliente registrado correctamente."),
                     "msg_Exito_Titulo", "Éxito", MessageBoxIcon.Information);
-                Terminar_235JB(ResultadoCU.Completado);
+                Terminar_235JB(DialogResult.OK);
             }
             catch (Exception ex_235JB)
             {
@@ -96,7 +98,33 @@ namespace CAFECCINO_INGENIERIA_DE_SOFTWARE
 
         private void btnCancelar_Click_235JB(object sender_235JB, EventArgs e_235JB)
         {
-            Terminar_235JB(ResultadoCU.Cancelado);
+            Terminar_235JB(DialogResult.Cancel);
+        }
+
+        private readonly Traductor traductor_235JB = new Traductor();
+
+        public DialogResult Resultado { get; private set; } = DialogResult.Cancel;
+
+        private string Msg_235JB(string clave_235JB, string original_235JB)
+        {
+            return traductor_235JB.ObtenerMensaje(Name, clave_235JB, original_235JB);
+        }
+
+        private void Aviso_235JB(string mensaje_235JB, string tituloClave_235JB, string tituloOriginal_235JB, MessageBoxIcon icono_235JB)
+        {
+            MessageBox.Show(this, mensaje_235JB, Msg_235JB(tituloClave_235JB, tituloOriginal_235JB), MessageBoxButtons.OK, icono_235JB);
+        }
+
+        private void Error_235JB(string clave_235JB, string original_235JB, Exception ex_235JB)
+        {
+            Aviso_235JB(Msg_235JB(clave_235JB, original_235JB) + ex_235JB.Message, "msg_Error_Titulo", "Error", MessageBoxIcon.Error);
+        }
+
+        private void Terminar_235JB(DialogResult resultado_235JB)
+        {
+            Resultado = resultado_235JB;
+            DialogResult = resultado_235JB == DialogResult.Cancel ? DialogResult.Cancel : DialogResult.OK;
+            Close();
         }
     }
 }

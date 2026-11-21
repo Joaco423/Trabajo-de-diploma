@@ -38,7 +38,7 @@ namespace BLL
             _evento_235JB.RegistrarEvento(UsuarioActual_235JB(), "Alta de mozo " + mozo_235JB.DNIMozo, "Maestros", "Baja");
         }
 
-        // Devuelve false si los datos son iguales a los guardados (no se modifica nada).
+        
         public bool Modificar_235JB(Mozo mozo_235JB)
         {
             if (mozo_235JB == null) throw new ArgumentNullException("mozo");
@@ -59,9 +59,9 @@ namespace BLL
 
         private void VerificarNoOcupado_235JB(int dni_235JB)
         {
-            Mozo actual_235JB = _dal_235JB.ObtenerPorDNI_235JB(dni_235JB);
-            if (actual_235JB != null && actual_235JB.Estado == "Ocupado")
-                throw new EntidadEnUsoException("El mozo esta atendiendo un pedido.");
+            
+            if (_dal_235JB.ContarAtencionesEnCurso_235JB(dni_235JB) > 0)
+                throw new InvalidOperationException("msg_MozoEnUso");
         }
 
         
